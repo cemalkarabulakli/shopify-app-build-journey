@@ -1,0 +1,13 @@
+# Pin Node 22 — vite 8 needs ^20.19 || >=22.12 and .npmrc has engine-strict=true,
+# so an older Node picked by Nixpacks makes `npm ci` fail before anything builds.
+[variables]
+NIXPACKS_NODE_VERSION = "22"
+
+# Coolify health checks run curl/wget *inside* the container; the default
+# Nixpacks Node image has neither, which makes the container "unhealthy" and
+# Traefik answers "no available server". Include them explicitly.
+[phases.setup]
+nixPkgs = ["...", "curl", "wget"]
+
+[start]
+cmd = "node build"

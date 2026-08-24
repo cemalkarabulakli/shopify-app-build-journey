@@ -29,6 +29,6 @@
 	},
 	"description": "Build-in-public journal for my Shopify app",
 	"engines": {
-		"node": ">=20"
+		"node": ">=22.12.0"
 	}
 }
