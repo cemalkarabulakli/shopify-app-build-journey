@@ -1,0 +1,45 @@
+import { readdir, readFile } from 'node:fs/promises';
+import { basename, extname, join } from 'node:path';
+import { Post, type PostRepository } from '$lib/domain/post';
+import { FrontmatterParser } from './FrontmatterParser';
+
+/**
+ * Adapter: reads `*.md` files from a directory and maps them to Post entities.
+ * Knows about files and frontmatter; knows nothing about HTTP or rendering.
+ */
+export class FileSystemPostRepository implements PostRepository {
+	constructor(
+		private readonly directory: string,
+		private readonly frontmatter: FrontmatterParser = new FrontmatterParser()
+	) {}
+
+	async findAll(): Promise<Post[]> {
+		const files = (await readdir(this.directory)).filter((f) => extname(f) === '.md');
+		return Promise.all(files.map((f) => this.load(f)));
+	}
+
+	async findBySlug(slug: string): Promise<Post | null> {
+		const all = await this.findAll();
+		return all.find((p) => p.slug === slug) ?? null;
+	}
+
+	private async load(file: string): Promise<Post> {
+		const raw = await readFile(join(this.directory, file), 'utf8');
+		const { data, body } = this.frontmatter.parse(raw);
+		const slug = basename(file, '.md');
+		const tags = data.tags;
+		return Post.create({
+			slug,
+			title: str(data.title) || slug,
+			publishedAt: new Date(str(data.date) || 0),
+			summary: str(data.summary),
+			tags: Array.isArray(tags) ? tags : tags ? [tags] : [],
+			draft: str(data.draft) === 'true',
+			body
+		});
+	}
+}
+
+function str(v: string | string[] | undefined): string {
+	return Array.isArray(v) ? v.join(', ') : (v ?? '');
+}
