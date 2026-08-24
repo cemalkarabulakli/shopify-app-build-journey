@@ -1,20 +1,34 @@
 # Shopify App Build Journey
 
-Build-in-public journal for my Shopify app. SvelteKit + adapter-node, one markdown file per entry, no CMS, no database.
+**👉 Follow along at [shopifyjourney.cemalbuilds.com](https://shopifyjourney.cemalbuilds.com/)**
 
-## Run locally
+I'm building a Shopify app from zero, in public. Every entry covers what I shipped, what broke, what merchants said, and the real numbers — installs, paying merchants, MRR, hours spent. No fluff, no "we're crushing it".
+
+This repo is the site itself. The journal lives on the website; the code is here for anyone who wants to see how it's built or run their own.
+
+## Support the journey
+
+- **Read and subscribe** — [shopifyjourney.cemalbuilds.com](https://shopifyjourney.cemalbuilds.com/) or the [RSS feed](https://shopifyjourney.cemalbuilds.com/feed.xml).
+- **Shopify merchant?** I'm looking for early testers. Say hi via the [About page](https://shopifyjourney.cemalbuilds.com/about).
+- **Fellow builder?** Star ⭐ this repo, share an entry, or open an issue with feedback.
+
+---
+
+## Running the site yourself
+
+SvelteKit (Svelte 5, TypeScript) + adapter-node. One markdown file per entry, no CMS, no database.
 
 ```bash
 npm install
-npm run dev      # http://localhost:5173
-npm test         # unit tests (vitest)
-npm run check    # svelte-check / TypeScript
-npm run build && npm start   # production server on :3000 — what Coolify runs
+npm run dev                  # http://localhost:5173
+npm test                     # unit tests (vitest)
+npm run check                # svelte-check / TypeScript
+npm run build && npm start   # production server on :3000
 ```
 
-## Write an entry
+### Writing an entry
 
-Create `content/posts/<slug>.md` (the filename is the URL: `/posts/<slug>`):
+Create `content/posts/<slug>.md` — the filename becomes the URL `/posts/<slug>`:
 
 ```md
 ---
@@ -30,58 +44,44 @@ Markdown body…
 
 `draft: true` hides an entry everywhere (index, page, feed). Push to `main` → Coolify rebuilds → live.
 
-## Architecture
+### Architecture
 
-Clean architecture with the dependency rule pointing inward. Outer layers depend on inner ones, never the reverse.
+Clean architecture with the dependency rule pointing inward — outer layers depend on inner ones, never the reverse.
 
 ```
-src/lib/domain/post/            Entities & ports — pure TS, no imports from anything
+src/lib/domain/post/            Entities & ports — pure TS, no external imports
   Post.ts                         entity + invariants (slug format, title, date)
   PostRepository.ts               port: how the app asks for posts
-  errors.ts                       PostNotFoundError
-src/lib/application/            Use cases — orchestrate domain via ports
+src/lib/application/            Use cases — orchestrate the domain via ports
   use-cases/ListPublishedPosts    hides drafts, sorts newest first
   use-cases/GetPublishedPost      loads one entry, renders markdown via port
   use-cases/BuildFeed             format-agnostic feed data
   ports/MarkdownRenderer.ts       port: markdown → HTML
-  dto.ts                          plain objects that cross into the UI
-src/lib/server/                 Infrastructure — server-only ($lib/server is never bundled to the client)
-  infrastructure/content/
-    FileSystemPostRepository      adapter: content/posts/*.md → Post
-    CachedPostRepository          decorator: TTL cache over any PostRepository
-    FrontmatterParser             tiny frontmatter parser
-    MarkedMarkdownRenderer        adapter over `marked`
+src/lib/server/                 Infrastructure — server-only, never bundled to the client
+  infrastructure/content/         FileSystemPostRepository, CachedPostRepository (decorator),
+                                  FrontmatterParser, MarkedMarkdownRenderer
   presentation/RssFeedSerializer  FeedData → RSS 2.0
   config/siteConfig.ts            the only file that reads env vars
-  container.ts                    composition root — the only place that `new`s adapters
+  container.ts                    composition root — the only place that wires adapters
 src/routes/                     Presentation — thin loaders + Svelte components
 ```
 
-How SOLID shows up:
+Use cases depend on interfaces; concrete classes are chosen once in `container.ts`. Tests swap in an in-memory repository and a fake renderer — no mocking library needed. Swapping the content source (Git-backed CMS, Notion, a database) is one new `PostRepository` and one line in the container.
 
-- **S** — each class has one reason to change: parsing frontmatter, reading files, caching, rendering markdown, serialising RSS are all separate.
-- **O** — `CachedPostRepository` adds caching without touching `FileSystemPostRepository`; an `AtomFeedSerializer` could sit next to the RSS one.
-- **L** — any `PostRepository` (filesystem, cached, in-memory test double) is interchangeable; the use cases can't tell.
-- **I** — ports are minimal: `PostRepository` has two methods, `MarkdownRenderer` has one.
-- **D** — use cases depend on interfaces; concrete classes are chosen once in `container.ts`. Tests swap in `InMemoryPostRepository` and a fake renderer with zero mocking libraries.
+### Deployment (Coolify + Nixpacks)
 
-Swapping the content source (e.g. a Git-backed CMS, Notion, a database) means writing one new `PostRepository` and changing one line in the container.
+Base directory `/`, no install/build/start overrides, port `3000`. `nixpacks.toml` pins Node 22 and adds `curl`/`wget` so Coolify's health check (`GET /healthz`) works.
 
-## Deploy (Coolify)
-
-Matches the Nixpacks config: base directory `/`, no install/build/start overrides, port `3000`.
-Nixpacks detects `package.json` → `npm ci` → `npm run build` → `npm start` (`node build`).
-
-Environment variables (all optional — see `.env.example`):
-
-| Var | Default | Purpose |
+| Env var | Default | Purpose |
 |---|---|---|
-| `PORT` | `3000` | Listen port (adapter-node) |
-| `SITE_URL` | `http://localhost:3000` | Public URL for canonical links and RSS — **set this** |
+| `PORT` | `3000` | Listen port |
+| `SITE_URL` | `http://localhost:3000` | Public URL for canonical links and RSS |
 | `SITE_NAME` | `Shopify App Build Journey` | Site title |
 | `SITE_DESCRIPTION` | … | Index intro + feed description |
 | `AUTHOR` | `Cemal` | Footer / about |
 | `CONTENT_DIR` | `content/posts` | Where entries live |
-| `CACHE_TTL_MS` | `60000` in prod, `0` in dev | Post cache TTL |
+| `CACHE_TTL_MS` | `60000` prod / `0` dev | Post cache TTL |
 
-Health check: `GET /healthz` → `ok`. Feed: `/feed.xml`.
+---
+
+Built by [Cemal](https://shopifyjourney.cemalbuilds.com/about) · [shopifyjourney.cemalbuilds.com](https://shopifyjourney.cemalbuilds.com/)
