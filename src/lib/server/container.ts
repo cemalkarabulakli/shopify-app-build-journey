@@ -17,11 +17,18 @@ function buildContainer() {
 		new FileSystemPostRepository(resolve(site.contentDir)),
 		site.cacheTtlMs
 	);
+	// Standalone pages (roadmap, etc.) are the same shape as posts, so the same
+	// repository and use case serve them — a second instance, not a new abstraction.
+	const pages = new CachedPostRepository(
+		new FileSystemPostRepository(resolve(site.pagesDir)),
+		site.cacheTtlMs
+	);
 
 	return {
 		site,
 		listPublishedPosts: new ListPublishedPosts(posts),
 		getPublishedPost: new GetPublishedPost(posts, markdown),
+		getPage: new GetPublishedPost(pages, markdown),
 		buildFeed: new BuildFeed(posts, markdown),
 		rssSerializer: new RssFeedSerializer(site)
 	};

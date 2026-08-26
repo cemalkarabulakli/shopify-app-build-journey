@@ -31,3 +31,10 @@ time{font-size:.85rem;color:var(--muted);text-transform:uppercase;letter-spacing
 .post td,.post th{border:1px solid var(--border);padding:6px 10px;text-align:left}
 .back{margin-top:40px}
 .site-footer{padding-top:24px;padding-bottom:40px;border-top:1px solid var(--border);color:var(--muted);font-size:.9rem}
+
+/* Roadmap page */
+.roadmap .lede{color:var(--muted);font-size:1.05rem;margin:8px 0 0}
+.roadmap table{font-size:.92rem;display:block;overflow-x:auto;white-space:normal}
+.roadmap td:first-child,.roadmap th:first-child{text-align:center;width:2.5rem}
+.roadmap td:last-child,.roadmap th:last-child{white-space:nowrap}
+.roadmap h2{margin-top:40px;padding-top:8px;border-top:1px solid var(--border)}
