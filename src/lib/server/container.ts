@@ -7,6 +7,7 @@ import { MarkedMarkdownRenderer } from './infrastructure/content/MarkedMarkdownR
 import { RssFeedSerializer } from './presentation/RssFeedSerializer';
 import { rewriteRelativeMarkdownLinks } from './infrastructure/content/rewriteRelativeMarkdownLinks';
 import { Post } from '$lib/domain/post';
+import { FileSystemPathRepository } from './infrastructure/content/FileSystemPathRepository';
 
 /**
  * Composition root — the only place where concrete classes are wired together.
@@ -19,12 +20,6 @@ function buildContainer() {
 		new FileSystemPostRepository(resolve(site.contentDir)),
 		site.cacheTtlMs
 	);
-	// Standalone pages (roadmap, etc.) are the same shape as posts, so the same
-	// repository and use case serve them — a second instance, not a new abstraction.
-	const pages = new CachedPostRepository(
-		new FileSystemPostRepository(resolve(site.pagesDir)),
-		site.cacheTtlMs
-	);
 
 	// Learning docs live in /docs at the repo root; same shape again, ordered by
 	// filename (00-, 01-, …) and with `[x](FILE.md)` links pointed at /docs/file.
@@ -35,11 +30,11 @@ function buildContainer() {
 
 	return {
 		site,
+		path: new FileSystemPathRepository(resolve(site.pathFile)),
 		listDocs: new ListPublishedPosts(docs, Post.bySlug),
 		getDoc: new GetPublishedPost(docs, markdown, (md) => rewriteRelativeMarkdownLinks(md, '/docs')),
 		listPublishedPosts: new ListPublishedPosts(posts),
 		getPublishedPost: new GetPublishedPost(posts, markdown),
-		getPage: new GetPublishedPost(pages, markdown),
 		buildFeed: new BuildFeed(posts, markdown),
 		rssSerializer: new RssFeedSerializer(site)
 	};

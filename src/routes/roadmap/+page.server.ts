@@ -1,13 +1,2 @@
-import { error } from '@sveltejs/kit';
-import { PostNotFoundError } from '$lib/domain/post';
-import { container } from '$lib/server/container';
-import type { PageServerLoad } from './$types';
-
-export const load: PageServerLoad = async () => {
-	try {
-		return { page: await container().getPage.execute('roadmap') };
-	} catch (e) {
-		if (e instanceof PostNotFoundError) error(404, 'Roadmap not found');
-		throw e;
-	}
-};
+import { redirect } from '@sveltejs/kit';
+export const load = () => redirect(301, '/');

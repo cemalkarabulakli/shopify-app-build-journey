@@ -2,7 +2,7 @@
 title: "Day 0 — Why I'm building a Shopify app in public"
 date: 2026-08-24
 summary: "The problem I'm going after, the number I'm chasing, and the rules for this journal."
-tags: [start, strategy]
+tags: [faz-0, start, strategy]
 ---
 
 This is entry one of a build-in-public journal. Every post will follow the same shape so it stays honest:

@@ -1,31 +1,9 @@
 ---
-title: "Roadmap"
+title: "Phase 0 done — what exists, and what the research changed my mind about"
 date: 2026-08-26
-summary: "Zero to a Shopify app that gets paid — the phases, what's done, and what's next."
+summary: "This site, ten research docs, and three beliefs that didn't survive the numbers."
+tags: [faz-0, research]
 ---
-
-I'm starting from nothing: no Partner account, no CLI installed, no Shopify knowledge. Software and
-some marketing, that's it. This page tracks the whole route, updated as I go.
-
-The rule for every phase: **it isn't finished until there's something concrete to show.** Not
-"I learned about X" — a working thing, a number, or a conversation that happened.
-
-## Phases
-
-| # | Phase | Done when | Status |
-|---|---|---|---|
-| **0** | **Concepts** — what Shopify is, how an app works, where the money flows, what runs underneath | I can explain the whole model in my own words, including why webhooks arrive twice | ✅ **Done** |
-| **1** | **First running app** — Partner account, dev store, CLI | The app opens inside a dev store's admin | ⬜ Next |
-| **2** | **Anatomy** — OAuth, session tokens, embedded apps, App Bridge | I added my own page and can trace a request end to end | ⬜ |
-| **3** | **Data** — Admin GraphQL API, scopes | A page that lists products and updates one | ⬜ |
-| **4** | **Events** — webhooks, uninstall cleanup | `orders/create` caught and written to a database | ⬜ |
-| **5** | **The problem** — merchant interviews, demand testing | 10 merchant conversations, one problem in one sentence, one number | ⬜ |
-| **6** | **MVP** — my actual app | 3 merchants installed by hand and using it | ⬜ |
-| **7** | **Money** — Billing API, trials, plans | First payment received | ⬜ |
-| **8** | **Launch** — App Store listing and review | Submitted for review | ⬜ |
-
-Phases 0–4 are throwaway code, written on a template to learn the platform. The real product
-starts at phase 5. Building something permanent before then is how this goes wrong.
 
 ## What exists so far
 

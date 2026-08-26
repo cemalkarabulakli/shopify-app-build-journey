@@ -1,9 +1,7 @@
 import { browser } from '$app/environment';
 
-const KEY = 'docs:read';
-
-/** Which docs this reader has marked as read — per browser, via localStorage. */
-export function createReadingProgress() {
+/** A set of slugs this reader has marked done — per browser, via localStorage. */
+export function createReadingProgress(KEY = 'docs:read') {
 	let read = $state<string[]>(load());
 
 	function load(): string[] {

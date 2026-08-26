@@ -54,3 +54,23 @@ time{font-size:.85rem;color:var(--muted);text-transform:uppercase;letter-spacing
 .read-toggle{font:inherit;font-size:.9rem;padding:8px 14px;border:1px solid var(--accent);border-radius:6px;background:none;color:var(--accent);cursor:pointer}
 .read-toggle.done{background:var(--accent);color:#fff}
 .post table{font-size:.92rem;display:block;overflow-x:auto}
+
+/* Home — the ordered path */
+.path{list-style:none;padding:0;margin:24px 0 0}
+.step{position:relative;padding:20px 0 20px 52px;border-top:1px solid var(--border)}
+.step-n{position:absolute;left:0;top:22px;width:34px;height:34px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--muted);background:var(--bg)}
+.step.done .step-n{border-color:var(--accent);background:var(--accent);color:#fff}
+.step.next .step-n{border-color:var(--accent);color:var(--accent)}
+.step-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.step-head h2{margin:0;font-size:1.25rem}
+.step-head small{font-weight:400;color:var(--muted);font-size:.85rem}
+.step-head .status{margin-left:auto;font-size:.85rem;color:var(--muted)}
+.step .learn{margin:6px 0 4px}
+.step .done{margin:0 0 10px;color:var(--muted);font-size:.95rem}
+.step-docs,.step-posts{list-style:none;padding:0;margin:0}
+.step-docs li,.step-posts li{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:.95rem}
+.step-docs li a,.step-posts li a{text-decoration:none;color:var(--fg)}
+.step-docs li a:hover,.step-posts li a:hover{color:var(--accent)}
+.step-docs li.read a{color:var(--muted);text-decoration:line-through}
+.step-posts time{margin-left:auto;text-transform:none;letter-spacing:0}
+.rule{margin-top:32px;padding:14px 16px;border-left:3px solid var(--accent);color:var(--muted)}

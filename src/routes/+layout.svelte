@@ -11,7 +11,7 @@
 
 <header class="site-header">
 	<a class="brand" href="/">{data.site.name}</a>
-	<nav><a href="/">Journal</a><a href="/roadmap">Roadmap</a><a href="/docs">Docs</a><a href="/about">About</a><a href="/feed.xml">RSS</a></nav>
+	<nav><a href="/">Yol</a><a href="/journal">Journal</a><a href="/docs">Docs</a><a href="/about">About</a><a href="/feed.xml">RSS</a></nav>
 </header>
 
 <main>{@render children()}</main>

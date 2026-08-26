@@ -1,0 +1,15 @@
+{
+  "intro": "Sıfırdan — Partner hesabı yok, CLI kurulu değil, Shopify bilgisi yok — para kazanan bir Shopify app'e giden yol. Sırayla izle; her adım bir şey gösterebildiğinde biter, \"öğrendim\" dediğinde değil.",
+  "rule": "Faz 0–4 platformu öğrenmek için, atılabilir kod. Gerçek ürün Faz 5'te başlıyor; ondan önce kalıcı bir şey inşa etme.",
+  "steps": [
+    { "n": 0, "title": "Kavramlar", "time": "2 gün", "learn": "Shopify nedir, app nedir, para nasıl akıyor, arkada ne çalışıyor.", "done": "Tüm modeli kendi kelimelerimle anlatabiliyorum — webhook'un neden iki kez geldiği dahil.", "docs": ["00-shopify-101", "01-eticaret-terimleri", "02-shopify-anatomi"], "status": "done" },
+    { "n": 1, "title": "İlk çalışan app", "time": "1 gün", "learn": "Partner hesabı, dev store, Shopify CLI, `shopify app dev`.", "done": "Uygulama bir dev store'un admin'inde açılıyor.", "docs": ["learning"], "status": "next" },
+    { "n": 2, "title": "Anatomi", "time": "2 gün", "learn": "OAuth, session token, embedded app, App Bridge.", "done": "Template'e kendi sayfamı ekledim ve bir isteğin yolunu uçtan uca çizebiliyorum.", "docs": [] },
+    { "n": 3, "title": "Veri", "time": "3 gün", "learn": "Admin GraphQL API, scope'lar, rate limit.", "done": "Ürünleri listeleyen ve birini güncelleyen bir sayfa.", "docs": [] },
+    { "n": 4, "title": "Olaylar", "time": "2 gün", "learn": "Webhook'lar, uninstall temizliği, GDPR webhook'ları.", "done": "`orders/create` yakalanıp veritabanına yazılıyor.", "docs": [] },
+    { "n": 5, "title": "Problem", "time": "2 hafta", "learn": "Pazarın ekonomisi, merchant psikolojisi, görüşme, talep testi.", "done": "10 merchant görüşmesi, tek cümlelik bir problem, bir sayı.", "docs": ["03-ekosistem-verileri", "06-merchant-psikolojisi", "05-kisiler-ve-vizyon"] },
+    { "n": 6, "title": "MVP", "time": "3 hafta", "learn": "Kendi app'im — sadece problemi çözen kadarı.", "done": "3 merchant elle kurulmuş ve kullanıyor.", "docs": [] },
+    { "n": 7, "title": "Para", "time": "3 gün", "learn": "Billing API, trial, planlar, sürpriz fatura tuzağı.", "done": "İlk ödeme geldi.", "docs": [] },
+    { "n": 8, "title": "Yayın", "time": "1 hafta", "learn": "App Store listeleme, inceleme süreci, erken uyarı sistemi, topluluk.", "done": "Review'a gönderildi.", "docs": ["04-kaynaklar-ve-erken-uyari", "07-shopify-etkinlikleri", "08-eticaret-etkinlikleri", "09-podcastler"] }
+  ]
+}
