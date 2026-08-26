@@ -21,6 +21,7 @@ time{font-size:.85rem;color:var(--muted);text-transform:uppercase;letter-spacing
 .tags{margin:0}
 .tags span{font-size:.8rem;color:var(--accent);margin-right:6px}
 .post header{margin-bottom:28px}
+.post header .back{margin:0 0 8px;font-size:.9rem}
 .post h1{margin:4px 0 6px;font-size:2rem;line-height:1.2}
 .post img{max-width:100%;height:auto;border-radius:6px}
 .post pre{background:var(--code);padding:14px;border-radius:6px;overflow-x:auto;font-size:.9rem}
@@ -38,3 +39,18 @@ time{font-size:.85rem;color:var(--muted);text-transform:uppercase;letter-spacing
 .roadmap td:first-child,.roadmap th:first-child{text-align:center;width:2.5rem}
 .roadmap td:last-child,.roadmap th:last-child{white-space:nowrap}
 .roadmap h2{margin-top:40px;padding-top:8px;border-top:1px solid var(--border)}
+
+/* Docs — reading list with local progress */
+.docs-progress{display:flex;align-items:center;gap:12px;margin:20px 0 8px;color:var(--muted);font-size:.9rem}
+.docs-progress .bar{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.docs-progress .bar i{display:block;height:100%;background:var(--accent)}
+.docs-list{list-style:none;padding:0;margin:0 0 32px}
+.docs-list li{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--border)}
+.docs-list li a{flex:1;text-decoration:none;color:var(--fg)}
+.docs-list li a:hover{color:var(--accent)}
+.docs-list li.read a{color:var(--muted);text-decoration:line-through}
+.docs-list .num{font-size:.8rem;color:var(--muted);width:2.2rem}
+.docs-nav{display:flex;justify-content:space-between;gap:16px;margin-top:40px;padding-top:16px;border-top:1px solid var(--border)}
+.read-toggle{font:inherit;font-size:.9rem;padding:8px 14px;border:1px solid var(--accent);border-radius:6px;background:none;color:var(--accent);cursor:pointer}
+.read-toggle.done{background:var(--accent);color:#fff}
+.post table{font-size:.92rem;display:block;overflow-x:auto}

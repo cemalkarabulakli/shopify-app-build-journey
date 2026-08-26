@@ -175,6 +175,49 @@ Dikkat — bu boşluklar iki şeyden biri olabilir: **ihtiyaç var ama ürün yo
 **o mağazaların o şeye ihtiyacı yok** (küçük/ölü mağazalar). Ayrımı ancak konuşarak anlarsın.
 Bu tablo fikir *üretir*, fikir *doğrulamaz*.
 
+## 7b. Para nereye gidiyor, boşluk nerede? (Ağustos 2026 araştırması)
+
+**Merchant bütçesinin dağılımı** — harcamayı (kurulumu değil) kıran tek kaynak Eightx:
+
+| Merchant bandı | App harcaması/ay | Bütçeyi ne yiyor |
+|---|---|---|
+| < 1 mn $ | 50–300 $ | E-posta (ücretsiz katman), destek, yorum — 3–5 app |
+| 1–5 mn $ | 1.000–3.500 $ | **E-posta + SMS ≈ faturanın %40'ı** (Klaviyo + Postscript/Attentive); abonelik ~300 $, yorum 150–300 $ |
+| 5–20 mn $ | 5–15 bin $ | Destek (ticket hacmine göre fiyat) ve SMS en hızlı büyüyen kalemler; search, loyalty, BI eklenir |
+| 20 mn $+ | 20–80 bin $+ | "Diğer" (search, loyalty, fraud, BI, özel entegrasyon) DTC çekirdeğini geçer |
+
+**1 mn $+ ARR app'lerin yaşadığı yerler:** kargo/fulfillment, abonelik (Recharge), iade (Loop),
+yorum (Yotpo, Judge.me), bundle/upsell. 100 bin $+ ARR app'ler aynı alanların dar dilimlerinde:
+dikey abonelik, taşıyıcıya özel kargo kuralı, B2B toptan, iade otomasyonu, AI öneri.
+
+**Kurulum hacmi (para ≠ hacim):** cart customization 1,12 mn · yorum 1,12 mn · e-posta 735 bin.
+İlk 100 app kurulumların sadece %34'ü — uzun kuyruk gerçek.
+
+**İki farklı "boşluk" — karıştırma:**
+1. *Kullanım boşluğu* (§7'deki tablo: destek %98,6, abonelik %98,3…) → bu **tavan**, talep değil;
+   o mağazaların çoğu küçük/ölü.
+2. *Talebin arzı aştığı yer* (app başına yorum ≫ 92): print on demand (581/app), muhasebe
+   entegrasyonları (QuickBooks 58 app, vasat), Airtable/Monday/ClickUp/HubSpot ↔ Shopify ≈ sıfır.
+3. *Birden fazla kaynağın "az yapılmış" dediği:* B2B toptan, çoklu para birimi / uluslararası vergi,
+   headless araçları, **mevcut helpdesk'in içinde** çalışan ticaret odaklı AI destek (yeni bir
+   chat widget değil), Shopify'a özel analitik, Plus operasyon araçları, dikey abonelik yönetimi
+   (başarısız ödeme, self-servis).
+
+**Kilitli (girme):** SEO, upsell/cross-sell (1 mn yorum, 1.003 app), page builder, görsel
+optimizasyon, back-in-stock, terk edilen sepet.
+
+**Karar:** Yüksek bütçe payı + yüksek fiyat toleransı + ince arz üçünün kesiştiği yer
+**1–20 mn $ merchant'ın operasyonu**: abonelik uç durumları, iade, muhasebe/ops entegrasyonu,
+analitik. En çok para e-posta/SMS'e gidiyor ama o Klaviyo'nun — orada yarışılmaz, entegre olunur.
+
+**Ucuz kanıt:** Storeleads'ten 1–5 mn $ bandında 20 merchant'a tek cümlelik problem DM'i.
+5'i acıyı doğrularsa, app o.
+
+*Kaynaklar:* [Eightx](https://eightx.co/blog/average-ecommerce-shopify-app-spend-by-revenue-band-2026) ·
+[Week One Labs](https://weekonelabs.com/blog/shopify-app-revenue-benchmarks-2026/) ·
+[StoreInspect](https://storeinspect.com/report/state-of-shopify) · [StoreCensus](https://www.storecensus.com/stats) ·
+[Craftberry](https://craftberry.co/articles/shopify-app-store-statistics) · [AppOpportunity](https://appopportunity.com/blog/underserved-app-niches-2026)
+
 ## 8. Paranın kuralları (Shopify ile aranda)
 
 | Konu | Kural |

@@ -25,12 +25,16 @@ export class FileSystemPostRepository implements PostRepository {
 
 	private async load(file: string): Promise<Post> {
 		const raw = await readFile(join(this.directory, file), 'utf8');
-		const { data, body } = this.frontmatter.parse(raw);
-		const slug = basename(file, '.md');
+		const parsed = this.frontmatter.parse(raw);
+		// Docs use UPPER-CASE filenames and no frontmatter; normalise so one
+		// repository serves posts, pages and docs alike.
+		const slug = basename(file, '.md').toLowerCase();
+		const { title, body } = titleFromHeading(str(parsed.data.title), parsed.body, slug);
+		const data = parsed.data;
 		const tags = data.tags;
 		return Post.create({
 			slug,
-			title: str(data.title) || slug,
+			title,
 			publishedAt: new Date(str(data.date) || 0),
 			summary: str(data.summary),
 			tags: Array.isArray(tags) ? tags : tags ? [tags] : [],
@@ -42,4 +46,12 @@ export class FileSystemPostRepository implements PostRepository {
 
 function str(v: string | string[] | undefined): string {
 	return Array.isArray(v) ? v.join(', ') : (v ?? '');
+}
+
+/** Without a frontmatter title, promote the first `# Heading` to the title and drop it from the body. */
+function titleFromHeading(title: string, body: string, slug: string): { title: string; body: string } {
+	if (title) return { title, body };
+	const match = body.match(/^\s*# (.+?)\s*$/m);
+	if (!match) return { title: slug, body };
+	return { title: match[1].trim(), body: body.replace(match[0], '').trimStart() };
 }

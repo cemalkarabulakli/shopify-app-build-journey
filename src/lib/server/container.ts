@@ -5,6 +5,8 @@ import { CachedPostRepository } from './infrastructure/content/CachedPostReposit
 import { FileSystemPostRepository } from './infrastructure/content/FileSystemPostRepository';
 import { MarkedMarkdownRenderer } from './infrastructure/content/MarkedMarkdownRenderer';
 import { RssFeedSerializer } from './presentation/RssFeedSerializer';
+import { rewriteRelativeMarkdownLinks } from './infrastructure/content/rewriteRelativeMarkdownLinks';
+import { Post } from '$lib/domain/post';
 
 /**
  * Composition root — the only place where concrete classes are wired together.
@@ -24,8 +26,17 @@ function buildContainer() {
 		site.cacheTtlMs
 	);
 
+	// Learning docs live in /docs at the repo root; same shape again, ordered by
+	// filename (00-, 01-, …) and with `[x](FILE.md)` links pointed at /docs/file.
+	const docs = new CachedPostRepository(
+		new FileSystemPostRepository(resolve(site.docsDir)),
+		site.cacheTtlMs
+	);
+
 	return {
 		site,
+		listDocs: new ListPublishedPosts(docs, Post.bySlug),
+		getDoc: new GetPublishedPost(docs, markdown, (md) => rewriteRelativeMarkdownLinks(md, '/docs')),
 		listPublishedPosts: new ListPublishedPosts(posts),
 		getPublishedPost: new GetPublishedPost(posts, markdown),
 		getPage: new GetPublishedPost(pages, markdown),

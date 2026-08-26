@@ -7,6 +7,7 @@ export interface SiteConfig {
 	description: string;
 	contentDir: string;
 	pagesDir: string;
+	docsDir: string;
 	cacheTtlMs: number;
 }
 
@@ -22,6 +23,7 @@ export function loadSiteConfig(): SiteConfig {
 			'Building a Shopify app in public: what shipped, what broke, what merchants said, and the numbers.',
 		contentDir: env.CONTENT_DIR || 'content/posts',
 		pagesDir: env.PAGES_DIR || 'content/pages',
+		docsDir: env.DOCS_DIR || 'docs',
 		cacheTtlMs: Number(env.CACHE_TTL_MS ?? (env.NODE_ENV === 'production' ? 60_000 : 0))
 	};
 }

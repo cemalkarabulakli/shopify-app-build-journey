@@ -51,6 +51,11 @@ export class Post {
 		return !this.draft;
 	}
 
+	/** Alphabetical by slug — for numbered reading material (00-, 01-, …). */
+	static bySlug(a: Post, b: Post): number {
+		return a.slug.localeCompare(b.slug);
+	}
+
 	/** Newest first. */
 	static byNewest(a: Post, b: Post): number {
 		return b.publishedAt.getTime() - a.publishedAt.getTime();
