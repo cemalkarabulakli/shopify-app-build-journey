@@ -1,14 +1,14 @@
 <script lang="ts">
 	/** Confetti + floating "+XP" toast. Call `fire(label)`; purely cosmetic. */
-	let bursts = $state<{ id: number; label: string; pieces: { x: number; r: number; d: number; c: string }[] }[]>([]);
+	let bursts = $state<{ id: number; label: string; pieces: { a: number; r: number; d: number; c: string }[] }[]>([]);
 	let seq = 0;
-	const colors = ['#0a7c3e', '#5ad38a', '#ffd166', '#ef476f', '#118ab2', '#f78c6b'];
+	const colors = ['#2f6b3a', '#c58f22', '#e6b64c', '#c4502b', '#2b6f97', '#f3e8d0'];
 
 	export function fire(label: string) {
 		const id = ++seq;
-		const pieces = Array.from({ length: 22 }, (_, i) => ({
-			x: (i / 22) * 360 + Math.random() * 16,
-			r: 60 + Math.random() * 70,
+		const pieces = Array.from({ length: 26 }, (_, i) => ({
+			a: (i / 26) * 360 + Math.random() * 14,
+			r: 70 + Math.random() * 80,
 			d: Math.random() * 0.15,
 			c: colors[i % colors.length]
 		}));
@@ -18,19 +18,17 @@
 </script>
 
 {#each bursts as b (b.id)}
-	<div class="burst" aria-hidden="true">
-		<span class="toast">{b.label}</span>
+	<div class="pointer-events-none fixed top-[40%] left-1/2 z-50 h-0 w-0" aria-hidden="true">
+		<span class="toast absolute top-0 left-0 rounded-full border border-gold bg-card px-4 py-1 font-display text-xl font-extrabold whitespace-nowrap text-forest shadow-lg">{b.label}</span>
 		{#each b.pieces as p}
-			<i style="--a:{p.x}deg;--r:{p.r}px;--d:{p.d}s;background:{p.c}"></i>
+			<i class="piece absolute -top-1 -left-1 h-2 w-2 rounded-sm" style="--a:{p.a}deg;--r:{p.r}px;--d:{p.d}s;background:{p.c}"></i>
 		{/each}
 	</div>
 {/each}
 
 <style>
-	.burst{position:fixed;left:50%;top:40%;width:0;height:0;pointer-events:none;z-index:50}
-	.toast{position:absolute;left:0;top:0;transform:translate(-50%,-50%);font-weight:800;font-size:1.6rem;color:var(--accent);white-space:nowrap;animation:rise 1.2s ease-out forwards;text-shadow:0 2px 12px rgba(0,0,0,.15)}
-	i{position:absolute;left:-4px;top:-4px;width:8px;height:8px;border-radius:2px;animation:fly .9s cubic-bezier(.2,.8,.3,1) var(--d) forwards;opacity:0}
-	@keyframes fly{0%{opacity:1;transform:rotate(var(--a)) translateX(0) rotate(0)}100%{opacity:0;transform:rotate(var(--a)) translateX(var(--r)) rotate(540deg)}}
-	@keyframes rise{0%{opacity:0;transform:translate(-50%,-30%) scale(.6)}20%{opacity:1;transform:translate(-50%,-50%) scale(1.15)}100%{opacity:0;transform:translate(-50%,-140%) scale(1)}}
-	@media (prefers-reduced-motion:reduce){i{display:none}.toast{animation-duration:.6s}}
+	.toast { transform: translate(-50%, -50%); animation: rise 1.2s ease-out forwards; }
+	.piece { opacity: 0; animation: fly 0.9s cubic-bezier(0.2, 0.8, 0.3, 1) var(--d) forwards; }
+	@keyframes fly { 0% { opacity: 1; transform: rotate(var(--a)) translateX(0) rotate(0); } 100% { opacity: 0; transform: rotate(var(--a)) translateX(var(--r)) rotate(540deg); } }
+	@keyframes rise { 0% { opacity: 0; transform: translate(-50%, -30%) scale(0.6); } 20% { opacity: 1; transform: translate(-50%, -50%) scale(1.15); } 100% { opacity: 0; transform: translate(-50%, -140%) scale(1); } }
 </style>

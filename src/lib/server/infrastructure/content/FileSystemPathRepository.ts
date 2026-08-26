@@ -4,6 +4,7 @@ export type StepStatus = 'done' | 'next' | 'todo';
 export interface PathStep {
 	n: number;
 	title: string;
+	icon: string;
 	time: string;
 	learn: string;
 	done: string;
@@ -28,6 +29,7 @@ export class FileSystemPathRepository {
 			steps: (raw.steps ?? []).map((s: Partial<PathStep>) => ({
 				n: Number(s.n),
 				title: s.title ?? '',
+				icon: s.icon ?? '📍',
 				time: s.time ?? '',
 				learn: s.learn ?? '',
 				done: s.done ?? '',

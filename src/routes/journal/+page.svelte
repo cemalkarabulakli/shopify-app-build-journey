@@ -4,24 +4,25 @@
 </script>
 
 <svelte:head>
-	<title>Journal · {data.site.name}</title>
+	<title>Günlük · {data.site.name}</title>
 	<meta name="description" content={data.site.description} />
 	<link rel="canonical" href={data.site.url + '/journal'} />
 </svelte:head>
 
-<section class="intro">
-	<h1>{data.site.name}</h1>
-	<p>{data.site.description}</p>
+<section class="animate-enter">
+	<p class="mb-2 text-[.7rem] font-extrabold tracking-[.25em] text-gold uppercase">Seyir Defteri</p>
+	<h1 class="mb-2 text-3xl font-extrabold text-ink">Günlük</h1>
+	<p class="mb-8 text-muted">{data.site.description}</p>
 </section>
 
-<ol class="post-list">
-	{#each data.posts as post (post.slug)}
-		<li class="post-item">
+<ol class="space-y-4">
+	{#each data.posts as post, i (post.slug)}
+		<li class="card animate-enter p-5" style="animation-delay:{i * 70}ms">
 			<PostMeta publishedAt={post.publishedAt} tags={post.tags} />
-			<h2><a href="/posts/{post.slug}">{post.title}</a></h2>
-			{#if post.summary}<p>{post.summary}</p>{/if}
+			<h2 class="mt-1 text-xl font-extrabold"><a href="/posts/{post.slug}" class="text-ink no-underline hover:text-ember">{post.title}</a></h2>
+			{#if post.summary}<p class="mt-1 text-muted">{post.summary}</p>{/if}
 		</li>
 	{:else}
-		<li>No entries yet.</li>
+		<li class="text-muted">Henüz kayıt yok.</li>
 	{/each}
 </ol>

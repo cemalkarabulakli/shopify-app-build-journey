@@ -3,17 +3,15 @@
 	let { xp, docsRead, docsTotal, phasesDone, phasesTotal }: { xp: number; docsRead: number; docsTotal: number; phasesDone: number; phasesTotal: number } = $props();
 	const level = $derived(levelFor(xp));
 
-	// Count-up animation for the XP number.
 	let shown = $state(0);
 	$effect(() => {
 		const target = xp;
 		const from = shown;
 		if (from === target) return;
 		const start = performance.now();
-		const dur = 600;
 		let raf = 0;
 		const tick = (t: number) => {
-			const k = Math.min(1, (t - start) / dur);
+			const k = Math.min(1, (t - start) / 600);
 			shown = Math.round(from + (target - from) * (1 - Math.pow(1 - k, 3)));
 			if (k < 1) raf = requestAnimationFrame(tick);
 		};
@@ -22,32 +20,28 @@
 	});
 </script>
 
-<section class="xp" aria-label="İlerleme">
-	<div class="xp-head">
-		<span class="lvl"><b class="icon">{level.icon}</b> Seviye {level.index + 1} · <strong>{level.title}</strong></span>
-		<span class="num"><b>{shown}</b> XP</span>
+<section class="card relative mt-6 overflow-hidden p-5" aria-label="Macera kartı">
+	<span class="pointer-events-none absolute -top-6 -right-4 text-8xl opacity-[.07] select-none">🧭</span>
+	<p class="mb-2 text-[.7rem] font-extrabold tracking-[.2em] text-gold uppercase">Macera Kartı</p>
+	<div class="flex flex-wrap items-end justify-between gap-3">
+		<div>
+			<div class="text-sm text-muted">Seviye {level.index + 1}</div>
+			<div class="font-display text-2xl font-extrabold text-ink">
+				<span class="mr-1 inline-block animate-bob">{level.icon}</span>{level.title}
+			</div>
+		</div>
+		<div class="text-right tabular-nums">
+			<span class="font-display text-3xl font-extrabold text-forest">{shown}</span>
+			<span class="text-sm text-muted">XP</span>
+		</div>
 	</div>
-	<div class="bar" role="progressbar" aria-valuenow={level.pct} aria-valuemin="0" aria-valuemax="100">
-		<i style="width:{level.pct}%"></i>
+	<div class="relative mt-4 h-3.5 overflow-hidden rounded-full border border-line bg-bg-deep" role="progressbar" aria-valuenow={level.pct} aria-valuemin="0" aria-valuemax="100">
+		<div class="relative h-full rounded-full bg-gradient-to-r from-forest via-forest-soft to-gold transition-[width] duration-700 ease-out" style="width:{level.pct}%">
+			<span class="absolute inset-0 -translate-x-full animate-shine bg-gradient-to-r from-transparent via-white/40 to-transparent"></span>
+		</div>
 	</div>
-	<div class="xp-foot">
-		<span>{phasesDone}/{phasesTotal} faz · {docsRead}/{docsTotal} doküman</span>
-		<span>{#if level.next}{level.toNext} XP → {level.next}{:else}Zirve 👑{/if}</span>
+	<div class="mt-2 flex flex-wrap justify-between gap-2 text-xs text-muted">
+		<span>🏁 {phasesDone}/{phasesTotal} faz · 📖 {docsRead}/{docsTotal} parşömen</span>
+		<span>{#if level.next}{level.toNext} XP → <b class="text-ink">{level.next}</b>{:else}Zirveye ulaştın 🐉{/if}</span>
 	</div>
 </section>
-
-<style>
-	.xp{margin:20px 0 8px;padding:16px 18px;border:1px solid var(--border);border-radius:12px;background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 8%,var(--bg)),var(--bg))}
-	.xp-head,.xp-foot{display:flex;justify-content:space-between;align-items:center;gap:12px}
-	.xp-foot{margin-top:8px;font-size:.85rem;color:var(--muted)}
-	.lvl{font-size:.95rem}
-	.icon{display:inline-block;animation:bob 2.4s ease-in-out infinite}
-	.num{font-variant-numeric:tabular-nums;color:var(--accent)}
-	.num b{font-size:1.4rem}
-	.bar{position:relative;height:12px;margin-top:10px;background:var(--border);border-radius:6px;overflow:hidden}
-	.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#5ad38a);border-radius:6px;transition:width .7s cubic-bezier(.2,.8,.3,1);position:relative}
-	.bar i::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);transform:translateX(-100%);animation:shine 2.2s ease-in-out infinite}
-	@keyframes shine{to{transform:translateX(100%)}}
-	@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
-	@media (prefers-reduced-motion:reduce){.bar i::after,.icon{animation:none}.bar i{transition:none}}
-</style>

@@ -14,12 +14,12 @@
 	<meta property="og:url" content={canonical} />
 </svelte:head>
 
-<article class="post">
-	<header>
+<article class="card animate-enter p-6 sm:p-8">
+	<header class="mb-6 border-b border-dashed border-line pb-5">
 		<PostMeta publishedAt={data.post.publishedAt} tags={data.post.tags} />
-		<h1>{data.post.title}</h1>
+		<h1 class="mt-2 text-3xl leading-tight font-extrabold text-ink">{data.post.title}</h1>
 	</header>
 	<!-- HTML is rendered from our own markdown files in content/posts -->
-	{@html data.post.html}
-	<p class="back"><a href="/">← All entries</a></p>
+	<div class="prose-map">{@html data.post.html}</div>
+	<p class="mt-10"><a href="/journal" class="text-forest no-underline hover:text-ember">← Seyir defteri</a></p>
 </article>

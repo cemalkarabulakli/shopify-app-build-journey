@@ -3,12 +3,12 @@ export const XP_PER_DOC = 100;
 export const XP_PER_PHASE = 500;
 
 export const LEVELS = [
-	{ min: 0, title: 'Meraklı', icon: '🌱' },
-	{ min: 300, title: 'Çırak', icon: '🔧' },
-	{ min: 900, title: 'Kalfa', icon: '⚙️' },
-	{ min: 1800, title: 'Usta', icon: '🛠️' },
-	{ min: 3000, title: 'App Builder', icon: '🚀' },
-	{ min: 4500, title: 'Merchant Whisperer', icon: '👑' }
+	{ min: 0, title: 'Acemi Gezgin', icon: '🥾' },
+	{ min: 300, title: 'Kaşif', icon: '🧭' },
+	{ min: 900, title: 'İzci', icon: '🔦' },
+	{ min: 1800, title: 'Haritacı', icon: '🗺️' },
+	{ min: 3000, title: 'Kaptan', icon: '⚓' },
+	{ min: 4500, title: 'Efsane', icon: '🐉' }
 ] as const;
 
 export function xpFor(docsRead: number, phasesDone: number): number {
