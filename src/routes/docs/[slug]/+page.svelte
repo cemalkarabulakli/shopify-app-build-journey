@@ -1,9 +1,17 @@
 <script lang="ts">
 	import { createReadingProgress } from '$lib/client/readingProgress.svelte';
+	import { XP_PER_DOC } from '$lib/client/gamification';
+	import Burst from '$lib/components/Burst.svelte';
 	let { data } = $props();
 	const progress = createReadingProgress();
 	const canonical = $derived(`${data.site.url}/docs/${data.doc.slug}`);
 	const isRead = $derived(progress.has(data.doc.slug));
+	let burst: Burst;
+	function mark() {
+		const was = isRead;
+		progress.toggle(data.doc.slug);
+		if (!was) burst.fire(`+${XP_PER_DOC} XP`);
+	}
 </script>
 
 <svelte:head>
@@ -13,6 +21,8 @@
 	<meta property="og:title" content={data.doc.title} />
 	<meta property="og:url" content={canonical} />
 </svelte:head>
+
+<Burst bind:this={burst} />
 
 <article class="post docs">
 	<header>
@@ -24,7 +34,7 @@
 
 	<nav class="docs-nav">
 		<span>{#if data.prev}<a href="/docs/{data.prev.slug}">← {data.prev.title}</a>{/if}</span>
-		<button class="read-toggle" class:done={isRead} onclick={() => progress.toggle(data.doc.slug)}>
+		<button class="read-toggle" class:done={isRead} onclick={mark}>
 			{isRead ? '✓ Okundu' : 'Okudum olarak işaretle'}
 		</button>
 		<span>{#if data.next}<a href="/docs/{data.next.slug}">{data.next.title} →</a>{/if}</span>
