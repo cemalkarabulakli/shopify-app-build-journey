@@ -24,7 +24,7 @@
 	}
 	const status = {
 		done: { text: 'Fethedildi', cls: 'border-forest text-forest' },
-		next: { text: 'Buradasın', cls: 'border-gold bg-gold text-ink' },
+		next: { text: 'Buradasın', cls: 'border-forest bg-forest text-white' },
 		todo: { text: 'Sisli', cls: 'border-line text-muted' }
 	} as const;
 </script>
@@ -83,7 +83,7 @@
 				</div>
 			</div>
 
-			<article class="card p-6 transition-transform hover:-translate-y-0.5 {step.status === 'next' ? 'ring-2 ring-gold/60' : ''}">
+			<article class="card p-6 transition-transform hover:-translate-y-0.5 {step.status === 'next' ? 'ring-2 ring-forest/50' : ''}">
 				<div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
 					<span class="font-display text-xs font-extrabold tracking-widest text-muted">FAZ {step.n}</span>
 					<h2 class="text-xl font-extrabold text-ink">{step.title}</h2>

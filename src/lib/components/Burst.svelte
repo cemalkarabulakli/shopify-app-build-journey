@@ -2,7 +2,7 @@
 	/** Confetti + floating "+XP" toast. Call `fire(label)`; purely cosmetic. */
 	let bursts = $state<{ id: number; label: string; pieces: { a: number; r: number; d: number; c: string }[] }[]>([]);
 	let seq = 0;
-	const colors = ['#2f6b3a', '#c58f22', '#e6b64c', '#c4502b', '#2b6f97', '#f3e8d0'];
+	const colors = ['#008060', '#95bf47', '#e3b341', '#b7791f', '#1f4e79', '#ffffff'];
 
 	export function fire(label: string) {
 		const id = ++seq;

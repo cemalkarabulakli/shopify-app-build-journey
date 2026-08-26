@@ -1,37 +1,38 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
 
-/* ── Adventure palette: parchment by day, night-map by dark ───────────── */
+/* ── Palette: Shopify brand (Polaris green/lime, Polaris ink & surfaces)
+   + trust colours from marketing (deep navy, restrained amber). ─────────── */
 :root {
-	--bg: #f3e8d0;        /* parchment */
-	--bg-deep: #e7d8b6;   /* aged edge */
-	--card: #fbf3e1;
-	--ink: #2b1d0e;
-	--muted: #7a6547;
-	--line: #d3c19a;
-	--forest: #2f6b3a;
-	--forest-soft: #3f8a4c;
-	--gold: #c58f22;
-	--gold-soft: #e6b64c;
-	--ember: #c4502b;
-	--sky: #2b6f97;
-	--code: #ecdfc2;
+	--bg: #f4f6f5;        /* Polaris-style cool surface */
+	--bg-deep: #e3e9e6;
+	--card: #ffffff;
+	--ink: #1a1d1f;       /* Polaris text */
+	--muted: #5c6763;
+	--line: #d6ded9;
+	--forest: #008060;    /* Shopify green */
+	--forest-soft: #95bf47; /* Shopify lime */
+	--gold: #b7791f;      /* amber — reward, warm trust */
+	--gold-soft: #e3b341;
+	--ember: #d72c0d;     /* Polaris critical */
+	--sky: #1f4e79;       /* navy — credibility */
+	--code: #edf1ef;
 }
 @media (prefers-color-scheme: dark) {
 	:root {
-		--bg: #17120d;
-		--bg-deep: #0f0c09;
-		--card: #221a13;
-		--ink: #efe3c8;
-		--muted: #b39a73;
-		--line: #3d3022;
-		--forest: #5fbf72;
-		--forest-soft: #7dd48e;
-		--gold: #e8b64f;
-		--gold-soft: #f4cd79;
-		--ember: #f07a54;
-		--sky: #6fb3dc;
-		--code: #2a2118;
+		--bg: #121516;
+		--bg-deep: #0b0d0e;
+		--card: #1b1f21;
+		--ink: #e9edeb;
+		--muted: #9aa5a0;
+		--line: #2e3538;
+		--forest: #3fbf8a;
+		--forest-soft: #95bf47;
+		--gold: #e3b341;
+		--gold-soft: #f0cc6f;
+		--ember: #f26b4f;
+		--sky: #7fb3e0;
+		--code: #23282a;
 	}
 }
 
@@ -70,22 +71,22 @@
 	body {
 		@apply bg-bg font-sans text-ink text-[17px] leading-relaxed;
 		background-image:
-			radial-gradient(circle at 20% 0%, color-mix(in srgb, var(--gold) 10%, transparent), transparent 40%),
-			radial-gradient(circle at 100% 100%, color-mix(in srgb, var(--forest) 10%, transparent), transparent 45%);
+			radial-gradient(circle at 15% 0%, color-mix(in srgb, var(--forest) 9%, transparent), transparent 42%),
+			radial-gradient(circle at 100% 100%, color-mix(in srgb, var(--sky) 8%, transparent), transparent 45%);
 		background-attachment: fixed;
 	}
 	h1, h2, h3 { @apply font-display; }
 }
 
 @utility card {
-	@apply bg-card border border-line rounded-2xl shadow-[0_1px_0_var(--line),0_10px_30px_-18px_rgba(43,29,14,.35)];
+	@apply bg-card border border-line rounded-2xl shadow-[0_1px_0_var(--line),0_12px_32px_-20px_rgba(26,29,31,.35)];
 }
 
 /* Rendered markdown (docs, posts) */
 .prose-map {
 	@apply prose prose-lg max-w-none text-ink
 		prose-headings:font-display prose-headings:text-ink
-		prose-a:text-forest prose-a:decoration-gold/60 hover:prose-a:text-ember
+		prose-a:text-sky prose-a:decoration-sky/40 hover:prose-a:text-forest
 		prose-strong:text-ink prose-code:text-ember prose-code:before:content-none prose-code:after:content-none
 		prose-blockquote:border-l-gold prose-blockquote:text-muted prose-blockquote:not-italic
 		prose-th:text-ink prose-td:border-line prose-th:border-line prose-hr:border-line prose-li:marker:text-gold;
