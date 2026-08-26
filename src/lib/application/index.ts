@@ -6,3 +6,5 @@ export type { MarkdownRenderer } from './ports/MarkdownRenderer';
 export type { PostSummaryDto, PostDetailDto } from './dto';
 export { ExportMarkdown } from './use-cases/ExportMarkdown';
 export type { MarkdownExport } from './use-cases/ExportMarkdown';
+export { SyncVipMembership } from './use-cases/SyncVipMembership';
+export type { SubscriptionEvent } from './use-cases/SyncVipMembership';

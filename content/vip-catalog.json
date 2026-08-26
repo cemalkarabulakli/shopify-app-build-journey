@@ -1,0 +1,9 @@
+{
+  "environment": "sandbox",
+  "trialDays": 7,
+  "tiers": {
+    "starter": { "productId": null, "monthly": { "priceId": null, "USD": "1000", "overrides": { "GBP": "800", "EUR": "900", "AUD": "1500" } }, "yearly": { "priceId": null, "USD": "10000", "overrides": { "GBP": "8000", "EUR": "9000", "AUD": "15000" } } },
+    "pro": { "productId": null, "monthly": { "priceId": null, "USD": "4000", "overrides": { "GBP": "3200", "EUR": "3700", "AUD": "6000" } }, "yearly": { "priceId": null, "USD": "40000", "overrides": { "GBP": "32000", "EUR": "37000", "AUD": "60000" } } },
+    "advanced": { "productId": null, "monthly": { "priceId": null, "USD": "12000", "overrides": { "GBP": "9500", "EUR": "11000", "AUD": "18000" } }, "yearly": { "priceId": null, "USD": "120000", "overrides": { "GBP": "95000", "EUR": "110000", "AUD": "180000" } } }
+  }
+}

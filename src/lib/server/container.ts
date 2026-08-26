@@ -1,5 +1,5 @@
 import { resolve } from 'node:path';
-import { BuildFeed, ExportMarkdown, GetPublishedPost, ListPublishedPosts } from '$lib/application';
+import { BuildFeed, ExportMarkdown, GetPublishedPost, ListPublishedPosts, SyncVipMembership } from '$lib/application';
 import { loadSiteConfig } from './config/siteConfig';
 import { CachedPostRepository } from './infrastructure/content/CachedPostRepository';
 import { FileSystemPostRepository } from './infrastructure/content/FileSystemPostRepository';
@@ -8,6 +8,8 @@ import { RssFeedSerializer } from './presentation/RssFeedSerializer';
 import { rewriteRelativeMarkdownLinks } from './infrastructure/content/rewriteRelativeMarkdownLinks';
 import { Post } from '$lib/domain/post';
 import { FileSystemPathRepository } from './infrastructure/content/FileSystemPathRepository';
+import { FileVipMemberRepository } from './infrastructure/vip/FileVipMemberRepository';
+import { PaddleWebhookAdapter } from './infrastructure/vip/PaddleWebhookAdapter';
 
 /**
  * Composition root — the only place where concrete classes are wired together.
@@ -28,8 +30,14 @@ function buildContainer() {
 		site.cacheTtlMs
 	);
 
+	// VIP membership: Paddle events in, one JSON file out (see VIP_DATA_DIR).
+	const vipMembers = new FileVipMemberRepository(resolve(site.vipDataDir, 'vip-members.json'));
+
 	return {
 		site,
+		vipMembers,
+		syncVipMembership: new SyncVipMembership(vipMembers),
+		paddleWebhooks: new PaddleWebhookAdapter(site.paddle.apiKey, site.paddle.webhookSecret, site.paddle.environment),
 		path: new FileSystemPathRepository(resolve(site.pathDir)),
 		listDocs: new ListPublishedPosts(docs, Post.bySlug),
 		exportDocs: new ExportMarkdown(docs, (md) => rewriteRelativeMarkdownLinks(md, `${site.url}/docs`), Post.bySlug),

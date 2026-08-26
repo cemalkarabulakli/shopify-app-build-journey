@@ -12,6 +12,7 @@ export const GET: RequestHandler = async () => {
 		{ loc: '/journal', lastmod: posts[0]?.publishedAt.slice(0, 10), priority: '0.9', changefreq: 'weekly' },
 		{ loc: '/docs', lastmod: today, priority: '0.9', changefreq: 'weekly' },
 		{ loc: '/about', priority: '0.5', changefreq: 'monthly' },
+		{ loc: '/vip', priority: '0.7', changefreq: 'monthly' },
 		{ loc: '/llms.txt', lastmod: today, priority: '0.6', changefreq: 'weekly' },
 		{ loc: '/llms-full.txt', lastmod: today, priority: '0.6', changefreq: 'weekly' },
 		...posts.map((p) => ({ loc: `/posts/${p.slug}`, lastmod: p.publishedAt.slice(0, 10), priority: '0.8', changefreq: 'monthly' })),

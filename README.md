@@ -83,6 +83,11 @@ Base directory `/`, no install/build/start overrides, port `3000`. `nixpacks.tom
 | `PATH_DIR` | `content` | Holds `path.<locale>.json`, the ordered learning path shown on the home page |
 | `DOCS_DIR` | `docs` | Learning notes served at `/docs` (reading order = filename) |
 | `CACHE_TTL_MS` | `60000` prod / `0` dev | Post cache TTL |
+| `PUBLIC_PADDLE_CLIENT_TOKEN` | — | Paddle.js client token (VIP checkout); page shows "opens soon" without it |
+| `PADDLE_ENV` | `sandbox` | `sandbox` or `production` |
+| `PADDLE_API_KEY` | — | Only for `npm run paddle:catalog`, which creates the 3 tiers × 2 prices and writes ids to `content/vip-catalog.json` |
+| `PADDLE_WEBHOOK_SECRET` | — | Verifies `POST /api/paddle/webhook`; endpoint returns 503 without it |
+| `VIP_DATA_DIR` | `data` | Holds `vip-members.json` — mount a persistent volume |
 
 ---
 

@@ -10,7 +10,8 @@
 		{ href: '/', label: t.nav.map, icon: '🗺️' },
 		{ href: '/journal', label: t.nav.journal, icon: '📜' },
 		{ href: '/docs', label: t.nav.library, icon: '📚' },
-		{ href: '/about', label: t.nav.about, icon: '🧑‍🚀' }
+		{ href: '/about', label: t.nav.about, icon: '🧑‍🚀' },
+		{ href: '/vip', label: t.nav.vip, icon: '👑' }
 	];
 	const active = (href: string) => (href === '/' ? page.url.pathname === '/' : page.url.pathname.startsWith(href));
 </script>

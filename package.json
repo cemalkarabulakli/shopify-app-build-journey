@@ -11,7 +11,8 @@
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"test": "vitest run",
-		"test:watch": "vitest"
+		"test:watch": "vitest",
+		"paddle:catalog": "node scripts/paddle-catalog.mjs"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-node": "^5.5.7",
@@ -28,6 +29,8 @@
 		"vitest": "^4.1.11"
 	},
 	"dependencies": {
+		"@paddle/paddle-js": "^1.6.5",
+		"@paddle/paddle-node-sdk": "^3.10.0",
 		"marked": "^18.0.11"
 	},
 	"description": "Build-in-public journal for my Shopify app",
