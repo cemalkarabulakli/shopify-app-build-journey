@@ -1,17 +1,16 @@
 <script lang="ts">
 	import PostMeta from '$lib/components/PostMeta.svelte';
+	import Seo from '$lib/components/Seo.svelte';
+	import { useI18n } from '$lib/i18n';
+	const { t } = useI18n();
 	let { data } = $props();
 </script>
 
-<svelte:head>
-	<title>Günlük · {data.site.name}</title>
-	<meta name="description" content={data.site.description} />
-	<link rel="canonical" href={data.site.url + '/journal'} />
-</svelte:head>
+<Seo site={data.site} title={t.journal.title} description={data.site.description} path="/journal" />
 
 <section class="animate-enter">
-	<p class="mb-2 text-[.7rem] font-extrabold tracking-[.25em] text-gold uppercase">Seyir Defteri</p>
-	<h1 class="mb-2 text-3xl font-extrabold text-ink">Günlük</h1>
+	<p class="mb-2 text-[.7rem] font-extrabold tracking-[.25em] text-gold uppercase">{t.journal.eyebrow}</p>
+	<h1 class="mb-2 text-3xl font-extrabold text-ink">{t.journal.title}</h1>
 	<p class="mb-8 text-muted">{data.site.description}</p>
 </section>
 
@@ -23,6 +22,6 @@
 			{#if post.summary}<p class="mt-1 text-muted">{post.summary}</p>{/if}
 		</li>
 	{:else}
-		<li class="text-muted">Henüz kayıt yok.</li>
+		<li class="text-muted">{t.journal.empty}</li>
 	{/each}
 </ol>

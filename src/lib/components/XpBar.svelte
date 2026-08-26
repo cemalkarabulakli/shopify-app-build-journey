@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { levelFor } from '$lib/client/gamification';
+	import { useI18n } from '$lib/i18n';
+	const { t } = useI18n();
 	let { xp, docsRead, docsTotal, phasesDone, phasesTotal }: { xp: number; docsRead: number; docsTotal: number; phasesDone: number; phasesTotal: number } = $props();
 	const level = $derived(levelFor(xp));
 
@@ -20,14 +22,14 @@
 	});
 </script>
 
-<section class="card relative mt-6 overflow-hidden p-5" aria-label="Macera kartı">
+<section class="card relative mt-6 overflow-hidden p-5" aria-label={t.home.card}>
 	<span class="pointer-events-none absolute -top-6 -right-4 text-8xl opacity-[.07] select-none">🧭</span>
-	<p class="mb-2 text-[.7rem] font-extrabold tracking-[.2em] text-gold uppercase">Macera Kartı</p>
+	<p class="mb-2 text-[.7rem] font-extrabold tracking-[.2em] text-gold uppercase">{t.home.card}</p>
 	<div class="flex flex-wrap items-end justify-between gap-3">
 		<div>
-			<div class="text-sm text-muted">Seviye {level.index + 1}</div>
+			<div class="text-sm text-muted">{t.home.level} {level.index + 1}</div>
 			<div class="font-display text-2xl font-extrabold text-ink">
-				<span class="mr-1 inline-block animate-bob">{level.icon}</span>{level.title}
+				<span class="mr-1 inline-block animate-bob">{level.icon}</span>{t.levels[level.index]}
 			</div>
 		</div>
 		<div class="text-right tabular-nums">
@@ -41,7 +43,7 @@
 		</div>
 	</div>
 	<div class="mt-2 flex flex-wrap justify-between gap-2 text-xs text-muted">
-		<span>🏁 {phasesDone}/{phasesTotal} faz · 📖 {docsRead}/{docsTotal} parşömen</span>
-		<span>{#if level.next}{level.toNext} XP → <b class="text-ink">{level.next}</b>{:else}Zirveye ulaştın 🐉{/if}</span>
+		<span>🏁 {phasesDone}/{phasesTotal} {t.home.phases} · 📖 {docsRead}/{docsTotal} {t.home.scrolls}</span>
+		<span>{#if level.hasNext}{level.toNext} {t.home.toNext} <b class="text-ink">{t.levels[level.index + 1]}</b>{:else}{t.home.maxed}{/if}</span>
 	</div>
 </section>

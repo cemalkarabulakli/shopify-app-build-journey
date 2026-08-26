@@ -2,10 +2,11 @@ import { container } from '$lib/server/container';
 import type { PageServerLoad } from './$types';
 
 /** Home = the ordered path. Docs and journal entries are attached to the step they belong to. */
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async ({ parent }) => {
+	const { locale } = await parent();
 	const c = container();
 	const [path, docs, posts] = await Promise.all([
-		c.path.load(),
+		c.path.load(locale),
 		c.listDocs.execute(),
 		c.listPublishedPosts.execute()
 	]);

@@ -1,0 +1,104 @@
+{
+  "intro": "From nothing — no Partner account, no CLI, no Shopify knowledge — to a Shopify app that gets paid. Follow the steps in order; a step is done when there is something to show, not when you \"learned it\".",
+  "rule": "Phases 0–4 are throwaway code written to learn the platform. The real product starts at phase 5; don't build anything permanent before then.",
+  "steps": [
+    {
+      "n": 0,
+      "title": "Concepts",
+      "icon": "🧭",
+      "time": "2 days",
+      "learn": "What Shopify is, what an app is, how the money flows, what runs underneath.",
+      "done": "I can explain the whole model in my own words — including why a webhook can arrive twice.",
+      "docs": [
+        "00-shopify-101",
+        "01-eticaret-terimleri",
+        "02-shopify-anatomi"
+      ],
+      "status": "done"
+    },
+    {
+      "n": 1,
+      "title": "First running app",
+      "icon": "🏕️",
+      "time": "1 day",
+      "learn": "Partner account, dev store, Shopify CLI, `shopify app dev`.",
+      "done": "The app opens inside a dev store's admin.",
+      "docs": [
+        "learning"
+      ],
+      "status": "next"
+    },
+    {
+      "n": 2,
+      "title": "Anatomy",
+      "icon": "🗝️",
+      "time": "2 days",
+      "learn": "OAuth, session tokens, embedded apps, App Bridge.",
+      "done": "I added my own page to the template and can trace a request end to end.",
+      "docs": []
+    },
+    {
+      "n": 3,
+      "title": "Data",
+      "icon": "📦",
+      "time": "3 days",
+      "learn": "Admin GraphQL API, scopes, rate limits.",
+      "done": "A page that lists products and updates one.",
+      "docs": []
+    },
+    {
+      "n": 4,
+      "title": "Events",
+      "icon": "⚡",
+      "time": "2 days",
+      "learn": "Webhooks, uninstall cleanup, GDPR webhooks.",
+      "done": "`orders/create` is caught and written to a database.",
+      "docs": []
+    },
+    {
+      "n": 5,
+      "title": "The problem",
+      "icon": "🔍",
+      "time": "2 weeks",
+      "learn": "Market economics, merchant psychology, interviews, demand testing.",
+      "done": "10 merchant conversations, one problem in one sentence, one number.",
+      "docs": [
+        "03-ekosistem-verileri",
+        "06-merchant-psikolojisi",
+        "05-kisiler-ve-vizyon"
+      ]
+    },
+    {
+      "n": 6,
+      "title": "MVP",
+      "icon": "⚒️",
+      "time": "3 weeks",
+      "learn": "My actual app — only as much as solves the problem.",
+      "done": "3 merchants installed by hand and using it.",
+      "docs": []
+    },
+    {
+      "n": 7,
+      "title": "Money",
+      "icon": "💰",
+      "time": "3 days",
+      "learn": "Billing API, trials, plans, the surprise-invoice trap.",
+      "done": "First payment received.",
+      "docs": []
+    },
+    {
+      "n": 8,
+      "title": "Launch",
+      "icon": "🏰",
+      "time": "1 week",
+      "learn": "App Store listing, the review process, early-warning system, community.",
+      "done": "Submitted for review.",
+      "docs": [
+        "04-kaynaklar-ve-erken-uyari",
+        "07-shopify-etkinlikleri",
+        "08-eticaret-etkinlikleri",
+        "09-podcastler"
+      ]
+    }
+  ]
+}

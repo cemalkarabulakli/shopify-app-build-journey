@@ -4,6 +4,9 @@
 	import { formatDate } from '$lib/format';
 	import Burst from '$lib/components/Burst.svelte';
 	import XpBar from '$lib/components/XpBar.svelte';
+	import Seo from '$lib/components/Seo.svelte';
+	import { useI18n } from '$lib/i18n';
+	const { t } = useI18n();
 	let { data } = $props();
 	const read = createReadingProgress('docs:read');
 	let burst: Burst;
@@ -20,25 +23,30 @@
 	function toggle(step: Step, slug: string) {
 		const wasRead = read.has(slug);
 		read.toggle(slug);
-		if (!wasRead) burst.fire(badgeEarned(step) ? `🏅 ${step.title} rozeti!` : `+${XP_PER_DOC} XP`);
+		if (!wasRead) burst.fire(badgeEarned(step) ? t.home.badgeEarned(step.title) : t.xpToast(XP_PER_DOC));
 	}
-	const status = {
-		done: { text: 'Fethedildi', cls: 'border-forest text-forest' },
-		next: { text: 'Buradasın', cls: 'border-forest bg-forest text-white' },
-		todo: { text: 'Sisli', cls: 'border-line text-muted' }
-	} as const;
+	const statusCls = { done: 'border-forest text-forest', next: 'border-forest bg-forest text-white', todo: 'border-line text-muted' } as const;
 </script>
 
-<svelte:head>
-	<title>{data.site.name}</title>
-	<meta name="description" content={data.site.description} />
-	<link rel="canonical" href={data.site.url + '/'} />
-</svelte:head>
+<Seo
+	site={data.site}
+	title={data.site.name}
+	description={data.site.description}
+	path="/"
+	jsonLd={{
+		'@context': 'https://schema.org',
+		'@type': 'HowTo',
+		name: data.site.name,
+		description: data.intro,
+		url: data.site.url + '/',
+		step: data.steps.map((s) => ({ '@type': 'HowToStep', position: s.n + 1, name: `${t.home.phase} ${s.n}: ${s.title}`, text: `${s.learn} ${t.home.doneWhen} ${s.done}`, url: `${data.site.url}/#faz-${s.n}` }))
+	}}
+/>
 
 <Burst bind:this={burst} />
 
 <section class="animate-enter">
-	<p class="mb-2 text-[.7rem] font-extrabold tracking-[.25em] text-gold uppercase">Görev Haritası · Sıfırdan App Store'a</p>
+	<p class="mb-2 text-[.7rem] font-extrabold tracking-[.25em] text-gold uppercase">{t.home.eyebrow}</p>
 	<h1 class="mb-3 text-3xl leading-tight font-extrabold text-ink sm:text-4xl">{data.site.name}</h1>
 	<p class="max-w-3xl text-lg text-muted">{data.intro}</p>
 </section>
@@ -46,15 +54,15 @@
 <div class="grid gap-4 lg:grid-cols-[3fr_2fr] lg:items-stretch">
 <XpBar {xp} docsRead={readDocs} docsTotal={totalDocs} phasesDone={doneSteps} phasesTotal={data.steps.length} />
 
-<section class="card mt-4 flex flex-wrap content-center items-center gap-3 px-5 py-4 lg:mt-6" aria-label="Rozet çantası">
-	<span class="w-full text-[.7rem] font-extrabold tracking-[.2em] text-gold uppercase">Rozet Çantası</span>
+<section class="card mt-4 flex flex-wrap content-center items-center gap-3 px-5 py-4 lg:mt-6" aria-label={t.home.badges}>
+	<span class="w-full text-[.7rem] font-extrabold tracking-[.2em] text-gold uppercase">{t.home.badges}</span>
 	{#each data.steps as step (step.n)}
 		{@const earned = badgeEarned(step)}
 		<span
 			class="relative grid h-10 w-10 place-items-center rounded-full border text-xl transition {earned
 				? 'animate-pop border-gold bg-gold/15 shadow-[0_0_0_3px_color-mix(in_srgb,var(--gold)_25%,transparent)]'
 				: 'border-line opacity-40 grayscale'}"
-			title="{step.title} rozeti"
+			title="{step.title} {t.home.badgeOf}"
 		>
 			{step.icon}
 			<small class="absolute -right-1 -bottom-1 rounded-full border border-line bg-card px-1 text-[.6rem] text-muted">{step.n}</small>
@@ -71,7 +79,7 @@
 
 	{#each data.steps as step, i (step.n)}
 		{@const pct = stepPct(step)}
-		{@const st = status[step.status]}
+		
 		<li id="faz-{step.n}" class="relative animate-enter {step.status === 'todo' ? 'opacity-70' : ''}" style="animation-delay:{i * 80}ms">
 			<!-- waypoint -->
 			<div
@@ -85,13 +93,13 @@
 
 			<article class="card p-6 transition-transform hover:-translate-y-0.5 {step.status === 'next' ? 'ring-2 ring-forest/50' : ''}">
 				<div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-					<span class="font-display text-xs font-extrabold tracking-widest text-muted">FAZ {step.n}</span>
+					<span class="font-display text-xs font-extrabold tracking-widest text-muted">{t.home.phase.toUpperCase()} {step.n}</span>
 					<h2 class="text-xl font-extrabold text-ink">{step.title}</h2>
 					<span class="text-sm text-muted">· {step.time}</span>
-					<span class="ml-auto rounded-full border px-2.5 py-0.5 text-[.7rem] font-extrabold tracking-wider uppercase {st.cls}">{st.text}</span>
+					<span class="ml-auto rounded-full border px-2.5 py-0.5 text-[.7rem] font-extrabold tracking-wider uppercase {statusCls[step.status]}">{t.home.status[step.status]}</span>
 				</div>
 				<p class="mt-2">{step.learn}</p>
-				<p class="mt-1 text-[.95rem] text-muted"><b class="text-ink">🏁 Bitti sayılır:</b> {step.done}</p>
+				<p class="mt-1 text-[.95rem] text-muted"><b class="text-ink">🏁 {t.home.doneWhen}</b> {step.done}</p>
 
 				{#if step.docs.length}
 					<div class="mt-4 h-1.5 overflow-hidden rounded-full bg-bg-deep">
@@ -107,7 +115,7 @@
 									<span class="flex-1 {isRead ? 'text-muted line-through' : ''}">📜 {doc.title}</span>
 									<span class="text-[.7rem] font-extrabold text-gold {isRead ? 'opacity-40' : ''}">+{XP_PER_DOC}</span>
 								</label>
-								<a href="/docs/{doc.slug}" class="rounded-lg px-2.5 py-1 font-extrabold text-forest no-underline hover:bg-forest/10" aria-label="Oku">→</a>
+								<a href="/docs/{doc.slug}" class="rounded-lg px-2.5 py-1 font-extrabold text-forest no-underline hover:bg-forest/10" aria-label={t.home.read}>→</a>
 							</li>
 						{/each}
 					</ul>
@@ -118,7 +126,7 @@
 						{#each step.posts as post (post.slug)}
 							<li class="flex items-center gap-2 px-2 text-[.95rem]">
 								<a href="/posts/{post.slug}" class="text-ink no-underline hover:text-ember">✍️ {post.title}</a>
-								<time datetime={post.publishedAt} class="ml-auto text-xs whitespace-nowrap text-muted">{formatDate(post.publishedAt)}</time>
+								<time datetime={post.publishedAt} class="ml-auto text-xs whitespace-nowrap text-muted">{formatDate(post.publishedAt, t.locale)}</time>
 							</li>
 						{/each}
 					</ul>

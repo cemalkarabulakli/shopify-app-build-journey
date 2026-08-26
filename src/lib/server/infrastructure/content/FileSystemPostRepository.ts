@@ -36,7 +36,7 @@ export class FileSystemPostRepository implements PostRepository {
 			slug,
 			title,
 			publishedAt: new Date(str(data.date) || 0),
-			summary: str(data.summary),
+			summary: str(data.summary) || firstParagraph(body),
 			tags: Array.isArray(tags) ? tags : tags ? [tags] : [],
 			draft: str(data.draft) === 'true',
 			body
@@ -54,4 +54,14 @@ function titleFromHeading(title: string, body: string, slug: string): { title: s
 	const match = body.match(/^\s*# (.+?)\s*$/m);
 	if (!match) return { title: slug, body };
 	return { title: match[1].trim(), body: body.replace(match[0], '').trimStart() };
+}
+
+/** Fallback description for frontmatter-less docs: first plain paragraph, trimmed to ~160 chars. */
+function firstParagraph(body: string): string {
+	const para = body
+		.split(/\n\s*\n/)
+		.map((p) => p.replace(/^>\s?/gm, '').replace(/[*_`#\[\]]/g, '').replace(/\(https?:[^)]*\)/g, '').replace(/\s+/g, ' ').trim())
+		.find((p) => p.length > 40 && !p.startsWith('|') && !p.startsWith('-'));
+	if (!para) return '';
+	return para.length > 160 ? para.slice(0, 157).trimEnd() + '…' : para;
 }

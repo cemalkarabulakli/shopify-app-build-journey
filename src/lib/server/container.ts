@@ -1,5 +1,5 @@
 import { resolve } from 'node:path';
-import { BuildFeed, GetPublishedPost, ListPublishedPosts } from '$lib/application';
+import { BuildFeed, ExportMarkdown, GetPublishedPost, ListPublishedPosts } from '$lib/application';
 import { loadSiteConfig } from './config/siteConfig';
 import { CachedPostRepository } from './infrastructure/content/CachedPostRepository';
 import { FileSystemPostRepository } from './infrastructure/content/FileSystemPostRepository';
@@ -30,8 +30,10 @@ function buildContainer() {
 
 	return {
 		site,
-		path: new FileSystemPathRepository(resolve(site.pathFile)),
+		path: new FileSystemPathRepository(resolve(site.pathDir)),
 		listDocs: new ListPublishedPosts(docs, Post.bySlug),
+		exportDocs: new ExportMarkdown(docs, (md) => rewriteRelativeMarkdownLinks(md, `${site.url}/docs`), Post.bySlug),
+		exportPosts: new ExportMarkdown(posts),
 		getDoc: new GetPublishedPost(docs, markdown, (md) => rewriteRelativeMarkdownLinks(md, '/docs')),
 		listPublishedPosts: new ListPublishedPosts(posts),
 		getPublishedPost: new GetPublishedPost(posts, markdown),

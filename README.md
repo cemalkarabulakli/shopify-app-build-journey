@@ -80,7 +80,7 @@ Base directory `/`, no install/build/start overrides, port `3000`. `nixpacks.tom
 | `SITE_DESCRIPTION` | … | Index intro + feed description |
 | `AUTHOR` | `Cemal` | Footer / about |
 | `CONTENT_DIR` | `content/posts` | Where entries live |
-| `PATH_FILE` | `content/path.json` | The ordered learning path shown on the home page |
+| `PATH_DIR` | `content` | Holds `path.<locale>.json`, the ordered learning path shown on the home page |
 | `DOCS_DIR` | `docs` | Learning notes served at `/docs` (reading order = filename) |
 | `CACHE_TTL_MS` | `60000` prod / `0` dev | Post cache TTL |
 
