@@ -24,3 +24,4 @@ vite.config.ts.timestamp-*
 
 # VIP member store (runtime data)
 /data
+/.e2e

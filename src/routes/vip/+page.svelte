@@ -3,29 +3,53 @@
 	import { initializePaddle, type Paddle } from '@paddle/paddle-js';
 	import Seo from '$lib/components/Seo.svelte';
 	import { useI18n } from '$lib/i18n';
-	import type { Cycle } from './+page.server';
+	import type { BillingCycle, Tier } from '$lib/vip/tiers';
+	import { UNKNOWN_COUNTRY } from '$lib/vip/country';
 	let { data } = $props();
 	const { t, locale } = useI18n();
 
 	let paddle = $state<Paddle | undefined>();
-	let email = $state('');
-	let cycle = $state<Cycle>('monthly');
+	// svelte-ignore state_referenced_locally — prefill only; the field is user-owned afterwards
+	let email = $state(data.signedInEmail);
+	let cycle = $state<BillingCycle>('month');
 	let status = $state<'loading' | 'ready' | 'unavailable'>('loading');
-	const configured = $derived(!!data.paddle.token && data.tiers.some((x) => x.monthly.priceId));
+	/** priceId → formatted total string from Paddle. Displayed verbatim, never recomputed. */
+	let totals = $state<Record<string, string>>({});
+	let priceError = $state('');
+
+	const priceIds = $derived(data.tiers.flatMap((x) => [x.priceId.month, x.priceId.year]).filter(Boolean));
+	const configured = $derived(!!data.paddle.token && priceIds.length > 0);
 
 	onMount(async () => {
 		if (!configured) return (status = 'unavailable');
 		paddle = await initializePaddle({
 			token: data.paddle.token,
 			environment: data.paddle.environment,
-			checkout: { settings: { displayMode: 'overlay', locale, successUrl: data.paddle.successUrl, showAddTaxId: true } }
+			checkout: { settings: { displayMode: 'overlay', variant: 'one-page', locale, successUrl: data.paddle.successUrl, showAddTaxId: true } }
 		});
-		status = paddle ? 'ready' : 'unavailable';
+		if (!paddle) return (status = 'unavailable');
+		await loadPrices(paddle);
+		status = 'ready';
 	});
 
-	function subscribe(priceId: string | null) {
+	async function loadPrices(p: Paddle) {
+		try {
+			const res = await p.PricePreview({
+				items: priceIds.map((priceId) => ({ priceId, quantity: 1 })),
+				// Only pass a real ISO code; otherwise Paddle geolocates from the visitor's IP.
+				...(data.country !== UNKNOWN_COUNTRY ? { address: { countryCode: data.country } } : {})
+			});
+			totals = Object.fromEntries(res.data.details.lineItems.map((li) => [li.price.id, li.formattedTotals.total]));
+		} catch (e) {
+			priceError = (e as Error).message || 'Could not load prices';
+		}
+	}
+
+	function subscribe(tier: Tier) {
+		const priceId = tier.priceId[cycle];
 		if (!paddle || !priceId) return;
 		paddle.Checkout.open({
+			settings: { displayMode: 'overlay', variant: 'one-page', successUrl: data.paddle.successUrl },
 			items: [{ priceId, quantity: 1 }],
 			customer: email ? { email } : undefined,
 			// Subscription webhooks don't carry the email; ride it along so the member record has it.
@@ -33,27 +57,10 @@
 		});
 	}
 
-	const usd = (n: number) => new Intl.NumberFormat(t.locale, { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n);
-	const tierText = (key: string) => t.vip.tiers[key as keyof typeof t.vip.tiers];
+	const tierText = (key: Tier['key']) => t.vip.tiers[key];
 </script>
 
-<Seo
-	site={data.site}
-	title={t.vip.title}
-	description={t.vip.lede}
-	path="/vip"
-	jsonLd={{
-		'@context': 'https://schema.org',
-		'@type': 'Product',
-		name: `${data.site.name} — ${t.vip.title}`,
-		description: t.vip.lede,
-		url: data.site.url + '/vip',
-		offers: data.tiers.flatMap((x) => [
-			{ '@type': 'Offer', name: `${tierText(x.key).name} monthly`, price: x.monthly.usd, priceCurrency: 'USD', url: data.site.url + '/vip', availability: 'https://schema.org/InStock' },
-			{ '@type': 'Offer', name: `${tierText(x.key).name} yearly`, price: x.yearly.usd, priceCurrency: 'USD', url: data.site.url + '/vip', availability: 'https://schema.org/InStock' }
-		])
-	}}
-/>
+<Seo site={data.site} title={t.vip.title} description={t.vip.lede} path="/vip" />
 
 <section class="animate-enter">
 	<p class="mb-2 text-[.7rem] font-extrabold tracking-[.25em] text-gold uppercase">{t.vip.eyebrow}</p>
@@ -63,9 +70,9 @@
 
 <div class="mt-8 flex flex-wrap items-center justify-between gap-4">
 	<div class="inline-flex rounded-full border border-line bg-card p-1 text-sm font-extrabold" role="tablist">
-		{#each ['monthly', 'yearly'] as const as c (c)}
+		{#each ['month', 'year'] as const as c (c)}
 			<button role="tab" aria-selected={cycle === c} class="rounded-full px-4 py-1.5 transition {cycle === c ? 'bg-forest text-white shadow' : 'text-muted hover:text-ink'}" onclick={() => (cycle = c)}>
-				{t.vip.cycle[c]}{#if c === 'yearly'}<span class="ml-1 rounded-full bg-gold/20 px-2 py-0.5 text-[.65rem] text-gold">{t.vip.yearlySave}</span>{/if}
+				{t.vip.cycle[c]}{#if c === 'year'}<span class="ml-1 rounded-full bg-gold/20 px-2 py-0.5 text-[.65rem] text-gold">{t.vip.yearlySave}</span>{/if}
 			</button>
 		{/each}
 	</div>
@@ -75,20 +82,27 @@
 	</label>
 </div>
 
+{#if priceError}<p class="mt-4 rounded-lg border border-ember/40 bg-ember/10 px-3 py-2 text-sm text-ember">{priceError}</p>{/if}
+
 <div class="mt-6 grid gap-5 lg:grid-cols-3">
 	{#each data.tiers as tier, i (tier.key)}
 		{@const text = tierText(tier.key)}
-		{@const price = tier[cycle]}
-		{@const featured = tier.key === 'pro'}
-		<article class="card animate-enter relative flex flex-col overflow-hidden p-6 {featured ? 'ring-2 ring-gold/70 lg:-translate-y-2' : ''}" style="animation-delay:{i * 80}ms">
-			{#if featured}<span class="absolute top-4 right-4 rounded-full bg-gold px-2.5 py-0.5 text-[.65rem] font-extrabold tracking-wider text-ink uppercase">{t.vip.popular}</span>{/if}
-			<div class="text-3xl">{text.icon}</div>
+		{@const priceId = tier.priceId[cycle]}
+		{@const total = totals[priceId]}
+		<article class="card animate-enter relative flex flex-col overflow-hidden p-6 {tier.featured ? 'ring-2 ring-gold/70 lg:-translate-y-2' : ''}" style="animation-delay:{i * 80}ms">
+			{#if tier.featured}<span class="absolute top-4 right-4 rounded-full bg-gold px-2.5 py-0.5 text-[.65rem] font-extrabold tracking-wider text-ink uppercase">{t.vip.popular}</span>{/if}
+			<div class="text-3xl">{tier.icon}</div>
 			<h2 class="mt-2 font-display text-xl font-extrabold text-ink">{text.name}</h2>
 			<p class="mt-1 min-h-10 text-sm text-muted">{text.tagline}</p>
-			<p class="mt-4 font-display text-4xl font-extrabold text-ink">
-				{usd(price.usd)}<span class="ml-1 font-sans text-sm font-semibold text-muted">/{t.vip.per[cycle]}</span>
+			<p class="mt-4 font-display text-4xl font-extrabold text-ink" aria-live="polite">
+				{#if total}
+					{total}<span class="ml-1 font-sans text-sm font-semibold text-muted">/{t.vip.per[cycle]}</span>
+				{:else if status === 'loading'}
+					<span class="inline-block h-9 w-28 animate-pulse rounded bg-bg-deep"></span>
+				{:else}
+					<span class="text-lg text-muted">—</span>
+				{/if}
 			</p>
-			{#if cycle === 'yearly'}<p class="text-xs text-muted">≈ {usd(price.usd / 12)}/{t.vip.per.monthly}</p>{/if}
 			<p class="mt-1 text-xs font-extrabold text-forest">🎁 {t.vip.trial(data.trialDays)}</p>
 			<ul class="mt-4 flex-1 space-y-2 text-sm">
 				{#each text.perks as perk (perk)}
@@ -96,11 +110,11 @@
 				{/each}
 			</ul>
 			<button
-				class="mt-6 w-full rounded-full px-5 py-3 font-extrabold shadow transition active:scale-[.98] disabled:cursor-not-allowed disabled:opacity-50 {featured ? 'bg-forest text-white hover:bg-forest-soft hover:text-ink' : 'border-2 border-forest text-forest hover:bg-forest hover:text-white'}"
-				disabled={status !== 'ready' || !price.priceId}
-				onclick={() => subscribe(price.priceId)}
+				class="mt-6 w-full rounded-full px-5 py-3 font-extrabold shadow transition active:scale-[.98] disabled:cursor-not-allowed disabled:opacity-50 {tier.featured ? 'bg-forest text-white hover:bg-forest-soft hover:text-ink' : 'border-2 border-forest text-forest hover:bg-forest hover:text-white'}"
+				disabled={status !== 'ready' || !priceId || !total}
+				onclick={() => subscribe(tier)}
 			>
-				{status === 'loading' ? t.vip.loading : status === 'unavailable' || !price.priceId ? t.vip.unavailable : t.vip.cta}
+				{status === 'loading' ? t.vip.loading : status === 'unavailable' || !priceId ? t.vip.unavailable : t.vip.cta}
 			</button>
 		</article>
 	{/each}

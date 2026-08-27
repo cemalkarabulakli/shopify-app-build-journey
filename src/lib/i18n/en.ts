@@ -1,6 +1,6 @@
 export const en = {
 	locale: 'en-GB',
-	nav: { map: 'Map', journal: 'Journal', library: 'Library', about: 'Traveller', vip: 'VIP', rss: 'RSS' },
+	nav: { map: 'Map', journal: 'Journal', library: 'Library', about: 'Traveller', vip: 'VIP', account: 'Account', rss: 'RSS' },
 	footer: 'Built in the open. The map is updated as I go.',
 	home: {
 		eyebrow: 'Quest map · from zero to the App Store',
@@ -42,12 +42,12 @@ export const en = {
 		loading: 'Loading checkout…',
 		unavailable: 'Checkout opens soon',
 		secure: 'Payments and invoices handled by Paddle, our merchant of record. VAT included where applicable.',
-		cycle: { monthly: 'Monthly', yearly: 'Yearly' },
-		per: { monthly: 'mo', yearly: 'yr' },
+		cycle: { month: 'Monthly', year: 'Yearly' },
+		per: { month: 'mo', year: 'yr' },
 		yearlySave: '2 months free',
 		popular: 'Most popular',
 		trial: (days: number) => `${days}-day free trial`,
-		localPricing: 'Local pricing in GBP, EUR and AUD applied at checkout.',
+		localPricing: 'Prices shown in your local currency, as Paddle will charge them. Local pricing for the UK, Ireland and Australia.',
 		tiers: {
 			starter: { icon: '🥾', name: 'Starter', tagline: 'A seat at the campfire.', perks: ['Early access to the app on your store', 'Weekly live build sessions + recordings', 'Private channel with the builder and other VIPs', 'Founding-member price locked forever'] },
 			pro: { icon: '🧭', name: 'Pro', tagline: 'A vote on where we go next.', perks: ['Everything in Starter', 'Vote on the roadmap and interview targets', 'Unfiltered numbers: MRR, churn, installs, interview notes', 'One 30-min 1:1 call per month'] },
@@ -63,6 +63,26 @@ export const en = {
 		],
 		successTitle: "You're in. Welcome, VIP.",
 		successText: 'Your receipt is on its way from Paddle. Within a day you will get the private-channel invite and the next live-session date at the email you used at checkout.'
+	},
+	account: {
+		eyebrow: 'Your seat',
+		title: 'Account',
+		lede: 'Sign in with the email you used at checkout. No password — we email you a one-time link.',
+		sendLink: 'Email me a sign-in link',
+		sentTitle: 'Check your inbox',
+		sentText: 'If that address has an account, a sign-in link is on its way. It works for 15 minutes.',
+		signedInAs: 'Signed in as',
+		vipActive: (tier: string) => `VIP ${tier} — active`,
+		vipActiveText: 'Early access, live sessions and the private channel are yours. Invites go to this email.',
+		noVip: 'No active VIP membership',
+		noVipText: 'Nothing on this email grants access right now.',
+		renews: 'renews',
+		scheduled: (action: string, date: string) => `scheduled to ${action} on ${date}`,
+		billingTitle: 'Billing',
+		billingText: 'Update your card, download invoices or cancel — handled by Paddle, our merchant of record.',
+		openPortal: 'Manage billing',
+		logout: 'Sign out',
+		errors: { email: 'That email address doesn’t look right.', send: 'Could not send the email. Try again in a minute.', link: 'That link is invalid or has expired — request a new one.', db: 'Billing records are temporarily unavailable.' }
 	},
 	levels: ['Novice Wanderer', 'Explorer', 'Scout', 'Cartographer', 'Captain', 'Legend'],
 	xpToast: (xp: number) => `+${xp} XP`

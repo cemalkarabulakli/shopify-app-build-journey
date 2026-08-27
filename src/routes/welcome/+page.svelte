@@ -9,7 +9,7 @@
 	onMount(() => setTimeout(() => burst.fire('👑 VIP'), 300));
 </script>
 
-<Seo site={data.site} title={t.vip.successTitle} description={t.vip.successText} path="/vip/success" />
+<Seo site={data.site} title={t.vip.successTitle} description={t.vip.successText} path="/welcome" />
 <svelte:head><meta name="robots" content="noindex" /></svelte:head>
 
 <Burst bind:this={burst} />

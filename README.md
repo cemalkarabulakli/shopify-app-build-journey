@@ -75,7 +75,8 @@ Base directory `/`, no install/build/start overrides, port `3000`. `nixpacks.tom
 | Env var | Default | Purpose |
 |---|---|---|
 | `PORT` | `3000` | Listen port |
-| `SITE_URL` | `http://localhost:3000` | Public URL for canonical links and RSS |
+| `SITE_URL` | `http://localhost:3000` | Public URL for canonical links, RSS, sign-in links and Paddle success redirects |
+| `ORIGIN` | — | **Required in production** (adapter-node): same value as `SITE_URL`; without it every form POST (sign-in, portal) is rejected as cross-site |
 | `SITE_NAME` | `Shopify App Build Journey` | Site title |
 | `SITE_DESCRIPTION` | … | Index intro + feed description |
 | `AUTHOR` | `Cemal` | Footer / about |
@@ -83,11 +84,30 @@ Base directory `/`, no install/build/start overrides, port `3000`. `nixpacks.tom
 | `PATH_DIR` | `content` | Holds `path.<locale>.json`, the ordered learning path shown on the home page |
 | `DOCS_DIR` | `docs` | Learning notes served at `/docs` (reading order = filename) |
 | `CACHE_TTL_MS` | `60000` prod / `0` dev | Post cache TTL |
-| `PUBLIC_PADDLE_CLIENT_TOKEN` | — | Paddle.js client token (VIP checkout); page shows "opens soon" without it |
-| `PADDLE_ENV` | `sandbox` | `sandbox` or `production` |
-| `PADDLE_API_KEY` | — | Only for `npm run paddle:catalog`, which creates the 3 tiers × 2 prices and writes ids to `content/vip-catalog.json` |
+| `PUBLIC_PADDLE_CLIENT_TOKEN` | — | Paddle.js client token (`test_…` on sandbox); `/vip` shows "opens soon" without it. Prices come from `Paddle.PricePreview()`, localized by `x-vercel-ip-country` / `cf-ipcountry` or Paddle's own IP lookup |
+| `PUBLIC_PADDLE_ENV` | **required** | `sandbox` or `production`; `/vip` returns 500 and the webhook 503 when unset, so you never hit the wrong account |
+| `PADDLE_API_KEY` | — | Server only: `npm run paddle:catalog` and customer-portal sessions |
 | `PADDLE_WEBHOOK_SECRET` | — | Verifies `POST /api/paddle/webhook`; endpoint returns 503 without it |
-| `VIP_DATA_DIR` | `data` | Holds `vip-members.json` — mount a persistent volume |
+| `DATABASE_URL` | — | Postgres for the billing mirror and sign-in tokens (schema below). Webhook/account routes answer 503 without it |
+| `SESSION_SECRET` | — | ≥32 chars; signs the `session` cookie for `/account` |
+| `RESEND_API_KEY`, `EMAIL_FROM` | — | Sign-in emails via Resend; unset → links are printed to the server log |
+
+### Database (billing mirror)
+
+Paddle is the source of truth; these tables mirror it from verified webhooks so pages never call Paddle on read.
+`customers` / `subscriptions` / `transactions` are upserted by Paddle id and ordered by event time; `webhook_events`
+makes at-least-once delivery idempotent; `login_tokens` holds hashed one-time sign-in links. Access rule
+(`Subscription.grantsAccess`): `active`, `trialing`, `past_due` → yes; `paused`, `canceled` → no; a *scheduled*
+cancel never revokes early.
+
+```sql
+CREATE TABLE customers (customer_id TEXT PRIMARY KEY, email TEXT NOT NULL, name TEXT, created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW());
+CREATE TABLE subscriptions (subscription_id TEXT PRIMARY KEY, customer_id TEXT NOT NULL REFERENCES customers(customer_id), status TEXT NOT NULL, price_id TEXT NOT NULL, product_id TEXT NOT NULL, scheduled_change_action TEXT, scheduled_change_at TIMESTAMPTZ, current_period_end TIMESTAMPTZ, event_occurred_at TIMESTAMPTZ NOT NULL, created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW());
+CREATE INDEX subscriptions_customer_idx ON subscriptions(customer_id);
+CREATE TABLE transactions (transaction_id TEXT PRIMARY KEY, customer_id TEXT, subscription_id TEXT, status TEXT NOT NULL, total TEXT, currency_code TEXT, billed_at TIMESTAMPTZ, event_occurred_at TIMESTAMPTZ NOT NULL, created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW());
+CREATE TABLE webhook_events (event_id TEXT PRIMARY KEY, event_type TEXT NOT NULL, occurred_at TIMESTAMPTZ NOT NULL, received_at TIMESTAMPTZ NOT NULL DEFAULT NOW());
+CREATE TABLE login_tokens (token_hash TEXT PRIMARY KEY, email TEXT NOT NULL, expires_at TIMESTAMPTZ NOT NULL, used_at TIMESTAMPTZ);
+```
 
 ---
 

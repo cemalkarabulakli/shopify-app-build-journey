@@ -1,6 +1,6 @@
 import { resolve } from 'node:path';
-import { BuildFeed, ExportMarkdown, GetPublishedPost, ListPublishedPosts, SyncVipMembership } from '$lib/application';
-import { loadSiteConfig } from './config/siteConfig';
+import { BuildFeed, ExportMarkdown, GetAccessForEmail, GetPublishedPost, HandleBillingEvent, ListPublishedPosts, MagicLinkLogin } from '$lib/application';
+import { loadSiteConfig, requirePaddle } from './config/siteConfig';
 import { CachedPostRepository } from './infrastructure/content/CachedPostRepository';
 import { FileSystemPostRepository } from './infrastructure/content/FileSystemPostRepository';
 import { MarkedMarkdownRenderer } from './infrastructure/content/MarkedMarkdownRenderer';
@@ -8,8 +8,11 @@ import { RssFeedSerializer } from './presentation/RssFeedSerializer';
 import { rewriteRelativeMarkdownLinks } from './infrastructure/content/rewriteRelativeMarkdownLinks';
 import { Post } from '$lib/domain/post';
 import { FileSystemPathRepository } from './infrastructure/content/FileSystemPathRepository';
-import { FileVipMemberRepository } from './infrastructure/vip/FileVipMemberRepository';
 import { PaddleWebhookAdapter } from './infrastructure/vip/PaddleWebhookAdapter';
+import { PaddlePortal } from './infrastructure/vip/PaddlePortal';
+import { PgBillingStore, subscriptionRepo, transactionRepo } from './infrastructure/vip/PgBillingStore';
+import { SessionCodec } from './infrastructure/auth/Session';
+import { ConsoleEmailSender, ResendEmailSender } from './infrastructure/auth/EmailSenders';
 
 /**
  * Composition root — the only place where concrete classes are wired together.
@@ -30,14 +33,37 @@ function buildContainer() {
 		site.cacheTtlMs
 	);
 
-	// VIP membership: Paddle events in, one JSON file out (see VIP_DATA_DIR).
-	const vipMembers = new FileVipMemberRepository(resolve(site.vipDataDir, 'vip-members.json'));
+	// Billing/auth: everything below is lazy so the public site runs with no DATABASE_URL/Paddle env,
+	// and a misconfiguration fails the one request that needs it — loudly — not the whole site.
+	let store: PgBillingStore | undefined;
+	const billing = () => {
+		if (!site.databaseUrl) throw new Error('DATABASE_URL is not set — billing, webhooks and accounts need Postgres');
+		return (store ??= new PgBillingStore(site.databaseUrl));
+	};
+	const email = () => (site.email.resendApiKey ? new ResendEmailSender(site.email.resendApiKey, site.email.from) : new ConsoleEmailSender());
 
 	return {
 		site,
-		vipMembers,
-		syncVipMembership: new SyncVipMembership(vipMembers),
-		paddleWebhooks: new PaddleWebhookAdapter(site.paddle.apiKey, site.paddle.webhookSecret, site.paddle.environment),
+		get paddleWebhooks() {
+			return new PaddleWebhookAdapter(site.paddle.webhookSecret, requirePaddle(site).environment);
+		},
+		get paddlePortal() {
+			return new PaddlePortal(site.paddle.apiKey, requirePaddle(site).environment);
+		},
+		get handleBillingEvent() {
+			const s = billing();
+			return new HandleBillingEvent(s, subscriptionRepo(s), transactionRepo(s), s);
+		},
+		get getAccessForEmail() {
+			const s = billing();
+			return new GetAccessForEmail(s, subscriptionRepo(s));
+		},
+		get magicLinkLogin() {
+			return new MagicLinkLogin(billing(), email(), site.url);
+		},
+		get sessions() {
+			return new SessionCodec(site.sessionSecret);
+		},
 		path: new FileSystemPathRepository(resolve(site.pathDir)),
 		listDocs: new ListPublishedPosts(docs, Post.bySlug),
 		exportDocs: new ExportMarkdown(docs, (md) => rewriteRelativeMarkdownLinks(md, `${site.url}/docs`), Post.bySlug),

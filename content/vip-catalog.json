@@ -2,8 +2,74 @@
   "environment": "sandbox",
   "trialDays": 7,
   "tiers": {
-    "starter": { "productId": null, "monthly": { "priceId": null, "USD": "1000", "overrides": { "GBP": "800", "EUR": "900", "AUD": "1500" } }, "yearly": { "priceId": null, "USD": "10000", "overrides": { "GBP": "8000", "EUR": "9000", "AUD": "15000" } } },
-    "pro": { "productId": null, "monthly": { "priceId": null, "USD": "4000", "overrides": { "GBP": "3200", "EUR": "3700", "AUD": "6000" } }, "yearly": { "priceId": null, "USD": "40000", "overrides": { "GBP": "32000", "EUR": "37000", "AUD": "60000" } } },
-    "advanced": { "productId": null, "monthly": { "priceId": null, "USD": "12000", "overrides": { "GBP": "9500", "EUR": "11000", "AUD": "18000" } }, "yearly": { "priceId": null, "USD": "120000", "overrides": { "GBP": "95000", "EUR": "110000", "AUD": "180000" } } }
+    "starter": {
+      "productId": "pro_01m101rxk3j3xskwh6bsfgqxwb",
+      "monthly": {
+        "priceId": "pri_01m101rxthbymtztq41c32f8pn",
+        "USD": "1000",
+        "overrides": {
+          "USD": "1000",
+          "GBP": "800",
+          "EUR": "900",
+          "AUD": "1500"
+        }
+      },
+      "yearly": {
+        "priceId": "pri_01m101ry0kb986dfxct3kyd4j0",
+        "USD": "10000",
+        "overrides": {
+          "USD": "10000",
+          "GBP": "8000",
+          "EUR": "9000",
+          "AUD": "15000"
+        }
+      }
+    },
+    "pro": {
+      "productId": "pro_01m101ry8gg30b88m1p35zskfz",
+      "monthly": {
+        "priceId": "pri_01m101ryrz96werechaqqkzz7j",
+        "USD": "4000",
+        "overrides": {
+          "USD": "4000",
+          "GBP": "3200",
+          "EUR": "3700",
+          "AUD": "6000"
+        }
+      },
+      "yearly": {
+        "priceId": "pri_01m101ryz12m20qt02ks2gamgd",
+        "USD": "40000",
+        "overrides": {
+          "USD": "40000",
+          "GBP": "32000",
+          "EUR": "37000",
+          "AUD": "60000"
+        }
+      }
+    },
+    "advanced": {
+      "productId": "pro_01m101rz68x23byzvz05wvak8z",
+      "monthly": {
+        "priceId": "pri_01m101rzbtcb8vf7b0pm86jdwk",
+        "USD": "12000",
+        "overrides": {
+          "USD": "12000",
+          "GBP": "9500",
+          "EUR": "11000",
+          "AUD": "18000"
+        }
+      },
+      "yearly": {
+        "priceId": "pri_01m101rzjh4sas4k3ym15wka3e",
+        "USD": "120000",
+        "overrides": {
+          "USD": "120000",
+          "GBP": "95000",
+          "EUR": "110000",
+          "AUD": "180000"
+        }
+      }
+    }
   }
 }

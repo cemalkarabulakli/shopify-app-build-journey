@@ -2,7 +2,7 @@
 /**
  * Creates the VIP catalog in a Paddle account and writes the id mapping to content/vip-catalog.json.
  *
- *   PADDLE_API_KEY=pdl_sdbx_... PADDLE_ENV=sandbox node scripts/paddle-catalog.mjs
+ *   PADDLE_API_KEY=pdl_sdbx_... PUBLIC_PADDLE_ENV=sandbox node scripts/paddle-catalog.mjs
  *
  * Idempotent-ish: if content/vip-catalog.json already has ids for a tier, that tier is skipped.
  * Amounts are strings in the lowest denomination ("1000" = USD 10.00), per Paddle's API.
@@ -16,7 +16,12 @@ if (!apiKey) {
 	console.error('PADDLE_API_KEY is required (sandbox key starts with pdl_sdbx_).');
 	process.exit(1);
 }
-const environment = process.env.PADDLE_ENV === 'production' ? Environment.production : Environment.sandbox;
+const envName = process.env.PUBLIC_PADDLE_ENV ?? process.env.PADDLE_ENV;
+if (envName !== 'sandbox' && envName !== 'production') {
+	console.error('PUBLIC_PADDLE_ENV must be "sandbox" or "production" — refusing to guess.');
+	process.exit(1);
+}
+const environment = envName === 'production' ? Environment.production : Environment.sandbox;
 const paddle = new Paddle(apiKey, { environment });
 
 /** Local prices, adjusted for purchasing power — starting points, tune in the Paddle dashboard. */

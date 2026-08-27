@@ -1,62 +1,90 @@
-import { EventName, Paddle, Environment, type EventEntity } from '@paddle/paddle-node-sdk';
-import type { SubscriptionEvent } from '$lib/application';
-import type { VipStatus } from '$lib/domain/vip';
+import { Environment, EventName, Paddle, type EventEntity } from '@paddle/paddle-node-sdk';
+import type { BillingEvent } from '$lib/application';
+import type { ScheduledAction, SubscriptionStatus } from '$lib/domain/vip';
 
 /**
- * Anti-corruption layer around Paddle: verifies signatures and translates
- * Paddle's event zoo into our one SubscriptionEvent shape.
+ * Anti-corruption layer around Paddle webhooks: verifies the signature on the RAW body
+ * (never JSON.parse first — that breaks verification) and maps Paddle's event zoo to BillingEvent.
  */
 export class PaddleWebhookAdapter {
 	private readonly paddle: Paddle;
 
 	constructor(
-		apiKey: string,
 		private readonly webhookSecret: string,
 		environment: 'sandbox' | 'production'
 	) {
-		this.paddle = new Paddle(apiKey || 'unused-for-webhooks', {
-			environment: environment === 'production' ? Environment.production : Environment.sandbox
-		});
+		// Verification is purely local (HMAC); no API key is needed for it.
+		this.paddle = new Paddle('unused-for-webhooks', { environment: environment === 'production' ? Environment.production : Environment.sandbox });
 	}
 
 	get configured(): boolean {
 		return this.webhookSecret.length > 0;
 	}
 
-	/** Throws if the signature is invalid. Returns null for events we don't care about. */
-	async parse(rawBody: string, signature: string): Promise<{ type: string; event: SubscriptionEvent | null }> {
-		const entity = await this.paddle.webhooks.unmarshal(rawBody, this.webhookSecret, signature);
-		return { type: entity.eventType, event: this.toSubscriptionEvent(entity) };
+	/** Throws when the signature is invalid. */
+	async parse(rawBody: string, signature: string): Promise<BillingEvent> {
+		const e = await this.paddle.webhooks.unmarshal(rawBody, this.webhookSecret, signature);
+		return this.map(e);
 	}
 
-	private toSubscriptionEvent(entity: EventEntity): SubscriptionEvent | null {
-		switch (entity.eventType) {
+	private map(e: EventEntity): BillingEvent {
+		const base = { eventId: e.eventId, eventType: e.eventType, occurredAt: new Date(e.occurredAt) };
+		switch (e.eventType) {
+			case EventName.CustomerCreated:
+			case EventName.CustomerUpdated:
+				return { ...base, kind: 'customer', data: { customerId: e.data.id, email: e.data.email, name: e.data.name ?? null, updatedAt: base.occurredAt } };
+
 			case EventName.SubscriptionCreated:
-			case EventName.SubscriptionActivated:
 			case EventName.SubscriptionUpdated:
+			case EventName.SubscriptionActivated:
 			case EventName.SubscriptionTrialing:
 			case EventName.SubscriptionPastDue:
 			case EventName.SubscriptionPaused:
 			case EventName.SubscriptionResumed:
 			case EventName.SubscriptionCanceled: {
-				const s = entity.data;
-				const custom = (s.customData ?? {}) as Record<string, unknown>;
+				const s = e.data;
+				const item = s.items[0];
 				return {
-					subscriptionId: s.id,
-					customerId: s.customerId,
-					// Paddle's subscription payload has no email; we pass it through customData at checkout.
-					email: typeof custom.email === 'string' ? custom.email : '',
-					status: mapStatus(s.status),
-					occurredAt: new Date(entity.occurredAt)
+					...base,
+					kind: 'subscription',
+					data: {
+						subscriptionId: s.id,
+						customerId: s.customerId,
+						status: mapStatus(s.status),
+						priceId: item?.price?.id ?? '',
+						productId: item?.product?.id ?? item?.price?.productId ?? '',
+						scheduledChange: s.scheduledChange ? { action: s.scheduledChange.action as ScheduledAction, effectiveAt: new Date(s.scheduledChange.effectiveAt) } : null,
+						currentPeriodEnd: s.currentBillingPeriod ? new Date(s.currentBillingPeriod.endsAt) : null,
+						updatedAt: base.occurredAt
+					}
+				};
+			}
+
+			case EventName.TransactionCompleted:
+			case EventName.TransactionPaymentFailed: {
+				const t = e.data;
+				return {
+					...base,
+					kind: 'transaction',
+					data: {
+						transactionId: t.id,
+						customerId: t.customerId ?? null,
+						subscriptionId: t.subscriptionId ?? null,
+						status: t.status,
+						total: t.details?.totals?.grandTotal ?? null,
+						currencyCode: t.currencyCode ?? null,
+						billedAt: t.billedAt ? new Date(t.billedAt) : null,
+						updatedAt: base.occurredAt
+					}
 				};
 			}
 			default:
-				return null;
+				return { ...base, kind: 'ignored' };
 		}
 	}
 }
 
-function mapStatus(status: string): VipStatus {
+function mapStatus(status: string): SubscriptionStatus {
 	switch (status) {
 		case 'active': return 'active';
 		case 'trialing': return 'trialing';

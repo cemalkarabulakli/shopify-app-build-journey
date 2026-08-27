@@ -2,7 +2,7 @@ import type { Messages } from './en';
 
 export const tr: Messages = {
 	locale: 'tr-TR',
-	nav: { map: 'Harita', journal: 'Günlük', library: 'Kütüphane', about: 'Gezgin', vip: 'VIP', rss: 'RSS' },
+	nav: { map: 'Harita', journal: 'Günlük', library: 'Kütüphane', about: 'Gezgin', vip: 'VIP', account: 'Hesap', rss: 'RSS' },
 	footer: 'Açık havada inşa ediliyor. Harita her gün güncellenir.',
 	home: {
 		eyebrow: "Görev haritası · sıfırdan App Store'a",
@@ -44,12 +44,12 @@ export const tr: Messages = {
 		loading: 'Ödeme yükleniyor…',
 		unavailable: 'Ödeme yakında açılıyor',
 		secure: 'Ödeme ve faturalar merchant of record olan Paddle tarafından işlenir. KDV dahildir.',
-		cycle: { monthly: 'Aylık', yearly: 'Yıllık' },
-		per: { monthly: 'ay', yearly: 'yıl' },
+		cycle: { month: 'Aylık', year: 'Yıllık' },
+		per: { month: 'ay', year: 'yıl' },
 		yearlySave: '2 ay bedava',
 		popular: 'En popüler',
 		trial: (days) => `${days} gün ücretsiz deneme`,
-		localPricing: 'GBP, EUR ve AUD için yerel fiyat ödemede uygulanır.',
+		localPricing: 'Fiyatlar Paddle’ın tahsil edeceği şekilde yerel para biriminde gösterilir. İngiltere, İrlanda ve Avustralya için yerel fiyat.',
 		tiers: {
 			starter: { icon: '🥾', name: 'Starter', tagline: 'Kamp ateşinde bir yer.', perks: ['App’e mağazanda erken erişim', 'Haftalık canlı geliştirme oturumları + kayıtlar', 'Kurucu ve diğer VIP’lerle özel kanal', 'Kurucu üye fiyatı ömür boyu sabit'] },
 			pro: { icon: '🧭', name: 'Pro', tagline: 'Nereye gideceğimizde oy hakkı.', perks: ['Starter’daki her şey', 'Yol haritası ve görüşme hedeflerinde oy', 'Filtresiz sayılar: MRR, churn, kurulum, görüşme notları', 'Ayda bir 30 dk birebir görüşme'] },
@@ -65,6 +65,26 @@ export const tr: Messages = {
 		],
 		successTitle: 'İçerdesin. Hoş geldin, VIP.',
 		successText: 'Makbuzun Paddle’dan yolda. Bir gün içinde özel kanal daveti ve bir sonraki canlı oturum tarihi ödemede kullandığın e-postaya gelecek.'
+	},
+	account: {
+		eyebrow: 'Sandalyen',
+		title: 'Hesap',
+		lede: 'Ödemede kullandığın e-postayla gir. Şifre yok — tek kullanımlık bir bağlantı gönderiyoruz.',
+		sendLink: 'Giriş bağlantısı gönder',
+		sentTitle: 'Gelen kutunu kontrol et',
+		sentText: 'Bu adresin bir hesabı varsa giriş bağlantısı yolda. 15 dakika geçerli.',
+		signedInAs: 'Giriş yapan',
+		vipActive: (tier) => `VIP ${tier} — aktif`,
+		vipActiveText: 'Erken erişim, canlı oturumlar ve özel kanal senin. Davetler bu e-postaya gelir.',
+		noVip: 'Aktif VIP üyelik yok',
+		noVipText: 'Bu e-postada şu an erişim veren bir şey yok.',
+		renews: 'yenilenir',
+		scheduled: (action, date) => `${date} tarihinde ${action} planlandı`,
+		billingTitle: 'Faturalandırma',
+		billingText: 'Kartını güncelle, fatura indir ya da iptal et — merchant of record Paddle yönetir.',
+		openPortal: 'Faturalandırmayı yönet',
+		logout: 'Çıkış',
+		errors: { email: 'Bu e-posta adresi doğru görünmüyor.', send: 'E-posta gönderilemedi. Bir dakika sonra tekrar dene.', link: 'Bağlantı geçersiz ya da süresi dolmuş — yenisini iste.', db: 'Fatura kayıtları geçici olarak kullanılamıyor.' }
 	},
 	levels: ['Acemi Gezgin', 'Kaşif', 'İzci', 'Haritacı', 'Kaptan', 'Efsane'],
 	xpToast: (xp) => `+${xp} XP`

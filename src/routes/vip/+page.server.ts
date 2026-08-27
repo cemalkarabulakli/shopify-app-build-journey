@@ -1,28 +1,42 @@
-import { readFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
-import { env } from '$env/dynamic/public';
+import { error } from '@sveltejs/kit';
 import { container } from '$lib/server/container';
+import { requirePaddle } from '$lib/server/config/siteConfig';
+import { UNKNOWN_COUNTRY } from '$lib/vip/country';
+import { tiers, trialDays } from '$lib/vip/tiers';
 import type { PageServerLoad } from './$types';
 
-export type Cycle = 'monthly' | 'yearly';
-interface CatalogPrice { priceId: string | null; USD: string }
-interface Catalog { trialDays: number; tiers: Record<string, { productId: string | null; monthly: CatalogPrice; yearly: CatalogPrice }> }
+/**
+ * Country from whichever edge/proxy header is present. Absent → undefined, and the
+ * client lets Paddle.PricePreview() geolocate from the visitor's IP. The 'OTHERS'
+ * sentinel below is app-side only and is never sent to Paddle.
+ */
+const COUNTRY_HEADERS = ['x-vercel-ip-country', 'cf-ipcountry', 'cloudfront-viewer-country', 'x-country-code'];
 
-/** Product/price ids written by `npm run paddle:catalog`; not secrets. */
-async function loadCatalog(): Promise<Catalog> {
-	return JSON.parse(await readFile(resolve('content/vip-catalog.json'), 'utf8'));
+function detectCountry(headers: Headers): string {
+	for (const h of COUNTRY_HEADERS) {
+		const v = headers.get(h)?.trim().toUpperCase();
+		if (v && /^[A-Z]{2}$/.test(v) && v !== 'XX' && v !== 'T1') return v;
+	}
+	return UNKNOWN_COUNTRY;
 }
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async ({ request, locals }) => {
 	const { site } = container();
-	const catalog = await loadCatalog();
+	let paddle;
+	try {
+		paddle = requirePaddle(site); // throws loudly when PUBLIC_PADDLE_ENV is missing
+	} catch (e) {
+		console.error('[vip]', (e as Error).message);
+		error(500, (e as Error).message);
+	}
+	if (!paddle.clientToken) console.warn('[vip] PUBLIC_PADDLE_CLIENT_TOKEN is not set — checkout disabled');
+
 	return {
-		paddle: { token: env.PUBLIC_PADDLE_CLIENT_TOKEN || '', environment: site.paddle.environment, successUrl: `${site.url}/vip/success` },
-		trialDays: catalog.trialDays,
-		tiers: Object.entries(catalog.tiers).map(([key, t]) => ({
-			key,
-			monthly: { priceId: t.monthly.priceId, usd: Number(t.monthly.USD) / 100 },
-			yearly: { priceId: t.yearly.priceId, usd: Number(t.yearly.USD) / 100 }
-		}))
+		paddle: { token: paddle.clientToken, environment: paddle.environment, successUrl: `${site.url}/welcome` },
+		country: detectCountry(request.headers),
+		// No auth on this site yet; when there is, put the signed-in email on locals.user.
+		signedInEmail: (locals as { user?: { email?: string } }).user?.email ?? '',
+		tiers,
+		trialDays
 	};
 };
