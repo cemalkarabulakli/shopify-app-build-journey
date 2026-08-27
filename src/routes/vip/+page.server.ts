@@ -34,8 +34,8 @@ export const load: PageServerLoad = async ({ request, locals }) => {
 	return {
 		paddle: { token: paddle.clientToken, environment: paddle.environment, successUrl: `${site.url}/welcome` },
 		country: detectCountry(request.headers),
-		// No auth on this site yet; when there is, put the signed-in email on locals.user.
-		signedInEmail: (locals as { user?: { email?: string } }).user?.email ?? '',
+		// Prefilled from the session (set by the magic-link sign-in in hooks.server.ts).
+		signedInEmail: locals.user?.email ?? '',
 		tiers,
 		trialDays
 	};
