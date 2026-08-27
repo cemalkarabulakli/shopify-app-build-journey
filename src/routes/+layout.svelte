@@ -19,7 +19,10 @@
 </script>
 
 <svelte:head>
-	<link rel="icon" href={favicon} />
+	<link rel="icon" type="image/svg+xml" href={favicon} />
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+	<meta name="theme-color" content="#008060" />
 	<link rel="alternate" type="application/rss+xml" title={data.site.name} href="/feed.xml" />
 	<link rel="alternate" type="text/markdown" href="/llms.txt" title="llms.txt" />
 	<link rel="sitemap" type="application/xml" href="/sitemap.xml" />
