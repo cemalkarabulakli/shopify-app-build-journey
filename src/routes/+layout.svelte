@@ -3,6 +3,7 @@
 	import favicon from '$lib/assets/favicon.svg';
 	import { page } from '$app/state';
 	import { LOCALES, setI18n } from '$lib/i18n';
+	import FogDragon from '$lib/components/FogDragon.svelte';
 	let { data, children } = $props();
 	// svelte-ignore state_referenced_locally — switching locale does a full reload (data-sveltekit-reload)
 	const { t } = setI18n(data.locale);
@@ -28,7 +29,7 @@
 
 <header class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-5 pt-6 pb-2">
 	<a href="/" class="font-display text-lg font-extrabold tracking-wide text-ink no-underline">
-		<span class="mr-1 inline-block animate-bob">⚔️</span>{data.site.name}
+		<span class="mr-1.5 inline-block align-middle"><FogDragon level={4} size={34} /></span>{data.site.name}
 	</a>
 	<nav class="flex gap-1 rounded-full border border-line bg-card/70 p-1 text-sm backdrop-blur">
 		{#each links as l (l.href)}

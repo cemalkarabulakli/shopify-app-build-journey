@@ -86,6 +86,13 @@ export const tr: Messages = {
 		logout: 'Çıkış',
 		errors: { email: 'Bu e-posta adresi doğru görünmüyor.', send: 'E-posta gönderilemedi. Bir dakika sonra tekrar dene.', link: 'Bağlantı geçersiz ya da süresi dolmuş — yenisini iste.', db: 'Fatura kayıtları geçici olarak kullanılamıyor.' }
 	},
+	dragon: {
+		name: 'Sis Ejderi',
+		levelUp: (level, title) => `Sis dağılıyor. Seviye ${level} — ${title}.`,
+		here: 'Buradasın. Aramızda bir parşömen ve çalışan bir uygulama var.',
+		vip: 'Taçlı hâli. Sadece iç halka görür.',
+		notFound: 'Burada sisten başka bir şey yok. Kontrol ettim.'
+	},
 	levels: ['Acemi Gezgin', 'Kaşif', 'İzci', 'Haritacı', 'Kaptan', 'Efsane'],
 	xpToast: (xp) => `+${xp} XP`
 };

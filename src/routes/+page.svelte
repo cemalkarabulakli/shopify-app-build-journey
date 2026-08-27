@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { createReadingProgress } from '$lib/client/readingProgress.svelte';
-	import { XP_PER_DOC, xpFor } from '$lib/client/gamification';
+	import { XP_PER_DOC, levelFor, xpFor } from '$lib/client/gamification';
+	import FogDragon from '$lib/components/FogDragon.svelte';
 	import { formatDate } from '$lib/format';
 	import Burst from '$lib/components/Burst.svelte';
 	import XpBar from '$lib/components/XpBar.svelte';
@@ -91,7 +92,15 @@
 				</div>
 			</div>
 
+			{#if step.status === 'next'}
+				<div class="absolute top-1.5 -left-[72px] w-16">
+					<FogDragon level={levelFor(xp).index + 1} size={56} point flip />
+				</div>
+			{/if}
 			<article class="card p-6 transition-transform hover:-translate-y-0.5 {step.status === 'next' ? 'ring-2 ring-forest/50' : ''}">
+				{#if step.status === 'next'}
+					<p class="mb-2.5 inline-block rounded-2xl rounded-bl-sm border border-forest bg-forest/10 px-3 py-1.5 text-sm font-bold text-forest">{t.dragon.here}</p>
+				{/if}
 				<div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
 					<span class="font-display text-xs font-extrabold tracking-widest text-muted">{t.home.phase.toUpperCase()} {step.n}</span>
 					<h2 class="text-xl font-extrabold text-ink">{step.title}</h2>

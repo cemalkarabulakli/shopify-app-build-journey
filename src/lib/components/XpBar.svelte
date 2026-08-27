@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { levelFor } from '$lib/client/gamification';
+	import FogDragon from '$lib/components/FogDragon.svelte';
 	import { useI18n } from '$lib/i18n';
 	const { t } = useI18n();
 	let { xp, docsRead, docsTotal, phasesDone, phasesTotal }: { xp: number; docsRead: number; docsTotal: number; phasesDone: number; phasesTotal: number } = $props();
@@ -20,16 +21,30 @@
 		raf = requestAnimationFrame(tick);
 		return () => cancelAnimationFrame(raf);
 	});
+
+	// Level-up quip: only when the level index actually rises during this visit.
+	let quip = $state('');
+	let lastIndex = $state(-1);
+	$effect(() => {
+		const i = level.index;
+		if (lastIndex >= 0 && i > lastIndex) {
+			quip = t.dragon.levelUp(i + 1, t.levels[i]);
+			const id = setTimeout(() => (quip = ''), 3200);
+			lastIndex = i;
+			return () => clearTimeout(id);
+		}
+		lastIndex = i;
+	});
 </script>
 
 <section class="card relative mt-6 overflow-hidden p-5" aria-label={t.home.card}>
-	<span class="pointer-events-none absolute -top-6 -right-4 text-8xl opacity-[.07] select-none">🧭</span>
 	<p class="mb-2 text-[.7rem] font-extrabold tracking-[.2em] text-gold uppercase">{t.home.card}</p>
 	<div class="flex flex-wrap items-end justify-between gap-3">
-		<div>
-			<div class="text-sm text-muted">{t.home.level} {level.index + 1}</div>
-			<div class="font-display text-2xl font-extrabold text-ink">
-				<span class="mr-1 inline-block animate-bob">{level.icon}</span>{t.levels[level.index]}
+		<div class="flex items-end gap-3">
+			<FogDragon level={level.index + 1} size={72} fog />
+			<div>
+				<div class="text-sm text-muted">{t.home.level} {level.index + 1} · {level.index + 1}/6</div>
+				<div class="font-display text-2xl font-extrabold text-ink">{t.levels[level.index]}</div>
 			</div>
 		</div>
 		<div class="text-right tabular-nums">
@@ -37,6 +52,9 @@
 			<span class="text-sm text-muted">XP</span>
 		</div>
 	</div>
+	{#if quip}
+		<p class="animate-pop mt-3 inline-block rounded-2xl rounded-bl-sm border border-gold bg-card px-3 py-1.5 font-display text-[.95rem] font-bold text-ink">{quip}</p>
+	{/if}
 	<div class="relative mt-4 h-3.5 overflow-hidden rounded-full border border-line bg-bg-deep" role="progressbar" aria-valuenow={level.pct} aria-valuemin="0" aria-valuemax="100">
 		<div class="relative h-full rounded-full bg-gradient-to-r from-forest via-forest-soft to-gold transition-[width] duration-700 ease-out" style="width:{level.pct}%">
 			<span class="absolute inset-0 -translate-x-full animate-shine bg-gradient-to-r from-transparent via-white/40 to-transparent"></span>

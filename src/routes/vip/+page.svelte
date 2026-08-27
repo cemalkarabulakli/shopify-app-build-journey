@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { initializePaddle, type Paddle } from '@paddle/paddle-js';
 	import Seo from '$lib/components/Seo.svelte';
+	import FogDragon from '$lib/components/FogDragon.svelte';
 	import { useI18n } from '$lib/i18n';
 	import type { BillingCycle, Tier } from '$lib/vip/tiers';
 	import { UNKNOWN_COUNTRY } from '$lib/vip/country';
@@ -66,6 +67,10 @@
 	<p class="mb-2 text-[.7rem] font-extrabold tracking-[.25em] text-gold uppercase">{t.vip.eyebrow}</p>
 	<h1 class="mb-3 text-3xl leading-tight font-extrabold text-ink sm:text-4xl">{t.vip.title}</h1>
 	<p class="max-w-3xl text-lg text-muted">{t.vip.lede}</p>
+	<div class="mt-4 flex items-end gap-3">
+		<FogDragon level={6} size={64} />
+		<p class="inline-block rounded-2xl rounded-bl-sm border border-gold bg-gold/10 px-3 py-1.5 font-display text-[.95rem] font-bold text-ink">{t.dragon.vip}</p>
+	</div>
 </section>
 
 <div class="mt-8 flex flex-wrap items-center justify-between gap-4">

@@ -84,6 +84,13 @@ export const en = {
 		logout: 'Sign out',
 		errors: { email: 'That email address doesn’t look right.', send: 'Could not send the email. Try again in a minute.', link: 'That link is invalid or has expired — request a new one.', db: 'Billing records are temporarily unavailable.' }
 	},
+	dragon: {
+		name: 'Fog Dragon',
+		levelUp: (level: number, title: string) => `The fog thins. Level ${level} — ${title}.`,
+		here: 'You are here. One scroll and a running app between us.',
+		vip: 'Crowned form. Only the inner circle sees it.',
+		notFound: 'Nothing out here but fog. I checked.'
+	},
 	levels: ['Novice Wanderer', 'Explorer', 'Scout', 'Cartographer', 'Captain', 'Legend'],
 	xpToast: (xp: number) => `+${xp} XP`
 };
