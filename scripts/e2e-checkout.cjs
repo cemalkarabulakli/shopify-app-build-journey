@@ -41,44 +41,50 @@ mkdirSync(OUT, { recursive: true });
 	await page.waitForTimeout(6000);
 	await page.screenshot({ path: `${OUT}/02-checkout-open.png` });
 
-	// 3. Try to complete with Paddle's test card inside the iframe
-	const f = await frame.contentFrame();
-	const fill = async (sel, val) => {
-		const el = await f.waitForSelector(sel, { timeout: 20000 }).catch(() => null);
-		if (el) { await el.fill(val); return true; }
-		return false;
-	};
+	// 3. Complete with a Paddle test card. Fields live directly in the paddle_frame.
+	const f = page.frame({ name: 'paddle_frame' }) ?? (await frame.contentFrame());
 	const dump = async (tag) => {
 		const txt = await f.evaluate(() => document.body.innerText).catch(() => '');
-		console.log(`[${tag}]`, txt.replace(/\s+/g, ' ').slice(0, 400));
+		console.log(`[${tag}]`, txt.replace(/\s+/g, ' ').slice(0, 300));
 	};
-	await dump('checkout page 1');
-	// One-page checkout: email/country/postcode + card fields (card fields are in nested iframes)
-	await fill('input[name="email"], input[type="email"]', 'vip-e2e@example.com');
-	await fill('input[name="postcode"], input[name="postalCode"], input[autocomplete="postal-code"]', 'SW1A 1AA');
-	const cont = await f.$('button:has-text("Continue"), button[type=submit]:not([disabled])');
-	if (cont) { await cont.click().catch(() => {}); await page.waitForTimeout(3000); }
-	await dump('after continue');
-	await page.screenshot({ path: `${OUT}/03-checkout-form.png` });
+	await f.waitForSelector('input[name="cardNumber"]', { timeout: 30000 });
+	await dump('checkout');
+	const emailField = await f.$('input[type="email"], input[name="email"]');
+	if (emailField) await emailField.fill('vip-e2e@example.com');
+	// Country first — changing it re-prices and re-renders the payment panel.
+	await f.selectOption('select[name="countryCode"]', 'GB').catch(() => {});
+	await page.waitForTimeout(1500);
+	const postcode = await f.$('input[name="postcode"], input[name="postalCode"]');
+	if (postcode) await postcode.fill('SW1A 1AA');
+	await f.click('#panel-card-CARD').catch(() => {});
+	await f.waitForSelector('input[name="cardNumber"]', { timeout: 15000 });
+	await f.fill('input[name="cardHolder"]', 'VIP E2E');
+	await f.fill('input[name="cardNumber"]', CARD);
+	await f.fill('input[name="expiry"]', '12/30');
+	await f.fill('input[name="cvv"]', '100');
+	await page.screenshot({ path: `${OUT}/03-card-filled.png` });
+	// Paddle's one-page checkout submits reliably from a keypress in the last field; a click on the
+	// button sometimes lands during a re-render and is swallowed. Enter first, click as fallback.
+	let declined = '';
+	page.on('response', async (r) => {
+		if (r.status() >= 400 && /paddle\.com/.test(r.url())) {
+			const t = await r.text().catch(() => '');
+			if (/payment-error|declined/i.test(t)) declined = t.slice(0, 160);
+			else console.log('  [http', r.status() + ']', r.url().slice(0, 100), t.slice(0, 160));
+		}
+	});
+	await f.press('input[name="cvv"]', 'Enter');
+	console.log('submitted checkout with card', CARD);
+	await page.waitForTimeout(6000);
+	const still = /Subscribe now|Start your free trial/.test(await f.evaluate(() => document.body.innerText).catch(() => ''));
+	if (still && !declined) { console.log('fallback: clicking submit'); await f.locator('button[type="submit"]').filter({ hasText: /Subscribe|Start your free trial|Pay/ }).last().click(); await page.waitForTimeout(6000); }
+	await page.screenshot({ path: `${OUT}/04-after-submit.png` });
 
-	// card fields live in nested iframes
-	const cardFrames = f.childFrames();
-	console.log('nested frames:', cardFrames.length);
-	for (const cf of cardFrames) {
-		await cf.fill('input[name="cardnumber"], input[autocomplete="cc-number"], input[name="cardNumber"]', CARD).catch(() => {});
-		await cf.fill('input[name="exp-date"], input[autocomplete="cc-exp"], input[name="expiry"]', '12/30').catch(() => {});
-		await cf.fill('input[name="cvc"], input[autocomplete="cc-csc"]', '100').catch(() => {});
-		await cf.fill('input[name="ccname"], input[autocomplete="cc-name"]', 'VIP E2E').catch(() => {});
+	if (CARD !== '4242424242424242') {
+		// Declined-card run: success means Paddle refused it and we stayed on the checkout.
+		if (declined && page.url().includes('/vip')) { console.log('DECLINED AS EXPECTED:', declined); await browser.close(); return; }
+		console.log('DECLINE TEST FAILED — no decline seen; url =', page.url()); await browser.close(); process.exit(1);
 	}
-	await f.fill('input[autocomplete="cc-number"]', CARD).catch(() => {});
-	await f.fill('input[autocomplete="cc-exp"]', '12/30').catch(() => {});
-	await f.fill('input[autocomplete="cc-csc"]', '100').catch(() => {});
-	await f.fill('input[autocomplete="cc-name"]', 'VIP E2E').catch(() => {});
-	await page.waitForTimeout(1000);
-	await page.screenshot({ path: `${OUT}/04-card-filled.png` });
-	const pay = await f.$('button:has-text("Subscribe"), button:has-text("Start trial"), button:has-text("Pay"), button[type=submit]');
-	if (pay) { await pay.click().catch(() => {}); console.log('clicked pay'); }
-	await dump('after pay');
 
 	// 4. Redirect to /welcome
 	try {
@@ -89,6 +95,8 @@ mkdirSync(OUT, { recursive: true });
 		console.log('NO REDIRECT; url =', page.url());
 		await dump('final');
 		await page.screenshot({ path: `${OUT}/05-stuck.png` });
+		await browser.close();
+		process.exit(1);
 	}
 	await browser.close();
 })().catch((e) => { console.error('E2E FAILED:', e.message); process.exit(1); });

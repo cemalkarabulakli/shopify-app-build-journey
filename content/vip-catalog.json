@@ -58,7 +58,8 @@
           "GBP": "9500",
           "EUR": "11000",
           "AUD": "18000"
-        }
+        },
+        "upgradePriceId": "pri_01m114mx9fsdr39vm5h8110ap9"
       },
       "yearly": {
         "priceId": "pri_01m101rzjh4sas4k3ym15wka3e",

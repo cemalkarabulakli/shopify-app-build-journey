@@ -92,6 +92,21 @@ Base directory `/`, no install/build/start overrides, port `3000`. `nixpacks.tom
 | `SESSION_SECRET` | — | ≥32 chars; signs the `session` cookie for `/account` |
 | `RESEND_API_KEY`, `EMAIL_FROM` | — | Sign-in emails via Resend; unset → links are printed to the server log |
 
+### Sandbox end-to-end test
+
+```
+PORT=80 ORIGIN=http://localhost SITE_URL=http://localhost node build   # Paddle's approved sandbox domain is http://localhost (no port)
+BASE=http://localhost npm run e2e:checkout                               # 4242 card → completes trial checkout → /welcome
+CARD=4000000000000002 BASE=http://localhost npm run e2e:checkout         # declined card → stays on checkout, exits 0
+```
+
+Requires the sandbox `.env` and Google Chrome (Playwright uses `channel: 'chrome'`). Screenshots land in `.e2e/`.
+Webhooks are delivered to the public URL in the notification destination, so to exercise the handler locally
+replay a notification's raw payload signed with `PADDLE_WEBHOOK_SECRET` (see `scripts/` history / git log for the snippet).
+
+`content/vip-catalog.json` also carries `advanced.monthly.upgradePriceId`: a no-trial Advanced price used when an
+existing subscriber upgrades (Paddle rejects some item changes onto trial prices).
+
 ### Database (billing mirror)
 
 Paddle is the source of truth; these tables mirror it from verified webhooks so pages never call Paddle on read.
