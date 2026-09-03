@@ -16,6 +16,8 @@
 		{ href: '/account', label: t.nav.account, icon: '🎟️' }
 	];
 	const active = (href: string) => (href === '/' ? page.url.pathname === '/' : page.url.pathname.startsWith(href));
+	// The /switch offer stands alone: no journal chrome in front of cold-outreach visitors.
+	const bare = $derived(page.url.pathname.startsWith('/switch'));
 </script>
 
 <svelte:head>
@@ -30,6 +32,9 @@
 	{@html `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@type': 'WebSite', name: data.site.name, url: data.site.url, description: data.site.description, inLanguage: data.locale, author: { '@type': 'Person', name: data.site.author, url: data.site.url + '/about' } })}</script>`}
 </svelte:head>
 
+{#if bare}
+	{@render children()}
+{:else}
 <header class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-5 pt-6 pb-2">
 	<a href="/" class="font-display text-lg font-extrabold tracking-wide text-ink no-underline">
 		<span class="mr-1.5 inline-block align-middle"><FogDragon level={4} size={34} /></span>{data.site.name}
@@ -63,3 +68,4 @@
 <footer class="mx-auto max-w-5xl border-t border-line px-5 pt-6 pb-12 text-sm text-muted">
 	© {new Date().getFullYear()} {data.site.author} · {t.footer}
 </footer>
+{/if}
