@@ -99,6 +99,17 @@
         "08-eticaret-etkinlikleri",
         "09-podcastler"
       ]
+    },
+    {
+      "n": 9,
+      "title": "Brand & scale",
+      "icon": "📣",
+      "time": "ongoing",
+      "learn": "One product, one funnel per pain. Offer → labelled proof → daily email flows → founder as the face. Premium is a result, not a price. Seven brands founded 2020+ as use cases, and the people to model. The second sale is the brand.",
+      "done": "Two pain-point landing pages with conversion numbers, a 5-email welcome flow sending, and one repeat purchase traced to email, not ads.",
+      "docs": [
+        "11-brand-and-scale"
+      ]
     }
   ]
 }

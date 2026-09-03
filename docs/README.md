@@ -14,6 +14,8 @@ Sıfırdan Shopify app geliştirme sürecinin kaydı. Sırayla okunacak şekilde
 | [07-SHOPIFY-ETKINLIKLERI.md](07-SHOPIFY-ETKINLIKLERI.md) | **Sadece Shopify** etkinlikleri: DotDev, Editions, Connect, partner buluşmaları, app satıcısı etkinlikleri + takip kaynakları | ~20 dk |
 | [08-ETICARET-ETKINLIKLERI.md](08-ETICARET-ETKINLIKLERI.md) | **Genel e-ticaret/DTC** konferansları (TR, Balkanlar, AB, ABD), fiyat duvarı analizi, açık CFP'ler + takvim kaynakları | ~25 dk |
 | [09-PODCASTLER.md](09-PODCASTLER.md) | Shopify/DTC/indie-SaaS podcast'leri — son bölüm tarihleri doğrulanmış, ölüler işaretli + keşif araçları | ~20 dk |
+| [10-CASE-STUDIES.md](10-CASE-STUDIES.md) | Shopify case study'leri para gözüyle okumak: değer havuzu, app'in alabileceği parça, merchant'ın ödeyeceği rakam | ~25 dk |
+| [11-BRAND-AND-SCALE.md](11-BRAND-AND-SCALE.md) | Markalaşma ve ölçekleme: Ali Aslan'ın funnel/e-posta adımları + Gürkanzone'un "premium fiyat sonuçtur" sırası: acı noktası funnel'ları, teklif, kanıt, e-posta/SMS akışları, kurucu yüzü; 2020+ marka use case'leri ve örnek alınacak kişiler — hem mağaza hem app için | ~45 dk |
 | [LEARNING.md](LEARNING.md) | Yol haritası + oturum oturum öğrenme günlüğü | sürekli |
 
 **Okuma sırası:** 00 → 01 → 02 → sonra LEARNING'deki Oturum 2 ile eller klavyeye.

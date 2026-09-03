@@ -99,6 +99,17 @@
         "09-podcastler"
       ],
       "icon": "🏰"
+    },
+    {
+      "n": 9,
+      "title": "Marka & ölçek",
+      "time": "sürekli",
+      "learn": "Tek ürün, her acı noktasına bir funnel. Teklif → etiketli kanıt → günlük e-posta akışları → marka yüzü olarak kurucu. Premium fiyat karar değil sonuçtur. 2020 sonrası kurulmuş yedi marka use case olarak, artı örnek alınacak kişiler. İkinci satış markadır.",
+      "done": "Dönüşüm sayısı olan iki acı-noktası landing page, gönderen 5 e-postalık hoş geldin akışı ve reklama değil e-postaya bağlanan bir tekrar satış.",
+      "docs": [
+        "11-brand-and-scale"
+      ],
+      "icon": "📣"
     }
   ]
 }
