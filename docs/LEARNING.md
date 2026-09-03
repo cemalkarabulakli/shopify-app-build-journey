@@ -1,157 +1,157 @@
-# Öğrenme Günlüğü — Sıfırdan Shopify App
+# Learning Log — Shopify App from Zero
 
-> **Başlangıç noktası:** Bilgisayarda hiçbir şey kurulu değil. Partner hesabı yok. Shopify
-> hakkında bilgi yok. Elimizde sadece: kod yazabilme ve biraz pazarlama sezgisi.
-> Bu dosya o noktadan başlayıp, App Store'da para kazanan bir app'e kadar giden yolun kaydı.
+> **Starting point:** Nothing installed on the computer. No Partner account. No knowledge
+> about Shopify. All we have: the ability to write code and a bit of marketing instinct.
+> This file is the record of the road from that point to an app that makes money on the App Store.
 >
-> Önce oku: [Shopify 101](00-SHOPIFY-101.md) · Terimler: [E-ticaret Sözlüğü](01-ETICARET-TERIMLERI.md)
-> Derinlik: [Shopify Anatomisi](02-SHOPIFY-ANATOMI.md) · Pazar verisi: [Ekosistem Verileri](03-EKOSISTEM-VERILERI.md)
-> Yayın: https://shopifyjourney.cemalbuilds.com
+> Read first: [Shopify 101](00-SHOPIFY-101.md) · Terms: [E-commerce Glossary](01-ECOMMERCE-GLOSSARY.md)
+> Depth: [Shopify Anatomy](02-SHOPIFY-ANATOMY.md) · Market data: [Ecosystem Data](03-ECOSYSTEM-DATA.md)
+> Published at: https://shopifyjourney.cemalbuilds.com
 
 ---
 
-## Kurallar
+## Rules
 
-1. **Önce çalıştır, sonra anla.** Dokümanı baştan sona okumak yok; tıkanınca bak.
-2. **Oturum = 60–90 dk, tek hedef.** Hedef "çalışan bir şey" olmalı, "X'i öğrenmek" değil.
-3. **Yazılmayan oturum olmamış sayılır.** Her oturumun sonunda 5 satır bu dosyaya.
-4. **Her fazın somut çıktısı var.** Çıktı yoksa faz bitmemiştir.
-5. **Teknik faz kısa, merchant fazı uzun.** Platformu öğrenip kimsenin istemediği şeyi
-   yayınlamak bu işin bir numaralı ölüm sebebi.
+1. **Run it first, understand it later.** No reading the docs cover to cover; look things up when stuck.
+2. **Session = 60–90 min, one goal.** The goal must be "something that works", not "learning X".
+3. **A session that isn't written down didn't happen.** Five lines into this file at the end of every session.
+4. **Every phase has a concrete output.** No output, the phase isn't done.
+5. **Technical phase short, merchant phase long.** Learning the platform and then shipping something
+   nobody wants is the number one cause of death in this business.
 
-## Yol haritası
+## Roadmap
 
-| Faz | Süre | Ne öğreniyorum | Bitti sayılması için |
+| Phase | Duration | What I'm learning | Counts as done when |
 |---|---|---|---|
-| **0** Kavramlar | 2 gün | Shopify ekosistemi, app nedir, para nasıl akıyor, arkadaki mimari | [101](00-SHOPIFY-101.md) + [Anatomi](02-SHOPIFY-ANATOMI.md) okundu; §8'deki 5 cümleyi ve "webhook neden iki kez gelir"i kendi kelimelerimle anlatabiliyorum | ⬜ |
-| **1** İlk çalışan app | 1 gün | Partner hesabı, dev store, CLI, `app dev` | Uygulama dev store admin'inde açılıyor | ⬜ |
-| **2** Anatomi | 2 gün | OAuth, session token, embedded, App Bridge | Template'e kendi sayfamı ekledim, isteğin yolunu çizebiliyorum | ⬜ |
-| **3** Veri | 3 gün | Admin GraphQL API, scopes | Ürünleri listeleyen + birini güncelleyen sayfa | ⬜ |
-| **4** Olaylar | 2 gün | Webhooks, app uninstall temizliği | `orders/create` yakalanıp DB'ye yazılıyor | ⬜ |
-| **5** **Problem** | 2 hafta | Merchant görüşmesi, talep testi ([veri](03-EKOSISTEM-VERILERI.md)) | 10 merchant konuşması + 1 cümlelik problem + 1 sayı | ⬜ |
-| **6** MVP | 3 hafta | Kendi app'im | 3 merchant elle kurulmuş, kullanıyor | ⬜ |
-| **7** Para | 3 gün | Billing API, trial, plan | İlk ödeme geldi | ⬜ |
-| **8** Yayın | 1 hafta | App Store listeleme, inceleme | Review'a gönderildi | ⬜ |
+| **0** Concepts | 2 days | The Shopify ecosystem, what an app is, how the money flows, the architecture behind it | [101](00-SHOPIFY-101.md) + [Anatomy](02-SHOPIFY-ANATOMY.md) read; I can explain the 5 sentences in §8 and "why a webhook arrives twice" in my own words | ⬜ |
+| **1** First working app | 1 day | Partner account, dev store, CLI, `app dev` | The app opens in the dev store admin | ⬜ |
+| **2** Anatomy | 2 days | OAuth, session token, embedded, App Bridge | I've added my own page to the template and can draw the path of a request | ⬜ |
+| **3** Data | 3 days | Admin GraphQL API, scopes | A page that lists products + updates one of them | ⬜ |
+| **4** Events | 2 days | Webhooks, app uninstall cleanup | `orders/create` is caught and written to the DB | ⬜ |
+| **5** **Problem** | 2 weeks | Merchant interviews, demand test ([data](03-ECOSYSTEM-DATA.md)) | 10 merchant conversations + a one-sentence problem + 1 number | ⬜ |
+| **6** MVP | 3 weeks | My own app | 3 merchants installed by hand, using it | ⬜ |
+| **7** Money | 3 days | Billing API, trial, plans | The first payment came in | ⬜ |
+| **8** Launch | 1 week | App Store listing, review | Submitted for review | ⬜ |
 
-Faz 0–4 platformu öğrenmek için, **atılabilir kod**. Gerçek ürün Faz 5'te başlıyor.
-Faz 5'e gelmeden kalıcı bir şey inşa etme.
+Phases 0–4 are for learning the platform, **throwaway code**. The real product starts in Phase 5.
+Don't build anything permanent before you reach Phase 5.
 
 ---
 
-## Oturumlar
+## Sessions
 
-### Oturum 0 — 2026-08-25 · Altyapı: günlük sitesi canlıda
+### Session 0 — 2026-08-25 · Infrastructure: the journal site is live
 
-**Hedef:** Öğrendiklerimi yayınlayacağım yer hazır olsun.
-**Yaptım:** SvelteKit + adapter-node, markdown tabanlı günlük, Coolify/Nixpacks ile deploy.
-**Öğrendim:**
-- Nixpacks + `.npmrc engine-strict=true` + gevşek `engines` = sessiz `npm ci` hatası.
-  Node'u üç yerde sabitle: `engines`, `.nvmrc`, `NIXPACKS_NODE_VERSION`.
-- Coolify health check container *içinde* curl/wget arar; Nixpacks Node imajında yoktur.
-- Traefik "no available server" = arkada sağlıklı container yok. Build ayarlarına değil,
-  **deploy loguna** bak.
-**Takıldım:** 503'ü teşhis ederken Coolify UI ayarlarına odaklandım, logu geç okudum.
-**Sonraki adım:** Faz 0 — Shopify'ın ne olduğunu anla.
+**Goal:** Have the place where I'll publish what I learn ready.
+**Did:** SvelteKit + adapter-node, markdown-based journal, deployed with Coolify/Nixpacks.
+**Learned:**
+- Nixpacks + `.npmrc engine-strict=true` + a loose `engines` = silent `npm ci` failure.
+  Pin Node in three places: `engines`, `.nvmrc`, `NIXPACKS_NODE_VERSION`.
+- The Coolify health check looks for curl/wget *inside* the container; the Nixpacks Node image doesn't have them.
+- Traefik "no available server" = no healthy container behind it. Don't look at the build settings,
+  look at the **deploy log**.
+**Stuck on:** While diagnosing the 503 I focused on the Coolify UI settings and read the log too late.
+**Next step:** Phase 0 — understand what Shopify is.
 
-### Oturum 1 — ____ · Faz 0: Kafada resim
+### Session 1 — ____ · Phase 0: The picture in my head
 
-**Hedef:** Tek satır kod yazmadan, ne inşa edeceğimi anlatabilmek.
+**Goal:** Be able to explain what I'm going to build without writing a single line of code.
 
-**Yapılacak (yaklaşık 45 dk):**
-1. [00-SHOPIFY-101.md](00-SHOPIFY-101.md) dosyasını oku, ardından [02-SHOPIFY-ANATOMI.md](02-SHOPIFY-ANATOMI.md).
-2. https://apps.shopify.com adresine git. Bir kategori seç (ör. "Store design" ya da "Marketing").
-   **5 app** incele ve şunları not al: ne yapıyor, fiyatı kaç, kaç yorum almış, en çok şikayet ne?
-   → Şikayetler (1–2 yıldızlı yorumlar) altın değerinde; boşluk oradadır.
-3. Aynı şeyi bir kez de **ücretsiz app'lerde** yap: neden ücretsizler, nasıl para kazanıyorlar?
-4. [01-ETICARET-TERIMLERI.md](01-ETICARET-TERIMLERI.md)'deki "3 formül" bölümünü ezberle.
-5. [03-EKOSISTEM-VERILERI.md](03-EKOSISTEM-VERILERI.md) §4 (merchant app bütçesi) ve §5 (churn)
-   tablolarına bak. İncelediğin 5 app'i bu sayılarla yeniden değerlendir:
-   fiyatı kaç, hangi ciro bandındaki merchant'a satıyor, kaç yorumu var?
+**To do (about 45 min):**
+1. Read [00-SHOPIFY-101.md](00-SHOPIFY-101.md), then [02-SHOPIFY-ANATOMY.md](02-SHOPIFY-ANATOMY.md).
+2. Go to https://apps.shopify.com. Pick a category (e.g. "Store design" or "Marketing").
+   Examine **5 apps** and note the following: what does it do, what's the price, how many reviews has it got, what's the top complaint?
+   → Complaints (1–2 star reviews) are worth gold; that's where the gap is.
+3. Do the same once more for **free apps**: why are they free, how do they make money?
+4. Memorize the "3 formulas" section in [01-ECOMMERCE-GLOSSARY.md](01-ECOMMERCE-GLOSSARY.md).
+5. Look at the tables in [03-ECOSYSTEM-DATA.md](03-ECOSYSTEM-DATA.md) §4 (merchant app budget) and §5 (churn).
+   Re-evaluate the 5 apps you examined against these numbers:
+   what's the price, which revenue band of merchant is it selling to, how many reviews does it have?
 
-**Kontrol sorusu (cevaplayamıyorsan faz bitmemiştir):**
-> "Shopify app nedir, benim sunucumla Shopify arasında kaç yönlü trafik var, para kimden kime akıyor?"
-> "Rate limit neden istek sayısıyla değil puanla ölçülüyor? Webhook neden iki kez gelebilir?"
+**Check question (if you can't answer it, the phase isn't done):**
+> "What is a Shopify app, how many directions of traffic are there between my server and Shopify, who does the money flow from and to?"
+> "Why is the rate limit measured in points rather than request count? Why can a webhook arrive twice?"
 
-**Yaptım:**
-**Öğrendim:**
-**Takıldım:**
-**Sonraki adım:**
+**Did:**
+**Learned:**
+**Stuck on:**
+**Next step:**
 
-### Oturum 2 — ____ · Faz 1: İlk uygulama dev store'da açılıyor
+### Session 2 — ____ · Phase 1: The first app opens in the dev store
 
-**Hedef:** `shopify app dev` çalışsın, uygulama admin panelinde embedded görünsün.
-Kod anlamak yok — sadece **çalışan bir şey görmek**.
+**Goal:** Get `shopify app dev` running, with the app showing up embedded in the admin panel.
+No understanding the code — just **seeing something that works**.
 
-**Adımlar, sırayla:**
+**Steps, in order:**
 
-1. **Partner hesabı** (ücretsiz): https://partners.shopify.com → Sign up.
-   Ülke/işletme bilgisi ister; şahıs olarak da açılıyor.
-2. **Development store** oluştur: Partners paneli → *Stores* → *Add store* →
-   **Development store** → "Start with test data" seç (sahte ürün/sipariş gelsin).
-   Adresi not al: `xxx.myshopify.com`.
-3. **CLI kur** (macOS):
+1. **Partner account** (free): https://partners.shopify.com → Sign up.
+   It asks for country/business details; you can open one as an individual too.
+2. Create a **Development store**: Partners dashboard → *Stores* → *Add store* →
+   **Development store** → choose "Start with test data" (so you get fake products/orders).
+   Note the address: `xxx.myshopify.com`.
+3. **Install the CLI** (macOS):
    ```bash
    brew tap shopify/shopify && brew install shopify-cli
    shopify version
    ```
-   (Alternatif: `npm install -g @shopify/cli`)
-4. **Uygulamayı oluştur** — Shopify'ın resmi başlangıç şablonu:
+   (Alternative: `npm install -g @shopify/cli`)
+4. **Create the app** — Shopify's official starter template:
    ```bash
    cd ~/development/Projects
    shopify app init --name journey-app --template reactRouter --flavor typescript
    cd journey-app
    ```
-   İlk çalıştırmada tarayıcıda Partner hesabına giriş isteyecek.
-5. **Çalıştır:**
+   On the first run it will ask you to log in to your Partner account in the browser.
+5. **Run it:**
    ```bash
    shopify app dev
    ```
-   Dev store'u seçtir. Terminalde çıkan **Preview URL**'e tıkla → *Install app* →
-   uygulama admin'in içinde açılmalı. **İşte bu an Faz 1'in bitişi.**
-6. Dosya yapısını 10 dk gez — **anlamaya çalışma**, sadece nerede ne var:
-   `shopify.app.toml` (app config, scopes) · `app/routes/` (sayfalar) ·
-   `app/shopify.server.ts` (kimlik doğrulama) · `prisma/` (session saklama).
+   Let it pick the dev store. Click the **Preview URL** printed in the terminal → *Install app* →
+   the app should open inside the admin. **That moment is the end of Phase 1.**
+6. Wander around the file structure for 10 min — **don't try to understand it**, just see what lives where:
+   `shopify.app.toml` (app config, scopes) · `app/routes/` (pages) ·
+   `app/shopify.server.ts` (authentication) · `prisma/` (session storage).
 
-**Muhtemel takılmalar:**
-- Tünel/HTTPS uyarısı → CLI kendi tünelini açar, olduğu gibi bırak.
+**Likely snags:**
+- Tunnel/HTTPS warning → the CLI opens its own tunnel, leave it as is.
 - "App already installed" → `shopify app dev --reset`
-- Node sürümü hatası → Node 20+ kurulu olsun (`node -v`).
+- Node version error → make sure Node 20+ is installed (`node -v`).
 
-**Yaptım:**
-**Öğrendim:**
-**Takıldım:**
-**Sonraki adım:**
+**Did:**
+**Learned:**
+**Stuck on:**
+**Next step:**
 
-### Oturum 3 — ____ · Faz 2: İstek nereden geliyor?
+### Session 3 — ____ · Phase 2: Where does the request come from?
 
-**Hedef:** Bir isteğin admin'den benim koduma nasıl ulaştığını çizebilmek.
-**Yapılacak:** `app/shopify.server.ts` içindeki `authenticate.admin(request)` çağrısını takip et.
-`app/routes/app._index.tsx`'e mağaza adını yazan bir satır ekle. Sayfayı yenile, değişikliği gör.
-**Kontrol sorusu:** "Cookie yerine neden session token var?"
+**Goal:** Be able to draw how a request gets from the admin to my code.
+**To do:** Follow the `authenticate.admin(request)` call inside `app/shopify.server.ts`.
+Add a line to `app/routes/app._index.tsx` that prints the store name. Refresh the page, see the change.
+**Check question:** "Why a session token instead of a cookie?"
 
-**Yaptım:**
-**Öğrendim:**
-**Takıldım:**
-**Sonraki adım:**
+**Did:**
+**Learned:**
+**Stuck on:**
+**Next step:**
 
 ---
 
-## Kavram sözlüğü (kendi cümlelerimle)
+## Concept glossary (in my own words)
 
-Bir kavramı **kendi kelimelerinle** yazamıyorsan öğrenmemişsindir.
-Resmî tanımlar [101](00-SHOPIFY-101.md)'de; buraya senin versiyonun gelir.
+If you can't write a concept down **in your own words**, you haven't learned it.
+The official definitions are in [101](00-SHOPIFY-101.md); your version goes here.
 
-| Kavram | Benim cümlem |
+| Concept | My sentence |
 |---|---|
 | Embedded app | |
 | Session token | |
 | Scopes | |
 | Webhook | |
 
-## Açık sorular (cevap bulunca tarih at)
+## Open questions (date them when you find the answer)
 
-- [ ] Şablon neden React Router? SvelteKit ile Shopify app olur mu, zahmete değer mi?
-- [ ] Template'te Prisma + SQLite var; prod'da session'ı nerede saklamalı?
-- [ ] En az hangi scope'larla iş görülür? Fazla izin kurulum oranını ne kadar düşürüyor?
-- [ ] App Store inceleme süreci ne kadar sürüyor, en sık ret sebepleri ne?
-- [ ] Ortalama uninstall (churn) oranı ne? Hangi kategori daha yapışkan?
+- [ ] Why is the template React Router? Can you build a Shopify app with SvelteKit, and is it worth the trouble?
+- [ ] The template has Prisma + SQLite; where should sessions be stored in prod?
+- [ ] What's the minimum set of scopes you can get by with? How much do excess permissions lower the install rate?
+- [ ] How long does the App Store review process take, and what are the most common rejection reasons?
+- [ ] What's the average uninstall (churn) rate? Which category is stickier?

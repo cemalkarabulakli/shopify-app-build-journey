@@ -43,7 +43,7 @@ app-shaped for a solo builder: **revenue growth, market expansion, operational e
 | **Cocunat** | Beauty | 50% more time on innovation; 20+ markets | "Time back" = operating cost removed | Ops automation: returns, support context, reporting | €200–600/mo, priced on hours saved |
 
 **Read the last column.** The merchants Shopify chooses to showcase are exactly the ~65,000 stores that
-spend >$100/month on apps (see [03-EKOSISTEM-VERILERI](03-EKOSISTEM-VERILERI.md) §4). None of them are
+spend >$100/month on apps (see [03-ECOSYSTEM-DATA](03-ECOSYSTEM-DATA.md) §4). None of them are
 price-sensitive about a €300/month tool that moves a number they already measure.
 
 ## 2. Patterns — what the money says
@@ -63,7 +63,7 @@ which is why "charge more" is almost always the right correction. A €300/month
 - Repeat/loyalty (WOW, Original's, BrainGain): 3.5× repeat orders is the single largest multiplier in
   any story — and loyalty apps are fewer and pricier than SEO/popup apps.
 - B2B (Vondels, Solberg, MR MARVIS): wholesale merchants have budgets and procurement habits; the App
-  Store's B2B category is thin (see [03](03-EKOSISTEM-VERILERI.md) §7b).
+  Store's B2B category is thin (see [03](03-ECOSYSTEM-DATA.md) §7b).
 
 ### Pattern D: "time back" is a price, not a vibe
 Cocunat's "50% more time on innovation" is the ops-automation pitch. Price it on hours:
@@ -97,7 +97,7 @@ Take Pattern C. A retention/subscription tool for consumable brands in the €1�
 - **Bonuses:** a merchant-facing dashboard that *proves* the lift (the thing that makes the guarantee safe).
 
 50 merchants × €149 = **€7,450 MRR** — inside the 3–15k/month band a solo builder can actually reach
-([03](03-EKOSISTEM-VERILERI.md) §2), with churn structurally low because the tool is tied to revenue.
+([03](03-ECOSYSTEM-DATA.md) §2), with churn structurally low because the tool is tied to revenue.
 
 ## 5. What to do with this file (Phase 5 — Problem)
 
@@ -112,6 +112,6 @@ document exists to make that conversation land.
 ## Sources
 
 - [Shopify case studies (TR index)](https://www.shopify.com/tr/case-studies) — brand metrics quoted as published, August 2026
-- [03-EKOSISTEM-VERILERI.md](03-EKOSISTEM-VERILERI.md) — merchant app budgets, price bands, churn, category gaps
-- [06-MERCHANT-PSIKOLOJISI.md](06-MERCHANT-PSIKOLOJISI.md) — who pays what at which stage
+- [03-ECOSYSTEM-DATA.md](03-ECOSYSTEM-DATA.md) — merchant app budgets, price bands, churn, category gaps
+- [06-MERCHANT-PSYCHOLOGY.md](06-MERCHANT-PSYCHOLOGY.md) — who pays what at which stage
 - Alex Hormozi, *$100M Offers* (value equation, Grand Slam Offer), *$100M Leads* (volume over strategy)

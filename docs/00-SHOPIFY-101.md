@@ -1,151 +1,152 @@
-# Shopify 101 — Hiç Bilmeyen Yazılımcı İçin
+# Shopify 101 — For the Developer Who Knows Nothing About It
 
-> Bu dosyayı okuyan kişi: **kod yazmayı biliyor**, pazarlamadan biraz anlıyor, Shopify hakkında
-> **sıfır** bilgisi var. Amaç: 30 dakika okuduktan sonra "Shopify app nedir, ben ne yapacağım,
-> para nereden geliyor" sorularına cevap verebilmek. Kurulum yok, sadece kafada net resim.
+> The person reading this file: **knows how to write code**, understands a bit of marketing, has
+> **zero** knowledge of Shopify. Goal: after 30 minutes of reading, be able to answer "what is a
+> Shopify app, what am I going to build, where does the money come from". No setup, just a clear
+> picture in your head.
 
 ---
 
-## 1. Shopify tam olarak ne?
+## 1. What exactly is Shopify?
 
-Bir e-ticaret **SaaS**'ı. İşletme aylık ücret öder, karşılığında hazır bir online mağaza alır:
-ürün yönetimi, sepet, ödeme, kargo, vergi, admin paneli. Kod yazmadan mağaza açarsın.
+An e-commerce **SaaS**. A business pays a monthly fee and gets a ready-made online store in return:
+product management, cart, payments, shipping, tax, admin panel. You open a store without writing code.
 
-Ekosistemde üç taraf var:
+There are three parties in the ecosystem:
 
-| Taraf | Kim | Ne ister |
+| Party | Who | What they want |
 |---|---|---|
-| **Merchant** (satıcı) | Mağaza sahibi. Bizim müşterimiz. | Daha çok satış, daha az manuel iş |
-| **Shopify** | Platform | Ekosistemin büyümesi, komisyon |
-| **Partner / Developer** | **Biz** | Merchant'a araç satıp para kazanmak |
+| **Merchant** (seller) | The store owner. Our customer. | More sales, less manual work |
+| **Shopify** | The platform | Ecosystem growth, commission |
+| **Partner / Developer** | **Us** | Sell tools to merchants and make money |
 
-Kritik nokta: **bizim müşterimiz Shopify değil, merchant.** Shopify sadece dağıtım kanalı —
-App Store'u işleten, faturayı kesen, parayı toplayan aracı.
+Critical point: **our customer is the merchant, not Shopify.** Shopify is just the distribution
+channel — the intermediary that runs the App Store, issues the invoice and collects the money.
 
-## 2. Shopify app nedir?
+## 2. What is a Shopify app?
 
-Shopify'ın kendi başına yapmadığı bir işi yapan, merchant'ın mağazasına **kurduğu** yazılım.
+Software that does a job Shopify doesn't do on its own, which the merchant **installs** into their store.
 
-Örnekler (gerçek App Store kategorileri):
-- Otomatik ürün yorumu toplama ve gösterme
-- Terk edilen sepete WhatsApp/SMS hatırlatma
-- Stok azaldığında tedarikçiye otomatik sipariş
-- Kargo etiketi basma, iade yönetimi
-- Ürün sayfasına "bunu da al" önerisi
+Examples (real App Store categories):
+- Automatically collecting and displaying product reviews
+- WhatsApp/SMS reminders for abandoned carts
+- Automatic reorders to the supplier when stock runs low
+- Printing shipping labels, managing returns
+- "Buy this too" recommendations on the product page
 
-Teknik olarak app **Shopify'ın sunucusunda çalışmaz.** Kendi sunucunda (bizim durumda Coolify'da)
-duran normal bir web uygulamasıdır. Shopify sadece:
-1. Merchant'ı sana OAuth ile yollar,
-2. Senin uygulamanı admin panelinin içinde **iframe** ile gösterir,
-3. Sana mağazanın verisine erişecek bir **access token** verir.
+Technically, the app **does not run on Shopify's servers.** It is a normal web application sitting on
+your own server (in our case, on Coolify). Shopify only:
+1. Sends the merchant to you via OAuth,
+2. Shows your application inside the admin panel in an **iframe**,
+3. Gives you an **access token** to access the store's data.
 
-Yani bildiğin web app. Yenisi: kimlik doğrulama akışı, API'ler ve faturalandırma Shopify'a bağlı.
+So it's a web app as you know it. What's new: the authentication flow, the APIs and billing are tied to Shopify.
 
-## 3. Zihinsel model — parçalar
+## 3. Mental model — the pieces
 
 ```
                  ┌────────────────────────────────────────────┐
-                 │  Shopify Admin (merchant'ın gördüğü panel) │
+                 │  Shopify Admin (what the merchant sees)    │
                  │  ┌──────────────────────────────────────┐  │
-   merchant ───► │  │  <iframe> SENİN UYGULAMAN            │  │
-                 │  │  (senin sunucunda çalışıyor)         │  │
+   merchant ───► │  │  <iframe> YOUR APP                   │  │
+                 │  │  (running on your server)            │  │
                  │  └──────────────────────────────────────┘  │
                  └────────────────────────────────────────────┘
-                            │  Admin GraphQL API (sen → Shopify: veri oku/yaz)
+                            │  Admin GraphQL API (you → Shopify: read/write data)
                             ▼
                  ┌────────────────────────────────────────────┐
-                 │  Shopify: ürünler, siparişler, müşteriler  │
+                 │  Shopify: products, orders, customers      │
                  └────────────────────────────────────────────┘
-                            │  Webhook (Shopify → sen: "sipariş geldi")
+                            │  Webhook (Shopify → you: "an order came in")
                             ▼
-                     senin sunucun / veritabanın
+                     your server / your database
 ```
 
-Üç yön var, karıştırma:
-- **iframe** → merchant senin arayüzünü admin içinde görür (buna *embedded app* denir).
-- **API çağrısı** → sen Shopify'dan veri istersin. GraphQL. (REST API artık eski, yenisini yazma.)
-- **Webhook** → Shopify sana olay bildirir. Sipariş oluştu, ürün silindi, app kaldırıldı.
+There are three directions, don't mix them up:
+- **iframe** → the merchant sees your UI inside the admin (this is called an *embedded app*).
+- **API call** → you ask Shopify for data. GraphQL. (The REST API is legacy now; don't write new code against it.)
+- **Webhook** → Shopify notifies you of an event. Order created, product deleted, app uninstalled.
 
-## 4. Sözlük — bunları bilmeden ilerlenmez
+## 4. Glossary — you can't move forward without these
 
-| Terim | Ne demek |
+| Term | What it means |
 |---|---|
-| **Merchant** | Mağaza sahibi. Müşterin. |
-| **Store / shop** | Bir mağaza. `filanca.myshopify.com` gibi kalıcı bir adı vardır. |
-| **Partner hesabı** | Geliştirici hesabın. Ücretsiz. App'ler ve test mağazaları burada. |
-| **Development store** | Ücretsiz, sahte veriyle dolu test mağazası. Gerçek satış yapamaz. Burada geliştirirsin. |
-| **Embedded app** | Admin içinde iframe'de açılan app. Standart budur. |
-| **App Bridge** | iframe içindeki senin JS'inin, dıştaki admin ile konuşmasını sağlayan Shopify kütüphanesi (modal aç, yönlendir, toast göster). |
-| **Session token** | Embedded app'te kimlik. iframe olduğu için cookie güvenilmez; her istekte kısa ömürlü bir JWT gelir. |
-| **Access token** | Merchant app'i kurunca aldığın, o mağazanın API'sine erişim anahtarı. Mağaza başına bir tane. |
-| **Scopes** | İzinler. `read_products`, `write_orders` gibi. İstediğin her izin kurulum ekranında merchant'a gösterilir — fazlası kurulumu düşürür. |
-| **Admin GraphQL API** | Mağaza verisini okuduğun/yazdığın ana API. |
-| **Webhook** | Shopify'ın sana attığı olay bildirimi (HTTP POST). |
-| **Extension** | App'inin, admin dışında bir yere kod enjekte eden parçası (aşağıda). |
-| **Theme** | Mağazanın vitrini (storefront) — Liquid şablonlarıyla yazılmış tema. App'ten ayrı bir dünya. |
-| **Liquid** | Shopify'ın tema şablon dili. App yazarken az, tema işine girersen çok görürsün. |
-| **App Store** | apps.shopify.com — app'lerin listelendiği pazar yeri. Buraya girmek **inceleme (review)** gerektirir. |
-| **Custom app** | Tek bir mağaza için yazılan, App Store'a girmeyen app. İnceleme yok. |
-| **Shopify Functions** | Shopify'ın kendi altyapısında çalışan WASM kodu (indirim mantığı, kargo kuralı). Nadir ama güçlü. |
+| **Merchant** | The store owner. Your customer. |
+| **Store / shop** | A single store. Has a permanent name like `something.myshopify.com`. |
+| **Partner account** | Your developer account. Free. Your apps and test stores live here. |
+| **Development store** | A free test store filled with fake data. Can't make real sales. This is where you develop. |
+| **Embedded app** | An app that opens in an iframe inside the admin. This is the standard. |
+| **App Bridge** | Shopify's library that lets your JS inside the iframe talk to the admin outside it (open a modal, redirect, show a toast). |
+| **Session token** | Identity in an embedded app. Because it's an iframe, cookies can't be trusted; a short-lived JWT comes with every request. |
+| **Access token** | The key you receive when a merchant installs the app, granting access to that store's API. One per store. |
+| **Scopes** | Permissions. Like `read_products`, `write_orders`. Every permission you ask for is shown to the merchant on the install screen — asking for too many lowers installs. |
+| **Admin GraphQL API** | The main API for reading/writing store data. |
+| **Webhook** | An event notification Shopify sends you (HTTP POST). |
+| **Extension** | The part of your app that injects code somewhere outside the admin (see below). |
+| **Theme** | The store's storefront — a theme written with Liquid templates. A separate world from the app. |
+| **Liquid** | Shopify's theme templating language. You'll see little of it writing apps, a lot of it if you get into theme work. |
+| **App Store** | apps.shopify.com — the marketplace where apps are listed. Getting in requires **review**. |
+| **Custom app** | An app written for a single store, not listed on the App Store. No review. |
+| **Shopify Functions** | WASM code that runs on Shopify's own infrastructure (discount logic, shipping rules). Rare but powerful. |
 
-## 5. App çeşitleri — ne yapacağına karar vermek
+## 5. Types of apps — deciding what to build
 
-**Public app** — App Store'da listelenir, herkes kurar. Ölçeklenir, ama inceleme sürecinden geçer.
-👉 *Hedefimiz bu.*
+**Public app** — Listed on the App Store, anyone can install it. Scales, but goes through the review process.
+👉 *This is our target.*
 
-**Custom app** — Tek merchant için. İnceleme yok, hızlı. Danışmanlık işi gibi; ölçeklenmez ama
-ilk parayı hızlı getirir ve gerçek problemi öğretir.
+**Custom app** — For a single merchant. No review, fast. Like consulting work; doesn't scale, but
+brings in the first money quickly and teaches you the real problem.
 
-**Extension'lar** — App'inin admin dışına uzanan parçaları:
-- *Theme app extension* → vitrine blok ekler (ör. ürün sayfasında yorum kutusu)
-- *Checkout UI extension* → ödeme sayfasına alan ekler (Plus planı gerektiren kısımlar var)
-- *Admin UI extension* → admin'in kendi sayfalarına buton/panel ekler
-- *Shopify Functions* → indirim/kargo mantığını Shopify'ın içinde çalıştırır
+**Extensions** — Parts of your app that reach outside the admin:
+- *Theme app extension* → adds a block to the storefront (e.g. a review box on the product page)
+- *Checkout UI extension* → adds fields to the checkout page (some parts require the Plus plan)
+- *Admin UI extension* → adds buttons/panels to the admin's own pages
+- *Shopify Functions* → runs discount/shipping logic inside Shopify
 
-Başlangıçta sadece **embedded admin app** yeter. Extension'lar sonra.
+At the start, an **embedded admin app** alone is enough. Extensions come later.
 
-## 6. Para nasıl kazanılıyor?
+## 6. How is money made?
 
-Merchant'tan **abonelik** alırsın (tipik: 9–99 $/ay, bazıları kullanım başına). Parayı sen
-tahsil etmezsin: **Billing API** ile Shopify merchant'ın mevcut faturasına ekler, keser, sana öder.
-Kredi kartı entegrasyonu yok — bu büyük kolaylık.
+You charge the merchant a **subscription** (typical: $9–99/mo, some usage-based). You don't collect
+the money yourself: via the **Billing API**, Shopify adds it to the merchant's existing invoice,
+charges it, and pays you. No credit card integration — this is a huge convenience.
 
-Shopify bir gelir payı alır. Şu anki genel çerçeve: yıllık belirli bir eşiğe kadar %0, üstü için
-pay alınıyor. **Oranlar değişiyor — başvuru anında Partner dokümanından teyit et**, buradaki
-sayıya güvenme.
+Shopify takes a revenue share. The current general framework: 0% up to a certain annual threshold,
+a share above it. **The rates change — confirm them in the Partner docs at the time you apply**,
+don't trust the number here.
 
-Gerçekçi büyüklük duygusu: 30 $/ay × 50 merchant = 1.500 $/ay. Bu, App Store'da orta-küçük ama
-gerçek bir app demek. Hedefi buradan kur, "milyonlarca merchant var" diye değil.
+A realistic sense of scale: $30/mo × 50 merchants = $1,500/mo. That's a small-to-mid but real app on
+the App Store. Set your target from here, not from "there are millions of merchants".
 
-## 7. Neden bu iş yazılımcı için cazip — ve nerede tuzak var
+## 7. Why this business is attractive for a developer — and where the trap is
 
-**Cazip:**
-- Ödeme altyapısı, kimlik doğrulama, dağıtım kanalı hazır geliyor.
-- Müşterin zaten para ödeyen bir işletme; B2C'deki "bedava bekleyen kullanıcı" problemi yok.
-- Merchant bulmak kolay: ne satacaklarını, cirolarını, sorunlarını açıkça konuşuyorlar.
+**Attractive:**
+- Payment infrastructure, authentication and the distribution channel come ready-made.
+- Your customer is already a paying business; no B2C "user waiting for free stuff" problem.
+- Merchants are easy to find: they openly talk about what they sell, their revenue, their problems.
 
-**Tuzak:**
-- App Store rekabeti sert; her popüler kategoride 50+ app var.
-- Merchant'lar app'i sepetteki eşya gibi kurar, bir ay sonra siler. **Churn yüksektir.**
-- "Güzel app" satmıyor; **ölçülebilir sonuç** satıyor (dönüşüm arttı, şu kadar saat kazandı).
-- En büyük hata: platformu öğrenip 3 ay kod yazıp, kimsenin istemediği bir şeyi yayınlamak.
+**Trap:**
+- App Store competition is fierce; every popular category has 50+ apps.
+- Merchants install apps like items in a shopping cart and delete them a month later. **Churn is high.**
+- A "nice app" doesn't sell; a **measurable result** sells (conversion went up, saved this many hours).
+- The biggest mistake: learn the platform, write code for 3 months, then publish something nobody wants.
 
-Bu yüzden yol haritasında teknik ısınma **kasıtlı olarak kısa**, sonra merchant konuşmaları geliyor.
+That's why in the roadmap the technical warm-up is **deliberately short**, followed by merchant conversations.
 
-## 8. Kafada net olması gereken 5 cümle
+## 8. The 5 sentences that need to be clear in your head
 
-1. Shopify app = kendi sunucumda çalışan, admin'de iframe ile görünen normal bir web uygulaması.
-2. Merchant kurar → OAuth → bana o mağaza için bir access token düşer.
-3. Veriyi Admin GraphQL API ile okurum, olayları webhook ile duyarım.
-4. Parayı Billing API ile Shopify tahsil eder, bana öder.
-5. Zor kısım kod değil; **hangi merchant'ın hangi acısını çözdüğüm.**
+1. Shopify app = a normal web application running on my own server, shown in the admin via an iframe.
+2. Merchant installs → OAuth → I get an access token for that store.
+3. I read data with the Admin GraphQL API, I hear about events via webhooks.
+4. Shopify collects the money via the Billing API and pays me.
+5. The hard part isn't the code; it's **which merchant's which pain I'm solving.**
 
-## 9. Sırada ne var
+## 9. What's next
 
-Hiçbir şey kurmadan buraya kadar geldik. Kurulum ve ilk çalışan uygulama:
-👉 [LEARNING.md](LEARNING.md) — Oturum 1.
+We got this far without installing anything. Setup and the first running application:
+👉 [LEARNING.md](LEARNING.md) — Session 1.
 
 ---
 
-*Kaynaklar: shopify.dev (resmi doküman), partners.shopify.com. Bu dosya öğrendikçe düzeltilir —
-yanlış bir şey görürsen değiştir, tarih at.*
+*Sources: shopify.dev (official docs), partners.shopify.com. This file gets corrected as we learn —
+if you see something wrong, change it and add a date.*

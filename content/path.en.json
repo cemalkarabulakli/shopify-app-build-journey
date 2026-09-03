@@ -11,8 +11,8 @@
       "done": "I can explain the whole model in my own words — including why a webhook can arrive twice.",
       "docs": [
         "00-shopify-101",
-        "01-eticaret-terimleri",
-        "02-shopify-anatomi"
+        "01-ecommerce-glossary",
+        "02-shopify-anatomy"
       ],
       "status": "done"
     },
@@ -63,9 +63,10 @@
       "learn": "Market economics, merchant psychology, interviews, demand testing.",
       "done": "10 merchant conversations, one problem in one sentence, one number.",
       "docs": [
-        "03-ekosistem-verileri",
-        "06-merchant-psikolojisi",
-        "05-kisiler-ve-vizyon"
+        "03-ecosystem-data",
+        "06-merchant-psychology",
+        "05-people-and-vision",
+        "10-case-studies"
       ]
     },
     {
@@ -94,10 +95,10 @@
       "learn": "App Store listing, the review process, early-warning system, community.",
       "done": "Submitted for review.",
       "docs": [
-        "04-kaynaklar-ve-erken-uyari",
-        "07-shopify-etkinlikleri",
-        "08-eticaret-etkinlikleri",
-        "09-podcastler"
+        "04-sources-and-early-warning",
+        "07-shopify-events",
+        "08-ecommerce-events",
+        "09-podcasts"
       ]
     },
     {

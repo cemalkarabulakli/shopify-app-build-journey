@@ -7,9 +7,9 @@ import { rewriteRelativeMarkdownLinks } from '../rewriteRelativeMarkdownLinks';
 
 describe('rewriteRelativeMarkdownLinks', () => {
 	it('points relative .md links at the docs route, keeps anchors, ignores absolute URLs', () => {
-		const md = 'see [x](03-EKOSISTEM-VERILERI.md#churn), [y](https://a.b/c.md), [z](/posts/q), [w](LEARNING.md)';
+		const md = 'see [x](03-ECOSYSTEM-DATA.md#churn), [y](https://a.b/c.md), [z](/posts/q), [w](LEARNING.md)';
 		expect(rewriteRelativeMarkdownLinks(md, '/docs')).toBe(
-			'see [x](/docs/03-ekosistem-verileri#churn), [y](https://a.b/c.md), [z](/posts/q), [w](/docs/learning)'
+			'see [x](/docs/03-ecosystem-data#churn), [y](https://a.b/c.md), [z](/posts/q), [w](/docs/learning)'
 		);
 	});
 });

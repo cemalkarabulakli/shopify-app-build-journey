@@ -16,6 +16,10 @@ export const en = {
 		doneWhen: 'Done when:',
 		read: 'Read',
 		status: { done: 'Conquered', next: 'You are here', todo: 'In the fog' },
+		taskDone: 'I did this',
+		sealedPhase: 'Sealed — finish the phase before it',
+		sealedScroll: 'Sealed',
+		phaseDone: (title: string) => `🏁 ${title} complete!`,
 		badgeEarned: (title: string) => `🏅 ${title} badge!`
 	},
 	journal: { eyebrow: "Captain's log", title: 'Journal', empty: 'No entries yet.', back: '← Back to the log' },
@@ -29,7 +33,14 @@ export const en = {
 		markRead: (xp: number) => `Mark as read → +${xp} XP`,
 		marked: '✓ Scroll read',
 		readLabel: 'Read',
-		trNotice: 'This scroll is currently in Turkish; an English version is coming.'
+		trNotice: '',
+		sealed: 'Sealed',
+		sealedLede: 'Scrolls open one at a time. Read the one before it and tick the phase task on the Map to break the seal.',
+		readFirst: (title: string) => `Read “${title}” first`,
+		finishPhase: (phase: string) => `Finish ${phase} on the Map first`,
+		unlockNext: 'Mark as read to unseal the next scroll',
+		unsealed: (title: string) => `🔓 Unsealed: ${title}`,
+		toMap: '→ Map'
 	},
 	about: { eyebrow: 'Traveller', title: (name: string) => `I'm ${name}`, p1: "A solo founder building a Shopify app and logging everything here — the wins, the wrong turns, and the numbers.", p2: "If you're a Shopify merchant who wants to try the app early, or another traveller comparing notes, say hi." },
 	error: { lost: 'You walked off the map.', back: 'Back to the map' },

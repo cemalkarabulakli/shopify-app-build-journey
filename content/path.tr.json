@@ -10,8 +10,8 @@
       "done": "Tüm modeli kendi kelimelerimle anlatabiliyorum — webhook'un neden iki kez geldiği dahil.",
       "docs": [
         "00-shopify-101",
-        "01-eticaret-terimleri",
-        "02-shopify-anatomi"
+        "01-ecommerce-glossary",
+        "02-shopify-anatomy"
       ],
       "status": "done",
       "icon": "🧭"
@@ -62,9 +62,10 @@
       "learn": "Pazarın ekonomisi, merchant psikolojisi, görüşme, talep testi.",
       "done": "10 merchant görüşmesi, tek cümlelik bir problem, bir sayı.",
       "docs": [
-        "03-ekosistem-verileri",
-        "06-merchant-psikolojisi",
-        "05-kisiler-ve-vizyon"
+        "03-ecosystem-data",
+        "06-merchant-psychology",
+        "05-people-and-vision",
+        "10-case-studies"
       ],
       "icon": "🔍"
     },
@@ -93,10 +94,10 @@
       "learn": "App Store listeleme, inceleme süreci, erken uyarı sistemi, topluluk.",
       "done": "Review'a gönderildi.",
       "docs": [
-        "04-kaynaklar-ve-erken-uyari",
-        "07-shopify-etkinlikleri",
-        "08-eticaret-etkinlikleri",
-        "09-podcastler"
+        "04-sources-and-early-warning",
+        "07-shopify-events",
+        "08-ecommerce-events",
+        "09-podcasts"
       ],
       "icon": "🏰"
     },

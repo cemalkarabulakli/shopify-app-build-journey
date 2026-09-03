@@ -18,6 +18,10 @@ export const tr: Messages = {
 		doneWhen: 'Bitti sayılır:',
 		read: 'Oku',
 		status: { done: 'Fethedildi', next: 'Buradasın', todo: 'Sisli' },
+		taskDone: 'Bunu yaptım',
+		sealedPhase: 'Mühürlü — önce önceki fazı bitir',
+		sealedScroll: 'Mühürlü',
+		phaseDone: (title) => `🏁 ${title} tamamlandı!`,
 		badgeEarned: (title) => `🏅 ${title} rozeti!`
 	},
 	journal: { eyebrow: 'Seyir defteri', title: 'Günlük', empty: 'Henüz kayıt yok.', back: '← Seyir defteri' },
@@ -31,7 +35,14 @@ export const tr: Messages = {
 		markRead: (xp) => `Okudum → +${xp} XP`,
 		marked: '✓ Parşömen okundu',
 		readLabel: 'Okundu',
-		trNotice: ''
+		trNotice: '',
+		sealed: 'Mühürlü',
+		sealedLede: 'Parşömenler sırayla açılır. Bir öncekini oku ve Harita’da fazın görevini işaretle; mühür kırılır.',
+		readFirst: (title) => `Önce “${title}” oku`,
+		finishPhase: (phase) => `Önce Harita’da ${phase}’i bitir`,
+		unlockNext: 'Okudum de, sonraki parşömen açılsın',
+		unsealed: (title) => `🔓 Mühür kırıldı: ${title}`,
+		toMap: '→ Harita'
 	},
 	about: { eyebrow: 'Gezgin', title: (name) => `Ben ${name}`, p1: 'Tek kişilik bir kurucuyum; bir Shopify app’i inşa ediyorum ve her şeyi burada — kazanımları, yanlış dönüşleri ve sayıları — kaydediyorum.', p2: 'App’i erkenden denemek isteyen bir Shopify merchant’ıysan ya da notları karşılaştırmak isteyen bir başka gezginsen, selam ver.' },
 	error: { lost: 'Haritanın dışına çıktın.', back: 'Haritaya dön' },
