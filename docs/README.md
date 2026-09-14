@@ -16,11 +16,15 @@ A record of the process of building a Shopify app from scratch. Numbered to be r
 | [09-PODCASTS.md](09-PODCASTS.md) | Shopify/DTC/indie-SaaS podcasts — latest episode dates verified, dead ones marked + discovery tools | ~20 min |
 | [10-CASE-STUDIES.md](10-CASE-STUDIES.md) | Reading Shopify case studies through a money lens: the value pool, the slice an app can take, the number the merchant will pay | ~25 min |
 | [11-BRAND-AND-SCALE.md](11-BRAND-AND-SCALE.md) | Branding and scaling: Ali Aslan's funnel/email steps + Gürkanzone's "premium price is a result" sequence: pain-point funnels, offer, proof, email/SMS flows, the founder's face; 2020+ brand use cases and people to model — for both stores and apps | ~45 min |
+| [12-PROBLEM-SELECTION.md](12-PROBLEM-SELECTION.md) | **The painkiller workshop**: pick the niche, mine competitor reviews for real pains, interview, and write the one-sentence problem. Run before building anything in Phase 5 | ~25 min |
+| [13-APP-ORIGIN-STORIES.md](13-APP-ORIGIN-STORIES.md) | The apps merchants actually have installed: what each founder saw, what v1 did, how the first 100 customers arrived, and where it got to | ~30 min |
 | [LEARNING.md](LEARNING.md) | Roadmap + session-by-session learning log | ongoing |
 
 **Reading order:** 00 → 01 → 02 → then hands on the keyboard with Session 2 in LEARNING.
-Be sure to read 03 + 06 before Phase 5 (idea/problem selection) — they tie the economics of the
-market and the psychology of the buyer to numbers. Read 04 before publishing your first app (set up
+Phase 5 (idea/problem selection) has its own arc, and the order matters — it builds an argument:
+**03** (the market's economics) → **06** (who pays and how much) → **10** (where merchants already
+pay) → **13** (how winning apps found their one problem) → **12** (the workshop where you do it) →
+**05** (who to follow while you do). Don't start at 12; it assumes 03 and 06. Read 04 before publishing your first app (set up
 the RSS feeds, run the early-warning system). 05 is the answer to "who should I listen to" — no rush,
 but high return.
 

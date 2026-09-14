@@ -59,13 +59,15 @@
       "n": 5,
       "title": "Problem",
       "time": "2 hafta",
-      "learn": "Pazarın ekonomisi, merchant psikolojisi, görüşme, talep testi.",
-      "done": "10 merchant görüşmesi, tek cümlelik bir problem, bir sayı.",
+      "learn": "Pazarın ekonomisi, kim ne kadar ödüyor, kazanan app'ler tek problemlerini nasıl buldu — sonra painkiller atölyesi: rakip yorumlarını maden gibi kaz, on merchant ile konuş, problemi tek cümleye indir.",
+      "done": "On merchant görüşmesi, her boşluğu dolu bir problem cümlesi, merchant'ın kendi ağzından bir sayı ve çalışmaya başlamış en ucuz kanıt.",
       "docs": [
         "03-ecosystem-data",
         "06-merchant-psychology",
-        "05-people-and-vision",
-        "10-case-studies"
+        "10-case-studies",
+        "13-app-origin-stories",
+        "12-problem-selection",
+        "05-people-and-vision"
       ],
       "icon": "🔍"
     },

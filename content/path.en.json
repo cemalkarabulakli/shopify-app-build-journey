@@ -60,13 +60,15 @@
       "title": "The problem",
       "icon": "🔍",
       "time": "2 weeks",
-      "learn": "Market economics, merchant psychology, interviews, demand testing.",
-      "done": "10 merchant conversations, one problem in one sentence, one number.",
+      "learn": "Market economics, who pays and how much, how winning apps found their one problem — then the painkiller workshop: mine competitor reviews, interview ten merchants, write the problem in one sentence.",
+      "done": "Ten merchant conversations, a problem statement with every slot filled, a number from the merchant's own mouth, and the cheapest proof already running.",
       "docs": [
         "03-ecosystem-data",
         "06-merchant-psychology",
-        "05-people-and-vision",
-        "10-case-studies"
+        "10-case-studies",
+        "13-app-origin-stories",
+        "12-problem-selection",
+        "05-people-and-vision"
       ]
     },
     {
