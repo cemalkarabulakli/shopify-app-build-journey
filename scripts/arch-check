@@ -1,0 +1,35 @@
+#!/bin/sh
+# Architecture boundaries F-1…F-4 (docs/architecture.md "Forbidden dependencies"), as greps.
+# F-5 (only container.ts constructs adapters) is a review rule. Exit 1 on any violation.
+set -u
+ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+cd "$ROOT" || exit 1
+
+# "file -> module" for every import / export-from / dynamic import in non-test sources under $1.
+imports() {
+  find "$1" -type f \( -name '*.ts' -o -name '*.svelte' \) ! -path '*/__tests__/*' -print |
+    while IFS= read -r f; do
+      grep -Eo "(from|import)[[:space:]]*\(?['\"][^'\"]+['\"]" "$f" |
+        sed -E "s/.*['\"]([^'\"]+)['\"]$/\1/" |
+        while IFS= read -r mod; do echo "$f -> $mod"; done
+    done
+}
+
+# F-1: domain imports nothing outside its own context folder.
+f1=$(imports src/lib/domain | grep -v -- "-> \./")
+# F-2: application imports only domain, its own modules and node: stdlib.
+f2=$(imports src/lib/application | grep -vE -- "-> (\./|\.\./|\\\$lib/domain/|\\\$lib/application|node:)")
+# F-3: routes and hooks never reach into infrastructure — they go through the container.
+f3=$(grep -rn "server/infrastructure" src/routes src/hooks.server.ts)
+# F-4: only siteConfig.ts reads the environment.
+f4=$(grep -rnE "process\.env|import\.meta\.env|\\\$env/" src | grep -v '^src/lib/server/config/siteConfig.ts:')
+
+bad=0
+for rule in F-1 F-2 F-3 F-4; do
+  case $rule in F-1) out=$f1 ;; F-2) out=$f2 ;; F-3) out=$f3 ;; F-4) out=$f4 ;; esac
+  [ -z "$out" ] && continue
+  echo "$out" | sed "s/^/ARCH $rule: /"
+  bad=1
+done
+[ "$bad" -eq 0 ] && echo "arch-check: F-1…F-4 hold"
+exit "$bad"

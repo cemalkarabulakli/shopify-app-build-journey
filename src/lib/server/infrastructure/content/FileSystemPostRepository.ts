@@ -10,11 +10,13 @@ import { FrontmatterParser } from './FrontmatterParser';
 export class FileSystemPostRepository implements PostRepository {
 	constructor(
 		private readonly directory: string,
-		private readonly frontmatter: FrontmatterParser = new FrontmatterParser()
+		private readonly frontmatter: FrontmatterParser = new FrontmatterParser(),
+		/** Which `.md` files count at all; checked before a file is read, so a skipped file can't break the listing. */
+		private readonly include: (fileName: string) => boolean = () => true
 	) {}
 
 	async findAll(): Promise<Post[]> {
-		const files = (await readdir(this.directory)).filter((f) => extname(f) === '.md');
+		const files = (await readdir(this.directory)).filter((f) => extname(f) === '.md' && this.include(f));
 		return Promise.all(files.map((f) => this.load(f)));
 	}
 
