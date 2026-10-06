@@ -3,6 +3,8 @@ import { BuildFeed, ExportMarkdown, GetAccessForEmail, GetPublishedPost, HandleB
 import { loadSiteConfig, requirePaddle } from './config/siteConfig';
 import { CachedPostRepository } from './infrastructure/content/CachedPostRepository';
 import { FileSystemPostRepository } from './infrastructure/content/FileSystemPostRepository';
+import { FrontmatterParser } from './infrastructure/content/FrontmatterParser';
+import { isLearningNote } from './infrastructure/content/learningNotes';
 import { MarkedMarkdownRenderer } from './infrastructure/content/MarkedMarkdownRenderer';
 import { RssFeedSerializer } from './presentation/RssFeedSerializer';
 import { rewriteRelativeMarkdownLinks } from './infrastructure/content/rewriteRelativeMarkdownLinks';
@@ -28,8 +30,9 @@ function buildContainer() {
 
 	// Learning docs live in /docs at the repo root; same shape again, ordered by
 	// filename (00-, 01-, …) and with `[x](FILE.md)` links pointed at /docs/file.
+	// The same folder holds the engineering rules (architecture.md, …), which stay unpublished (BR-11).
 	const docs = new CachedPostRepository(
-		new FileSystemPostRepository(resolve(site.docsDir)),
+		new FileSystemPostRepository(resolve(site.docsDir), new FrontmatterParser(), isLearningNote),
 		site.cacheTtlMs
 	);
 
