@@ -8,7 +8,7 @@ invent its own meaning for it.
 | Term | Meaning | Notes / not to be confused with |
 |---|---|---|
 | Entry | A journal post: `content/posts/<slug>.md`, served at `/posts/<slug>` | Code type is `Post`; not a Doc |
-| Doc (Scroll) | A learning note `docs/NN-*.md`, served at `/docs/<slug>`; reading order = filename | Not the ANEW engineering docs (`architecture.md` etc.) |
+| Doc (Scroll) | A learning note `docs/NN-*.md`, served at `/docs/<slug>`; reading order = filename | Not the ANEW engineering docs (`architecture.md` etc.), which are never published (BR-11) |
 | Path | The ordered learning path (`content/path.<locale>.json`) shown on the home page | |
 | Stage | One phase of the Path, rendered as a sealable map stage with its Docs | |
 | XP | Client-side reading gamification (`lib/client/gamification.ts`) | Not money, not membership |
@@ -44,6 +44,9 @@ invent its own meaning for it.
 - **BR-9** Only an Admin may change a request's status.
 - **BR-10** Milestone order is the plan and is never re-sorted. Progress counts only `done`
   milestones.
+- **BR-11** From `docs/`, only `NN-<name>.md` (exactly two digits, then a dash), `README.md` and
+  `LEARNING.md` (exact case) are published. Every other file there is unreachable (404) and absent
+  from the docs list, home page, sitemap and `llms*.txt`. Journal entries are not affected.
 
 ## Key domain invariants
 - No one loses paid access early (BR-2), and no one gains it from client-supplied data:
