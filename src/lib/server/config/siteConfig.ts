@@ -20,6 +20,8 @@ export interface SiteConfig {
 	databaseUrl: string;
 	sessionSecret: string;
 	email: { resendApiKey: string; from: string };
+	/** Lower-cased emails allowed to move requests on the roadmap board. */
+	adminEmails: string[];
 }
 
 /** Single place that knows about environment variables. */
@@ -44,7 +46,11 @@ export function loadSiteConfig(): SiteConfig {
 		},
 		databaseUrl: env.DATABASE_URL || '',
 		sessionSecret: env.SESSION_SECRET || '',
-		email: { resendApiKey: env.RESEND_API_KEY || '', from: env.EMAIL_FROM || `${env.SITE_NAME || 'Shopify App Build Journey'} <noreply@example.com>` }
+		email: { resendApiKey: env.RESEND_API_KEY || '', from: env.EMAIL_FROM || `${env.SITE_NAME || 'Shopify App Build Journey'} <noreply@example.com>` },
+		adminEmails: (env.ADMIN_EMAILS || '')
+			.split(',')
+			.map((e) => e.trim().toLowerCase())
+			.filter(Boolean)
 	};
 }
 
@@ -66,4 +72,10 @@ export function requirePaddle(site: SiteConfig): { environment: 'sandbox' | 'pro
 		throw new Error('PUBLIC_PADDLE_ENV is "production" but PUBLIC_PADDLE_CLIENT_TOKEN is a sandbox token.');
 	}
 	return { environment: site.paddle.environment, clientToken: site.paddle.clientToken };
+}
+
+/** True when this signed-in person may move requests on the roadmap board. */
+export function isAdminEmail(site: SiteConfig, email: string | undefined | null): boolean {
+	if (!email || site.adminEmails.length === 0) return false;
+	return site.adminEmails.includes(email.trim().toLowerCase());
 }

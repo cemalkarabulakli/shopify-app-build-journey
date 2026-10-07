@@ -1,6 +1,7 @@
 import { resolve } from 'node:path';
-import { BuildFeed, ExportMarkdown, GetAccessForEmail, GetPublishedPost, HandleBillingEvent, ListMerchants, ListPublishedPosts, MagicLinkLogin } from '$lib/application';
-import { loadSiteConfig, requirePaddle } from './config/siteConfig';
+import { BuildFeed, ExportMarkdown, GetAccessForEmail, GetPublishedPost, HandleBillingEvent, ListMerchants, ListPublishedPosts, ListRoadmap, MagicLinkLogin, SubmitFeatureRequest, ToggleVote, UpdateFeatureStatus } from '$lib/application';
+import type { MembershipCheck } from '$lib/application';
+import { isAdminEmail, loadSiteConfig, requirePaddle } from './config/siteConfig';
 import { CachedPostRepository } from './infrastructure/content/CachedPostRepository';
 import { FileSystemPostRepository } from './infrastructure/content/FileSystemPostRepository';
 import { FrontmatterParser } from './infrastructure/content/FrontmatterParser';
@@ -16,6 +17,8 @@ import { PaddlePortal } from './infrastructure/vip/PaddlePortal';
 import { PgBillingStore, subscriptionRepo, transactionRepo } from './infrastructure/vip/PgBillingStore';
 import { SessionCodec } from './infrastructure/auth/Session';
 import { ConsoleEmailSender, ResendEmailSender } from './infrastructure/auth/EmailSenders';
+import { PgFeatureBoard } from './infrastructure/roadmap/PgFeatureBoard';
+import { tiers } from '$lib/vip/tiers';
 
 /**
  * Composition root — the only place where concrete classes are wired together.
@@ -46,6 +49,25 @@ function buildContainer() {
 	};
 	const email = () => (site.email.resendApiKey ? new ResendEmailSender(site.email.resendApiKey, site.email.from) : new ConsoleEmailSender());
 
+	// Roadmap board: its own adapter and pool, so the public board is one query and is
+	// independent of the billing tables it never writes to.
+	let featureBoard: PgFeatureBoard | undefined;
+	const board = () => {
+		if (!site.databaseUrl) throw new Error('DATABASE_URL is not set — the roadmap board needs Postgres');
+		return (featureBoard ??= new PgFeatureBoard(site.databaseUrl));
+	};
+	/** Resolves "is this a paying member" through the billing mirror, plus the tier's display name. */
+	const membership = (): MembershipCheck => ({
+		isMember: async (addr: string) => {
+			const s = billing();
+			const access = await new GetAccessForEmail(s, subscriptionRepo(s)).execute(addr);
+			if (!access.hasAccess || !access.active) return { member: false, tier: null };
+			const priceId = access.active.priceId;
+			const tier = tiers.find((t) => t.priceId.month === priceId || t.priceId.year === priceId);
+			return { member: true, tier: tier?.name ?? 'VIP' };
+		}
+	});
+
 	return {
 		site,
 		get paddleWebhooks() {
@@ -68,6 +90,22 @@ function buildContainer() {
 		get sessions() {
 			return new SessionCodec(site.sessionSecret);
 		},
+		get listRoadmap() {
+			return new ListRoadmap(board());
+		},
+		get membership(): MembershipCheck {
+			return membership();
+		},
+		get submitFeatureRequest() {
+			return new SubmitFeatureRequest(board(), membership());
+		},
+		get toggleVote() {
+			return new ToggleVote(board(), membership());
+		},
+		get updateFeatureStatus() {
+			return new UpdateFeatureStatus(board(), (addr) => isAdminEmail(site, addr));
+		},
+		isAdmin: (addr: string | null | undefined) => isAdminEmail(site, addr),
 		path: new FileSystemPathRepository(resolve(site.pathDir)),
 		// The curated merchants sit next to the path files (spec 0002); story links resolve against docs.
 		listMerchants: new ListMerchants(new FileSystemMerchantRepository(resolve(site.pathDir, 'merchants.json')), docs),
