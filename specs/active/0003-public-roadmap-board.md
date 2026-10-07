@@ -57,13 +57,17 @@ approval.
     public note (at most 500 characters).
   - Moving a request to shipped records the date; moving it out of shipped clears it.
   - An empty `ADMIN_EMAILS` means no admins at all.
-- **R5 Signed-out actions.** A signed-out visitor who tries to vote or post is sent to sign in and
-  then back to `/roadmap`.
+- **R5 Signed-out actions.** A signed-out visitor who tries to vote or post is sent to sign in.
+  After signing in they land on their account page, not back on the board. That is the existing
+  sign-in flow; returning to the board would be a separate change (revision 1).
 - **R6 Safety.** Request bodies and notes are always shown as plain text, never as HTML.
 - **R7 Degraded mode.**
   - If the board's storage is unavailable, `/roadmap` still renders, with a clear "board
     unavailable" message instead of an error page.
-  - If the membership lookup fails, the visitor is treated as a non-member for that request.
+  - If the membership lookup fails while the page renders, the visitor sees the page as a
+    non-member. If it fails during a vote or a post, the action is refused with a "try again"
+    error instead. A vote's weight is fixed when cast (BR-7), so guessing "non-member" there
+    would record a member's vote at weight 1 for good (revision 1).
 - **R8 Navigation.** The main navigation links to the board in both languages (D3).
 
 ## Constraints & out of scope
@@ -91,8 +95,8 @@ approval.
 - [ ] AC-4 — A signed-in member's vote raises the score by 3 and the member-voter count by 1.
 - [ ] AC-5 — Voting on a shipped or declined request is refused ("closed"), and so is voting on a
   request that doesn't exist ("not-found"). Nothing changes.
-- [ ] AC-6 — A signed-out visitor who submits a vote or a request is redirected to sign in, with a
-  return to `/roadmap`.
+- [ ] AC-6 — A signed-out visitor who submits a vote or a request is redirected to sign in
+  (`/account`); nothing is recorded (revision 1).
 - [ ] AC-7 — A member posts a valid request: it appears under considering with score 3, 1 voter,
   1 member voter, and the author's tier recorded.
 - [ ] AC-8 — Posting is refused for a non-member ("not-member"); for title lengths 3 and 121; for
@@ -119,6 +123,14 @@ approval.
 - **Can it be tested against a real database?** `PgFeatureBoard` is not covered by
   `scripts/check`. Recommendation: in VERIFY, run the board against a disposable Neon branch with
   the schema applied, not production.
+
+## Revisions
+- **Revision 1 (2026-10-07, after review; approved in triage):**
+  - R5/AC-6 no longer promise a return to `/roadmap` after sign-in, because the adopted sign-in flow
+    never did that.
+  - R7 now distinguishes page rendering (falls back to non-member) from actions (refused with a
+    retryable error).
+  - Both describe the adopted behavior (D1); no code changes because of them.
 
 ## Definition of Done
 - [ ] Every acceptance criterion mapped to proof (test or reproducible observation)
