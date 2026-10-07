@@ -202,7 +202,7 @@
 								{@const docSealed = sealedDoc(doc.slug)}
 								<li class="flex flex-wrap items-center gap-1 {docSealed ? 'opacity-60' : ''}">
 									{#if docSealed}
-										<span class="flex flex-1 items-center gap-3 px-2 py-1.5">
+										<span class="flex flex-1 items-center gap-2.5 px-1 py-1.5 lg:gap-3 lg:px-2">
 											<span class="grid h-5 w-5 flex-none place-items-center text-sm" title={t.home.sealedScroll}>🔒</span>
 											<span class="flex-1">📜 {doc.title}</span>
 										</span>
