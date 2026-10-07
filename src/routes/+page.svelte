@@ -222,7 +222,7 @@
 
 					<!-- The phase task: ticking it (with every scroll read) breaks the seal on the next phase. -->
 					{@const taskDone = tasks.has(String(step.n))}
-					<label class="group mt-3 flex cursor-pointer items-start gap-3 rounded-lg border border-dashed border-line px-3 py-2 transition hover:bg-gold/10">
+					<label class="tap group mt-3 flex cursor-pointer items-start gap-3 rounded-lg border border-dashed border-line px-3 py-2 transition hover:bg-gold/10">
 						<input type="checkbox" class="peer sr-only" checked={taskDone} onchange={() => toggleTask(step)} />
 						<span class="mt-0.5 grid h-5 w-5 flex-none place-items-center rounded-md border-2 text-xs text-white transition peer-focus-visible:ring-2 peer-focus-visible:ring-gold {taskDone ? 'border-forest bg-forest' : 'border-line group-hover:border-gold'}">{taskDone ? '✓' : ''}</span>
 						<span class="text-[.95rem] {taskDone ? 'text-muted' : ''}"><b class="text-ink">🏁 {t.home.doneWhen}</b> {step.done} <span class="ml-1 text-xs font-extrabold text-gold">· {t.home.taskDone}</span></span>
