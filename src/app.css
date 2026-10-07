@@ -92,7 +92,8 @@
 	h1, h2, h3 { @apply font-display; }
 }
 
-/* A control a thumb can hit: at least 44 × 44 px below desktop (spec 0005 CB-4). */
+/* A control a thumb can hit: at least 44 × 44 px below desktop (spec 0005 CB-4).
+   Needs a non-inline display (inline links add max-lg:inline-flex); an explicit min-w-* / min-h-* wins over it. */
 @utility tap {
 	@variant max-lg {
 		min-height: 2.75rem;
