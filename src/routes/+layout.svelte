@@ -23,10 +23,17 @@
 	const bare = $derived(page.url.pathname.startsWith('/switch'));
 	// Below 1024 px the nav lives in a <details> menu (spec 0005): native without JS, closed after each navigation.
 	let menuOpen = $state(false);
+	let menuButton: HTMLElement;
 	afterNavigate(() => (menuOpen = false));
+	// Escape closes an open menu and hands focus back to its button, not to the page body.
+	function closeOnEscape(e: KeyboardEvent) {
+		if (e.key !== 'Escape' || !menuOpen) return;
+		menuOpen = false;
+		menuButton.focus();
+	}
 </script>
 
-<svelte:window onkeydown={(e) => e.key === 'Escape' && (menuOpen = false)} />
+<svelte:window onkeydown={closeOnEscape} />
 
 <svelte:head>
 	<link rel="icon" type="image/svg+xml" href={favicon} />
@@ -73,7 +80,7 @@
 		{/each}
 	</div>
 	<details bind:open={menuOpen} class="group flex-none lg:hidden">
-		<summary class="tap grid cursor-pointer list-none place-items-center rounded-lg text-xl text-ink hover:bg-gold/15 [&::-webkit-details-marker]:hidden" aria-label={t.nav.menu}>
+		<summary bind:this={menuButton} class="tap grid cursor-pointer list-none place-items-center rounded-lg text-xl text-ink hover:bg-gold/15 [&::-webkit-details-marker]:hidden" aria-label={t.nav.menu}>
 			<span class="group-open:hidden" aria-hidden="true">☰</span><span class="hidden group-open:inline" aria-hidden="true">✕</span>
 		</summary>
 		<nav class="absolute inset-x-0 top-full max-h-[calc(100dvh-4rem)] overflow-y-auto border-b border-line bg-card shadow-lg" aria-label={t.nav.menu}>
