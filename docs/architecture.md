@@ -55,4 +55,3 @@ Enforced by `scripts/arch-check` (step `arch` of `scripts/check`), except F-5.
 - A CMS or database for content: entries and docs are markdown files in git.
 - An ORM or migration tool: raw parameterized SQL, idempotent `scripts/*.sql`.
 - Client-side state stores and SPA-style data fetching: server loaders + form actions.
-- CI: `scripts/check` runs locally before merge (see open decisions in the bootstrap report).

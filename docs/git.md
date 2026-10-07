@@ -28,6 +28,8 @@ Solo project; `main` is production (Coolify deploys every push). Remote: GitHub 
   ids), `content/path.*.json` (drives the Stage map), and the ANEW docs in `docs/`.
 
 ## Pull requests
-- `scripts/check` green locally (no CI yet), REVIEW and VERIFY reports linked in the PR, then
-  squash-merge. Self-merge is allowed once both are green.
+- `scripts/check` green locally **and** the required `check` job green in CI (ADR 0004), REVIEW and
+  VERIFY reports linked in the PR, then squash-merge. Self-merge is allowed once all are green.
+- Content commits pushed straight to `main` are checked by CI after they land, so run
+  `scripts/check` locally first.
 - PR body ends with the spec number and the criterion ↔ evidence table from VERIFY.
