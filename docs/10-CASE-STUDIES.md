@@ -33,7 +33,7 @@ app-shaped for a solo builder: **revenue growth, market expansion, operational e
 | **JustMyLook** | Beauty retail | First **£1M day** on Black Friday | Peak-day capacity = the year's margin in 72 hours | Flash-sale infrastructure, inventory sync, queue/back-in-stock | Annual plan; peak-season pricing works |
 | **BODi** | Health & beauty | Checkout conversion **+10 pts** | Conversion is the highest-leverage number in the funnel | Checkout extensions, express pay, trust badges | Performance-based: % of lift |
 | **ARMEDANGELS** | Sustainable fashion | Mobile conversion +18%; load time –23% | Speed = conversion; mobile is 70%+ of traffic | Theme performance, image/script optimisation *(saturated — see §3)* | €30–100/mo, race to the bottom |
-| **BrainGain** | Sports supplements | GMV +45%; orders +35%; AOV +7.7% | Compound: more orders × bigger orders | Subscriptions + bundles for consumables | €99–299/mo + % of subscription GMV |
+| **BrainGain** | Home fitness equipment | GMV +45%; orders +35%; AOV +7.7% | Compound: more orders × bigger orders | Bundles + add-on upsells (sets, accessories) | €99–299/mo + % of subscription GMV |
 | **Vondels** | Gifts (B2B) | B2B sales +14% | Wholesale is the under-served half of commerce | B2B pricing, net terms, catalog visibility, reorder | €150–500/mo — B2B merchants have budgets |
 | **Polyvinyl Records** | Music | Revenue +20%; 3.88% conversion | Niche catalog, superfans, pre-orders | Pre-order/back-order management, fan-club tiers | €50–150/mo, low churn (identity-driven) |
 | **Solberg** | Industrial manufacturing | Revenue +15% YoY | Industrial buyers = high ticket, low volume | Quote-to-order, spec-driven product data, B2B | €300+/mo; competition thin |
@@ -102,7 +102,7 @@ Take Pattern C. A retention/subscription tool for consumable brands in the €1�
 ## 5. What to do with this file (Phase 5 — Problem)
 
 1. Pick **one** pattern (C is the strongest by numbers). Don't build anything.
-2. Find 20 merchants that look like WOW Concept / BrainGain (consumables, €1–5M, Storeleads filters).
+2. Find 20 merchants that look like WOW Concept / BrainGain (repeat and add-on buyers, €1–5M, Storeleads filters).
 3. DM the one-sentence outcome: *"Repeat orders +30% in 90 days or you don't pay — 15-minute call?"*
 4. Five replies with a real pain = the problem. Zero = next pattern. Either way it cost a day, not a month.
 
