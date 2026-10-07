@@ -53,3 +53,33 @@ describe('FeatureRequest', () => {
 		expect(() => FeatureRequest.create({ ...base, status: 'shipped' })).toThrow('shippedAt');
 	});
 });
+
+describe('FeatureRequest boundaries (spec 0003 AC-8, AC-9)', () => {
+	const make = (title: string, body: string) => FeatureRequest.create({ ...base, title, body });
+	const okBody = 'b'.repeat(10);
+	const okTitle = 'tttt';
+
+	it.each([
+		[3, 'short-title'],
+		[121, 'long-title']
+	])('refuses a %i-character title (%s)', (n, code) => {
+		expect(() => make('t'.repeat(n), okBody)).toThrow(code);
+	});
+	it.each([4, 120])('accepts a %i-character title', (n) => {
+		expect(make('t'.repeat(n), okBody).title).toHaveLength(n);
+	});
+	it.each([
+		[9, 'short-body'],
+		[2001, 'long-body']
+	])('refuses a %i-character body (%s)', (n, code) => {
+		expect(() => make(okTitle, 'b'.repeat(n))).toThrow(code);
+	});
+	it.each([10, 2000])('accepts a %i-character body', (n) => {
+		expect(make(okTitle, 'b'.repeat(n)).body).toHaveLength(n);
+	});
+	it('accepts a 500-character note and refuses 501 when a request is moved', () => {
+		const r = FeatureRequest.create(base);
+		expect(r.withStatus('planned', 'n'.repeat(500), new Date()).note).toHaveLength(500);
+		expect(() => r.withStatus('planned', 'n'.repeat(501), new Date())).toThrow('long-note');
+	});
+});

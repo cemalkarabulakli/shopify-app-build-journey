@@ -145,4 +145,12 @@ describe('ListRoadmap', () => {
 		expect(byStatus.shipped).toEqual([newer.id, older.id]);
 		expect(byStatus.building).toEqual([]);
 	});
+
+	it('breaks a score tie by showing the newer request first (spec 0003 AC-2)', async () => {
+		const older = seed({ id: 'tie-older', createdAt: new Date('2026-08-01'), updatedAt: new Date('2026-08-01') });
+		const newer = seed({ id: 'tie-newer', createdAt: new Date('2026-09-01'), updatedAt: new Date('2026-09-01') });
+		const columns = await new ListRoadmap(board).execute(null);
+		const considering = columns.find((c) => c.status === 'considering')!.items.map((i) => i.request.id);
+		expect(considering.indexOf(newer.id)).toBeLessThan(considering.indexOf(older.id));
+	});
 });
