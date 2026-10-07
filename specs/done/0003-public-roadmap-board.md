@@ -1,6 +1,6 @@
 # Spec 0003 — Public roadmap board (adoption)
 
-- Status: In progress
+- Status: Shipped
 - Mode: lite
 - Plan: `specs/plans/0003-plan.md`
 
@@ -86,32 +86,32 @@ approval.
   - Showing who voted.
 
 ## Acceptance criteria
-- [ ] AC-1 — A signed-out visitor sees `/roadmap` with all five columns in R1 order, and every
+- [x] AC-1 — A signed-out visitor sees `/roadmap` with all five columns in R1 order, and every
   request's title, body, score, voter count and member-voter count, without signing in.
-- [ ] AC-2 — Within building, planned and considering, a higher score ranks first, and equal
+- [x] AC-2 — Within building, planned and considering, a higher score ranks first, and equal
   scores rank the newer request first. Shipped lists the most recently shipped first.
-- [ ] AC-3 — A signed-in non-member votes on an open request: the score rises by 1 and the voter
+- [x] AC-3 — A signed-in non-member votes on an open request: the score rises by 1 and the voter
   count by 1. Clicking again removes the vote, and both numbers go back.
-- [ ] AC-4 — A signed-in member's vote raises the score by 3 and the member-voter count by 1.
-- [ ] AC-5 — Voting on a shipped or declined request is refused ("closed"), and so is voting on a
+- [x] AC-4 — A signed-in member's vote raises the score by 3 and the member-voter count by 1.
+- [x] AC-5 — Voting on a shipped or declined request is refused ("closed"), and so is voting on a
   request that doesn't exist ("not-found"). Nothing changes.
-- [ ] AC-6 — A signed-out visitor who submits a vote or a request is redirected to sign in
+- [x] AC-6 — A signed-out visitor who submits a vote or a request is redirected to sign in
   (`/account`); nothing is recorded (revision 1).
-- [ ] AC-7 — A member posts a valid request: it appears under considering with score 3, 1 voter,
+- [x] AC-7 — A member posts a valid request: it appears under considering with score 3, 1 voter,
   1 member voter, and the author's tier recorded.
-- [ ] AC-8 — Posting is refused for a non-member ("not-member"); for title lengths 3 and 121; for
+- [x] AC-8 — Posting is refused for a non-member ("not-member"); for title lengths 3 and 121; for
   body lengths 9 and 2001; and for a member who already has 5 open requests ("too-many-open"). A
   refused form keeps what the person typed. Title lengths 4 and 120 and body lengths 10 and 2000
   are accepted.
-- [ ] AC-9 — An admin moves a request to shipped with a note: it appears at the top of shipped
+- [x] AC-9 — An admin moves a request to shipped with a note: it appears at the top of shipped
   with the note and its ship date. Moving it back to planned clears the date. A note of 501
   characters is refused ("long-note").
-- [ ] AC-10 — A non-admin's status change is refused ("not-admin"), even when crafted by hand. With
+- [x] AC-10 — A non-admin's status change is refused ("not-admin"), even when crafted by hand. With
   `ADMIN_EMAILS` empty, everyone is refused.
-- [ ] AC-11 — A body or note containing `<script>` or other HTML is displayed as literal text.
-- [ ] AC-12 — With the database unreachable, `/roadmap` answers 200 with the "board unavailable"
+- [x] AC-11 — A body or note containing `<script>` or other HTML is displayed as literal text.
+- [x] AC-12 — With the database unreachable, `/roadmap` answers 200 with the "board unavailable"
   message, and the rest of the site is unaffected.
-- [ ] AC-13 — The navigation shows "Roadmap" / "Yol haritası" in both languages. The Turkish page
+- [x] AC-13 — The navigation shows "Roadmap" / "Yol haritası" in both languages. The Turkish page
   shows the English-only notice.
 
 ## Self-critique (gaps found, with recommendations — approve or change at the gate)
@@ -133,17 +133,42 @@ approval.
   - Both describe the adopted behavior (D1); no code changes because of them.
 
 ## Definition of Done
-- [ ] Every acceptance criterion mapped to proof (test or reproducible observation)
-- [ ] `scripts/check` green
-- [ ] Independent review done; real findings fixed, noise rejected with written rationale
-- [ ] Docs / ADRs updated if behavior or architecture changed
-- [ ] Spec moved to `specs/done/` (it becomes immutable there)
+- [x] Every acceptance criterion mapped to proof (test or reproducible observation)
+- [x] `scripts/check` green
+- [x] Independent review done; real findings fixed, noise rejected with written rationale
+- [x] Docs / ADRs updated if behavior or architecture changed
+- [x] Spec moved to `specs/done/` (it becomes immutable there)
 
 ## Scorecard (fill at ship — honest numbers make the process improvable)
 | Metric | Value |
 |---|---|
-| Spec revisions | |
-| Fix rounds | |
-| Review findings: real / noise | |
-| Regressions introduced | |
-| Bugs escaped to production | |
+| Spec revisions | 1 (R5/AC-6 and R7 corrected to the adopted behavior) |
+| Fix rounds | 2 (review triage; re-review r-1/r-2) + 2 fixes from VERIFY |
+| Review findings: real / noise | 9 real (M-1 and m-2 as spec fixes, m-1, m-3, m-5, n-1, n-3, n-6, r-2) / 5 accepted (m-4, n-2, n-4, r-3) or noted (n-5) |
+| Regressions introduced | 0 |
+| Bugs escaped to production | 0 from this feature. VERIFY found BUG-002 (a dropped DB connection crashed the site), already live via billing and fixed in #14 before this shipped |
+
+## Ship record (2026-10-07)
+- **Review:** clean after 2 rounds; triage recorded in `specs/plans/0003-plan.md` "Delta".
+- **Verify:** AC-1…AC-13 PASS on a throwaway Neon branch (seeded flows, Playwright, en + tr). A
+  re-verify after the fixes:
+  - long unbroken text wraps (1280 px: 17,973 → 1280);
+  - a dropped connection is survived and logged;
+  - a dead database answers in 10 s instead of 75 s;
+  - smoke test passed.
+- **Found in VERIFY and fixed before ship:**
+  - BUG-002 (pool crash, #14), plus the board's pool adopting `createPool` (now F-6);
+  - card text overflow.
+- **Production:** no database change needed; `feature_requests` and `feature_votes` already exist
+  and match `roadmap-schema.sql`. The owner sets `ADMIN_EMAILS` in Coolify.
+- **Accepted:**
+  - m-4: a member can exceed the 5-open cap by posting concurrently;
+  - n-2: a note cannot be cleared;
+  - n-4: one bad row makes the board unavailable;
+  - Declined requests sit in a collapsed list;
+  - `?next` is unused.
+- **Notes:**
+  - n-5: browsers that cached the old 301 from `/roadmap` to `/` may still redirect until their
+    cache expires.
+  - The header nav overflows 390 px on every page (pre-existing; the Roadmap link adds about
+    88 px). Follow-up: a `/change` for the mobile header.
