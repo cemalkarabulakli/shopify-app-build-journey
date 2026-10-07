@@ -11,6 +11,7 @@
 		{ href: '/', label: t.nav.map, icon: '🗺️' },
 		{ href: '/journal', label: t.nav.journal, icon: '📜' },
 		{ href: '/docs', label: t.nav.library, icon: '📚' },
+		{ href: '/merchants', label: t.nav.merchants, icon: '🏪' },
 		{ href: '/about', label: t.nav.about, icon: '🧑‍🚀' },
 		{ href: '/vip', label: t.nav.vip, icon: '👑' },
 		{ href: '/account', label: t.nav.account, icon: '🎟️' }
