@@ -18,7 +18,7 @@
 	{#each data.posts as post, i (post.slug)}
 		<li class="card animate-enter p-5" style="animation-delay:{i * 70}ms">
 			<PostMeta publishedAt={post.publishedAt} tags={post.tags} />
-			<h2 class="mt-1 text-xl font-extrabold"><a href="/posts/{post.slug}" class="text-ink no-underline hover:text-ember">{post.title}</a></h2>
+			<h2 class="mt-1 text-xl font-extrabold"><a href="/posts/{post.slug}" class="tap max-lg:flex max-lg:items-center text-ink no-underline hover:text-ember">{post.title}</a></h2>
 			{#if post.summary}<p class="mt-1 text-muted">{post.summary}</p>{/if}
 		</li>
 	{:else}

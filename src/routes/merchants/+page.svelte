@@ -60,10 +60,10 @@
 					target={link.newTab ? '_blank' : undefined}
 					rel={link.newTab ? 'noopener noreferrer' : undefined}
 					title={m.email ? t.merchants.viaEmail : t.merchants.viaPage}
-					class="rounded-full bg-forest px-4 py-1.5 text-sm font-bold text-white no-underline hover:bg-forest-soft">✉️ {t.merchants.reachOut}</a
+					class="tap max-lg:inline-flex max-lg:items-center rounded-full bg-forest px-4 py-1.5 text-sm font-bold text-white no-underline hover:bg-forest-soft">✉️ {t.merchants.reachOut}</a
 				>
-				<a href={m.storeUrl} target="_blank" rel="noopener noreferrer" class="rounded-full border border-line px-3 py-1.5 text-sm no-underline text-ink hover:bg-gold/10">{t.merchants.store} ↗</a>
-				<label class="ml-auto flex cursor-pointer items-center gap-2 text-sm {isReached ? 'text-forest' : 'text-muted'}">
+				<a href={m.storeUrl} target="_blank" rel="noopener noreferrer" class="tap max-lg:inline-flex max-lg:items-center rounded-full border border-line px-3 py-1.5 text-sm no-underline text-ink hover:bg-gold/10">{t.merchants.store} ↗</a>
+				<label class="tap ml-auto flex cursor-pointer items-center gap-2 text-sm {isReached ? 'text-forest' : 'text-muted'}">
 					<input type="checkbox" class="peer sr-only" checked={isReached} onchange={() => toggle(m.id)} />
 					<span class="grid h-5 w-5 place-items-center rounded-md border-2 text-xs text-white peer-focus-visible:ring-2 peer-focus-visible:ring-gold {isReached ? 'border-forest bg-forest' : 'border-line'}">{isReached ? '✓' : ''}</span>
 					{isReached ? t.merchants.marked : t.merchants.mark}

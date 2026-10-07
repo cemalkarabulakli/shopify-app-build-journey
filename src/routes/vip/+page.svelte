@@ -76,14 +76,14 @@
 <div class="mt-8 flex flex-wrap items-center justify-between gap-4">
 	<div class="inline-flex rounded-full border border-line bg-card p-1 text-sm font-extrabold" role="tablist">
 		{#each ['month', 'year'] as const as c (c)}
-			<button role="tab" aria-selected={cycle === c} class="rounded-full px-4 py-1.5 transition {cycle === c ? 'bg-forest text-white shadow' : 'text-muted hover:text-ink'}" onclick={() => (cycle = c)}>
+			<button role="tab" aria-selected={cycle === c} class="tap rounded-full px-4 py-1.5 transition {cycle === c ? 'bg-forest text-white shadow' : 'text-muted hover:text-ink'}" onclick={() => (cycle = c)}>
 				{t.vip.cycle[c]}{#if c === 'year'}<span class="ml-1 rounded-full bg-gold/20 px-2 py-0.5 text-xs text-gold">{t.vip.yearlySave}</span>{/if}
 			</button>
 		{/each}
 	</div>
 	<label class="flex items-center gap-2 text-sm font-extrabold text-ink">
 		{t.vip.emailLabel}
-		<input type="email" bind:value={email} placeholder="you@example.com" autocomplete="email" class="rounded-lg border border-line bg-card px-3 py-1.5 font-sans text-base font-normal text-ink placeholder:text-muted/60 focus:border-forest focus:ring-2 focus:ring-forest/30 focus:outline-none" />
+		<input type="email" bind:value={email} placeholder="you@example.com" autocomplete="email" class="tap rounded-lg border border-line bg-card px-3 py-1.5 font-sans text-base font-normal text-ink placeholder:text-muted/60 focus:border-forest focus:ring-2 focus:ring-forest/30 focus:outline-none" />
 	</label>
 </div>
 

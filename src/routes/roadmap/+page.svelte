@@ -63,7 +63,7 @@
 			<label class="flex flex-col gap-1 text-sm">
 				<span class="font-extrabold text-ink">{t.roadmap.titleLabel}</span>
 				<input name="title" required maxlength={TITLE_MAX} value={form?.title ?? ''} placeholder={t.roadmap.titlePlaceholder}
-					class="rounded-lg border border-line bg-bg px-3 py-2 text-ink placeholder:text-muted/60 focus:border-forest focus:ring-2 focus:ring-forest/30 focus:outline-none" />
+					class="tap rounded-lg border border-line bg-bg px-3 py-2 text-ink placeholder:text-muted/60 focus:border-forest focus:ring-2 focus:ring-forest/30 focus:outline-none" />
 			</label>
 			<label class="flex flex-col gap-1 text-sm">
 				<span class="font-extrabold text-ink">{t.roadmap.bodyLabel}</span>
@@ -71,7 +71,7 @@
 					class="rounded-lg border border-line bg-bg px-3 py-2 text-ink placeholder:text-muted/60 focus:border-forest focus:ring-2 focus:ring-forest/30 focus:outline-none">{form?.body ?? ''}</textarea>
 			</label>
 			<div class="flex flex-wrap items-center gap-3">
-				<button class="rounded-full bg-forest px-5 py-2.5 font-extrabold text-white hover:bg-forest-soft hover:text-ink">{t.roadmap.submitCta}</button>
+				<button class="tap rounded-full bg-forest px-5 py-2.5 font-extrabold text-white hover:bg-forest-soft hover:text-ink">{t.roadmap.submitCta}</button>
 				<span class="text-xs text-muted">{t.roadmap.openLimit(data.maxOpen)}</span>
 			</div>
 		</form>
@@ -81,13 +81,13 @@
 	{:else if data.user}
 		<h2 class="text-xl font-extrabold text-ink">{t.roadmap.membersOnly}</h2>
 		<p class="mt-1 text-sm text-muted">{t.roadmap.membersOnlyText}</p>
-		<a href="/vip" class="mt-3 inline-block rounded-full bg-forest px-5 py-2.5 font-extrabold text-white no-underline hover:bg-forest-soft hover:text-ink">{t.roadmap.seeTiers}</a>
+		<a href="/vip" class="tap max-lg:inline-flex max-lg:items-center mt-3 inline-block rounded-full bg-forest px-5 py-2.5 font-extrabold text-white no-underline hover:bg-forest-soft hover:text-ink">{t.roadmap.seeTiers}</a>
 	{:else}
 		<h2 class="text-xl font-extrabold text-ink">🗳️ {t.roadmap.signInToVote}</h2>
 		<p class="mt-1 text-sm text-muted">{t.roadmap.signInToVoteText}</p>
 		<div class="mt-3 flex flex-wrap gap-2">
-			<a href="/account?next=/roadmap" class="rounded-full bg-forest px-5 py-2.5 font-extrabold text-white no-underline hover:bg-forest-soft hover:text-ink">{t.roadmap.signInToVote} →</a>
-			<a href="/vip" class="rounded-full border border-line px-5 py-2.5 text-muted no-underline hover:text-ink">{t.roadmap.seeTiers}</a>
+			<a href="/account?next=/roadmap" class="tap max-lg:inline-flex max-lg:items-center rounded-full bg-forest px-5 py-2.5 font-extrabold text-white no-underline hover:bg-forest-soft hover:text-ink">{t.roadmap.signInToVote} →</a>
+			<a href="/vip" class="tap max-lg:inline-flex max-lg:items-center rounded-full border border-line px-5 py-2.5 text-muted no-underline hover:text-ink">{t.roadmap.seeTiers}</a>
 		</div>
 	{/if}
 </section>
@@ -153,12 +153,12 @@
 					<form method="POST" action="?/status" use:enhance class="mt-3 flex flex-wrap items-center gap-2 border-t border-dashed border-line pt-3">
 						<input type="hidden" name="id" value={item.id} />
 						<span class="text-xs font-extrabold text-muted">{t.roadmap.adminTitle}:</span>
-						<select name="status" class="rounded-lg border border-line bg-bg px-2 py-1 text-sm text-ink">
+						<select name="status" class="tap rounded-lg border border-line bg-bg px-2 py-1 text-sm text-ink">
 							{#each ROADMAP_ORDER as s (s)}<option value={s} selected={s === item.status}>{t.roadmap.columns[s]}</option>{/each}
 						</select>
 						<input name="note" maxlength={NOTE_MAX} placeholder={t.roadmap.noteLabel} value={item.note ?? ''}
-							class="min-w-40 flex-1 rounded-lg border border-line bg-bg px-2 py-1 text-sm text-ink placeholder:text-muted/60" />
-						<button class="rounded-full border-2 border-forest px-3 py-1 text-sm font-extrabold text-forest hover:bg-forest/10">{t.roadmap.save}</button>
+							class="tap min-w-40 flex-1 rounded-lg border border-line bg-bg px-2 py-1 text-sm text-ink placeholder:text-muted/60" />
+						<button class="tap rounded-full border-2 border-forest px-3 py-1 text-sm font-extrabold text-forest hover:bg-forest/10">{t.roadmap.save}</button>
 					</form>
 				{/if}
 			</div>
@@ -203,7 +203,7 @@
 
 {#if declined.length}
 	<details class="mt-8">
-		<summary class="cursor-pointer text-sm font-extrabold text-muted hover:text-ink">{icon.declined} {t.roadmap.columns.declined} ({declined.length})</summary>
+		<summary class="tap max-lg:flex max-lg:items-center cursor-pointer text-sm font-extrabold text-muted hover:text-ink">{icon.declined} {t.roadmap.columns.declined} ({declined.length})</summary>
 		<p class="mt-1 text-sm text-muted">{t.roadmap.columnHint.declined}</p>
 		<div class="mt-3 space-y-3">{#each declined as item (item.id)}{@render card(item)}{/each}</div>
 	</details>

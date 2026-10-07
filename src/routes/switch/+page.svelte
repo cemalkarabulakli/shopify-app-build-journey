@@ -72,7 +72,7 @@
 	<!-- Own top bar: the offer stands alone, the journal is the trust link. -->
 	<nav class="mb-12 flex items-center justify-between text-sm">
 		<span class="font-display text-lg font-extrabold text-ink">Zero-Churn Switch</span>
-		<a href="/journal" class="text-muted underline decoration-line underline-offset-4 hover:text-ink">Built in public — read the journal →</a>
+		<a href="/journal" class="tap max-lg:inline-flex max-lg:items-center text-muted underline decoration-line underline-offset-4 hover:text-ink">Built in public — read the journal →</a>
 	</nav>
 
 	<section class="animate-enter">
@@ -90,11 +90,11 @@
 		<div class="mt-4 grid gap-4 sm:grid-cols-2">
 			<label class="text-sm font-extrabold text-ink">
 				Monthly subscription revenue
-				<input type="number" bind:value={gmv} min="0" step="5000" class="mt-1 w-full rounded-lg border border-line bg-bg px-3 py-2 font-sans text-base font-normal text-ink focus:border-forest focus:ring-2 focus:ring-forest/30 focus:outline-none" />
+				<input type="number" bind:value={gmv} min="0" step="5000" class="tap mt-1 w-full rounded-lg border border-line bg-bg px-3 py-2 font-sans text-base font-normal text-ink focus:border-forest focus:ring-2 focus:ring-forest/30 focus:outline-none" />
 			</label>
 			<label class="text-sm font-extrabold text-ink">
 				Average order value
-				<input type="number" bind:value={aov} min="1" step="5" class="mt-1 w-full rounded-lg border border-line bg-bg px-3 py-2 font-sans text-base font-normal text-ink focus:border-forest focus:ring-2 focus:ring-forest/30 focus:outline-none" />
+				<input type="number" bind:value={aov} min="1" step="5" class="tap mt-1 w-full rounded-lg border border-line bg-bg px-3 py-2 font-sans text-base font-normal text-ink focus:border-forest focus:ring-2 focus:ring-forest/30 focus:outline-none" />
 			</label>
 		</div>
 		<div class="mt-6 grid gap-4 sm:grid-cols-2">

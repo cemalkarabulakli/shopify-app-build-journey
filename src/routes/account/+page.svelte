@@ -25,8 +25,8 @@
 		{:else}
 			<p class="text-muted">{t.account.lede}</p>
 			<form method="POST" action="?/login" use:enhance class="mt-4 flex flex-col gap-3">
-				<input type="email" name="email" required autocomplete="email" placeholder="you@example.com" class="rounded-lg border border-line bg-bg px-3 py-2 text-ink placeholder:text-muted/60 focus:border-forest focus:ring-2 focus:ring-forest/30 focus:outline-none" />
-				<button class="rounded-full bg-forest px-5 py-2.5 font-extrabold text-white hover:bg-forest-soft hover:text-ink">{t.account.sendLink}</button>
+				<input type="email" name="email" required autocomplete="email" placeholder="you@example.com" class="tap rounded-lg border border-line bg-bg px-3 py-2 text-ink placeholder:text-muted/60 focus:border-forest focus:ring-2 focus:ring-forest/30 focus:outline-none" />
+				<button class="tap rounded-full bg-forest px-5 py-2.5 font-extrabold text-white hover:bg-forest-soft hover:text-ink">{t.account.sendLink}</button>
 			</form>
 			{#if err}<p class="mt-3 text-sm text-ember">{t.account.errors[err as keyof typeof t.account.errors] ?? err}</p>{/if}
 		{/if}
@@ -61,9 +61,9 @@
 			<h2 class="font-extrabold text-ink">{t.account.billingTitle}</h2>
 			<p class="text-sm text-muted">{t.account.billingText}</p>
 			<form method="POST" action="/account/portal">
-				<button class="w-full rounded-full bg-forest px-5 py-2.5 font-extrabold text-white hover:bg-forest-soft hover:text-ink disabled:opacity-50" disabled={!data.access?.customerId}>{t.account.openPortal} →</button>
+				<button class="tap w-full rounded-full bg-forest px-5 py-2.5 font-extrabold text-white hover:bg-forest-soft hover:text-ink disabled:opacity-50" disabled={!data.access?.customerId}>{t.account.openPortal} →</button>
 			</form>
-			<form method="POST" action="/account/logout"><button class="w-full rounded-full border border-line px-5 py-2 text-sm text-muted hover:text-ink">{t.account.logout}</button></form>
+			<form method="POST" action="/account/logout"><button class="tap w-full rounded-full border border-line px-5 py-2 text-sm text-muted hover:text-ink">{t.account.logout}</button></form>
 		</aside>
 	</div>
 {/if}
