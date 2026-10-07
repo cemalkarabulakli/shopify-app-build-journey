@@ -68,7 +68,7 @@
       "docs": [
         "learning"
       ],
-      "status": "next",
+      "status": "done",
       "quests": [
         {
           "id": "q1-devstore",
@@ -93,7 +93,8 @@
           "id": "q2-admin-page",
           "title": "Add a page to your app inside the Shopify admin"
         }
-      ]
+      ],
+      "status": "done"
     },
     {
       "n": 3,
@@ -112,7 +113,8 @@
           "id": "q3-metafield",
           "title": "Save a setting in a metafield"
         }
-      ]
+      ],
+      "status": "done"
     },
     {
       "n": 4,
@@ -131,7 +133,8 @@
           "id": "q4-twice",
           "title": "Process the same webhook twice without a double effect"
         }
-      ]
+      ],
+      "status": "done"
     },
     {
       "n": 5,
@@ -159,7 +162,8 @@
           "id": "q5-problem",
           "title": "Write one merchant problem down in their own words"
         }
-      ]
+      ],
+      "status": "next"
     },
     {
       "n": 6,
@@ -174,7 +178,8 @@
           "id": "q6-mvp",
           "title": "Put your MVP in front of one real store"
         }
-      ]
+      ],
+      "status": "todo"
     },
     {
       "n": 7,
@@ -189,7 +194,8 @@
           "id": "q7-billing",
           "title": "Add a paid plan with the Billing API"
         }
-      ]
+      ],
+      "status": "todo"
     },
     {
       "n": 8,
@@ -209,7 +215,8 @@
           "id": "q8-listing",
           "title": "Submit your App Store listing"
         }
-      ]
+      ],
+      "status": "todo"
     },
     {
       "n": 9,
@@ -226,7 +233,8 @@
           "id": "q9-first10",
           "title": "Get your first 10 paying merchants"
         }
-      ]
+      ],
+      "status": "todo"
     }
   ]
 }
