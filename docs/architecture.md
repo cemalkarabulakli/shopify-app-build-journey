@@ -4,7 +4,7 @@
 A SvelteKit 2 (Svelte 5, TypeScript) app served by adapter-node, deployed by Coolify on every push
 to `main`. It is a **modular monolith in clean-architecture layers**: `domain` → `application` →
 `server` (infrastructure, presentation, config, container) → `routes`, with the dependency rule
-pointing inward. Code is sliced by context (`post`, `vip`, `auth`, `roadmap`, `project`). The reason
+pointing inward. Code is sliced by context (`post`, `vip`, `auth`, `roadmap`, `merchant`). The reason
 is testability at almost zero cost: use cases depend on ports, so tests run on in-memory fakes with
 no mocking library and no database, and an adapter (file system → CMS, Pg → anything) is swapped
 in one line of `container.ts`.
@@ -17,8 +17,9 @@ in one line of `container.ts`.
 | `lib/domain/vip` | Customer, Subscription (the access rule, BR-2), Transaction | The billing mirror model |
 | `lib/domain/auth` | `SessionUser`, login-token and email-sender ports | Who is signed in |
 | `lib/domain/roadmap` | FeatureRequest status machine, votes, limits (BR-6…BR-9) | Feature board rules |
+| `lib/domain/merchant` | Merchant card invariants and the curated catalog (BR-13) | The merchant hall's data rules |
 | `lib/application` | Use cases (`VerbNoun.execute()`), ports (`MarkdownRenderer`, `Membership`), DTOs | Orchestration |
-| `lib/server/infrastructure/content` | FS repositories, frontmatter, `marked` renderer, TTL cache | Reading `content/` and `docs/` |
+| `lib/server/infrastructure/content` | FS repositories (posts, docs, path, merchants), frontmatter, `marked` renderer, TTL cache | Reading `content/` and `docs/` |
 | `lib/server/infrastructure/vip` | `PgBillingStore`, `PaddleWebhookAdapter`, `PaddlePortal` | Tables `customers`, `subscriptions`, `transactions`, `webhook_events`, `login_tokens` |
 | `lib/server/infrastructure/auth` | Session cookie codec, email senders (Resend / console) | Session signing |
 | `lib/server/infrastructure/roadmap` | `PgFeatureBoard` (own pool) | Tables `feature_requests`, `feature_votes` |
