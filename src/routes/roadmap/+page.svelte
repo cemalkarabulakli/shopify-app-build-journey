@@ -203,7 +203,7 @@
 
 {#if declined.length}
 	<details class="mt-8">
-		<summary class="tap max-lg:flex max-lg:items-center cursor-pointer text-sm font-extrabold text-muted hover:text-ink">{icon.declined} {t.roadmap.columns.declined} ({declined.length})</summary>
+		<summary class="tap cursor-pointer max-lg:py-3 text-sm font-extrabold text-muted hover:text-ink">{icon.declined} {t.roadmap.columns.declined} ({declined.length})</summary>
 		<p class="mt-1 text-sm text-muted">{t.roadmap.columnHint.declined}</p>
 		<div class="mt-3 space-y-3">{#each declined as item (item.id)}{@render card(item)}{/each}</div>
 	</details>
