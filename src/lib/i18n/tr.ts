@@ -2,7 +2,7 @@ import { en, type Messages } from './en';
 
 export const tr: Messages = {
 	locale: 'tr-TR',
-	nav: { map: 'Harita', journal: 'Günlük', library: 'Kütüphane', about: 'Gezgin', merchants: 'Merchant\'lar', vip: 'VIP', roadmap: 'Yol haritası', account: 'Hesap', rss: 'RSS' },
+	nav: { map: 'Harita', journal: 'Günlük', library: 'Kütüphane', about: 'Gezgin', merchants: 'Merchant\'lar', vip: 'VIP', roadmap: 'Yol haritası', account: 'Hesap', rss: 'RSS', menu: 'Menü' },
 	footer: 'Açık havada inşa ediliyor. Harita her gün güncellenir.',
 	home: {
 		eyebrow: "Görev haritası · sıfırdan App Store'a",
