@@ -113,8 +113,9 @@
 </div>
 
 <!-- The trail -->
-<ol class="relative mt-10 space-y-7 pl-16">
-	<svg class="pointer-events-none absolute top-0 bottom-0 left-[22px] h-full w-2" aria-hidden="true" preserveAspectRatio="none" viewBox="0 0 8 100">
+<!-- Phones: a 36 px rail (spec 0005 CB-6); from 1024 px the 64 px rail of before. -->
+<ol class="relative mt-8 space-y-5 pl-9 lg:mt-10 lg:space-y-7 lg:pl-16">
+	<svg class="pointer-events-none absolute top-0 bottom-0 left-3 h-full w-2 lg:left-[22px]" aria-hidden="true" preserveAspectRatio="none" viewBox="0 0 8 100">
 		<line x1="4" y1="0" x2="4" y2="100" stroke="var(--gold)" stroke-width="3" stroke-dasharray="6 6" stroke-linecap="round" class="animate-dash" vector-effect="non-scaling-stroke" />
 	</svg>
 
@@ -127,14 +128,14 @@
 		{#if ci >= 0}
 			{@const chapter = data.chapters[ci]}
 			{@const cp = questProgress(chapterQuests(chapter), quests.has, reachedSoFar)}
-			<li id="chapter-{ci + 1}" class="relative -ml-16 animate-enter rounded-2xl border border-gold/40 bg-gold/10 px-5 py-4">
+			<li id="chapter-{ci + 1}" class="relative -ml-9 animate-enter rounded-2xl border border-gold/40 bg-gold/10 px-4 py-4 max-lg:bg-[color-mix(in_srgb,var(--gold)_10%,var(--bg))] sm:px-5 lg:-ml-16">
 				<div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
 					<span class="font-display text-xs font-extrabold tracking-widest text-gold uppercase">{t.home.chapter} {ci + 1}</span>
 					<h2 class="text-2xl font-extrabold text-ink">{chapter.title}</h2>
 					<span class="ml-auto text-sm text-muted tabular-nums">⚔️ {cp.done}/{cp.total} {t.home.quests}</span>
 				</div>
 				{#if ci === MERCHANTS_CHAPTER}
-					<a href="/merchants" class="mt-2 inline-block font-bold text-forest no-underline hover:text-ember">🏪 {t.home.toMerchants}</a>
+					<a href="/merchants" class="tap mt-2 inline-block font-bold text-forest no-underline hover:text-ember max-lg:inline-flex max-lg:items-center">🏪 {t.home.toMerchants}</a>
 				{/if}
 				{#if ci === OUR_APP_CHAPTER}
 					{#if ourAppNow}<p class="mt-2 font-bold text-forest">🐉 {t.home.ourAppNow(ourAppNow.n, ourAppNow.title)}</p>{/if}
@@ -144,8 +145,8 @@
 							{#each buildLog as s (s.n)}
 								{#each s.posts as post (post.slug)}
 									<li class="flex items-center gap-2 text-[.95rem]">
-										<span class="font-display text-xs font-extrabold text-muted">{t.home.phase} {s.n}</span>
-										<a href="/posts/{post.slug}" class="text-ink no-underline hover:text-ember">✍️ {post.title}</a>
+										<span class="font-display text-xs font-extrabold whitespace-nowrap text-muted">{t.home.phase} {s.n}</span>
+										<a href="/posts/{post.slug}" class="tap text-ink no-underline hover:text-ember max-lg:flex max-lg:items-center">✍️ {post.title}</a>
 									</li>
 								{/each}
 							{/each}
@@ -158,22 +159,26 @@
 		<li id="faz-{step.n}" class="relative animate-enter {sealed ? 'opacity-60' : ''}" style="animation-delay:{i * 80}ms">
 			<!-- waypoint -->
 			<div
-				class="absolute top-4 -left-14 grid h-12 w-12 place-items-center rounded-full {step.status === 'next' ? 'animate-pulse-ring' : ''}"
+				class="absolute top-4 -left-9 grid h-8 w-8 place-items-center rounded-full lg:-left-14 lg:h-12 lg:w-12 {step.status === 'next' ? 'animate-pulse-ring' : ''}"
 				style="background:conic-gradient(var(--gold) calc({pct} * 1%), var(--line) 0)"
 			>
-				<div class="grid h-10 w-10 place-items-center rounded-full text-lg {earned ? 'bg-forest text-white' : 'bg-card'}">
+				<div class="grid h-6 w-6 place-items-center rounded-full text-sm lg:h-10 lg:w-10 lg:text-lg {earned ? 'bg-forest text-white' : 'bg-card'}">
 					{earned ? '✓' : sealed ? '🔒' : step.icon}
 				</div>
 			</div>
 
 			{#if step.status === 'next'}
-				<div class="absolute top-1.5 -left-[72px] w-16">
+				<div class="absolute top-1.5 -left-[72px] hidden w-16 lg:block">
 					<FogDragon level={levelFor(xp).index + 1} size={56} point flip />
 				</div>
 			{/if}
-			<article class="card p-6 transition-transform hover:-translate-y-0.5 {step.status === 'next' ? 'ring-2 ring-forest/50' : ''}">
+			<article class="card p-4 transition-transform sm:p-6 hover:-translate-y-0.5 {step.status === 'next' ? 'ring-2 ring-forest/50' : ''}">
 				{#if step.status === 'next'}
-					<p class="mb-2.5 inline-block rounded-2xl rounded-bl-sm border border-forest bg-forest/10 px-3 py-1.5 text-sm font-bold text-forest">{t.dragon.here}</p>
+					<!-- Phones: the dragon stands next to its bubble; from 1024 px it sits on the trail (spec 0005 CB-6). -->
+					<div class="mb-2.5 flex items-end gap-2 lg:mb-0 lg:block">
+						<span class="flex-none lg:hidden"><FogDragon level={levelFor(xp).index + 1} size={44} point /></span>
+						<p class="mb-2.5 inline-block rounded-2xl rounded-bl-sm border border-forest bg-forest/10 px-3 py-1.5 text-sm font-bold text-forest max-lg:mb-0">{t.dragon.here}</p>
+					</div>
 				{/if}
 				<div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
 					<span class="font-display text-xs font-extrabold tracking-widest text-muted">{t.home.phase.toUpperCase()} {step.n}</span>
@@ -195,20 +200,20 @@
 							{#each step.docs as doc (doc.slug)}
 								{@const isRead = read.has(doc.slug)}
 								{@const docSealed = sealedDoc(doc.slug)}
-								<li class="flex items-center gap-1 {docSealed ? 'opacity-60' : ''}">
+								<li class="flex flex-wrap items-center gap-1 {docSealed ? 'opacity-60' : ''}">
 									{#if docSealed}
 										<span class="flex flex-1 items-center gap-3 px-2 py-1.5">
 											<span class="grid h-5 w-5 flex-none place-items-center text-sm" title={t.home.sealedScroll}>🔒</span>
 											<span class="flex-1">📜 {doc.title}</span>
 										</span>
 									{:else}
-										<label class="group flex flex-1 cursor-pointer items-center gap-3 rounded-lg px-2 py-1.5 transition hover:bg-gold/10">
+										<label class="tap group flex flex-[1_1_15rem] cursor-pointer items-center gap-2.5 rounded-lg px-1 py-1.5 transition hover:bg-gold/10 lg:flex-1 lg:gap-3 lg:px-2">
 											<input type="checkbox" class="peer sr-only" checked={isRead} onchange={() => toggleDoc(step, doc.slug)} />
 											<span class="grid h-5 w-5 flex-none place-items-center rounded-md border-2 text-xs text-white transition peer-focus-visible:ring-2 peer-focus-visible:ring-gold {isRead ? 'border-forest bg-forest' : 'border-line group-hover:border-gold'}">{isRead ? '✓' : ''}</span>
-											<span class="flex-1 {isRead ? 'text-muted line-through' : ''}">📜 {doc.title}</span>
-											<span class="text-xs font-extrabold text-gold {isRead ? 'opacity-40' : ''}">+{XP_PER_DOC}</span>
+											<span class="flex-1 {isRead ? 'text-muted line-through' : ''}">📜 {doc.title} <span class="inline-block text-xs font-extrabold text-gold lg:hidden {isRead ? 'opacity-40' : ''}">+{XP_PER_DOC}</span></span>
+											<span class="text-xs font-extrabold text-gold max-lg:hidden {isRead ? 'opacity-40' : ''}">+{XP_PER_DOC}</span>
 										</label>
-										<a href="/docs/{doc.slug}" class="rounded-lg px-2.5 py-1 font-extrabold text-forest no-underline hover:bg-forest/10" aria-label={t.home.read}>→</a>
+										<a href="/docs/{doc.slug}" class="tap ml-auto grid place-items-center rounded-lg px-2.5 py-1 font-extrabold text-forest no-underline hover:bg-forest/10 lg:ml-0 lg:block" aria-label={t.home.read}>→</a>
 									{/if}
 								</li>
 							{/each}
@@ -226,8 +231,8 @@
 					{#if step.posts.length}
 						<ul class="mt-3 space-y-1 border-t border-dashed border-line pt-3">
 							{#each step.posts as post (post.slug)}
-								<li class="flex items-center gap-2 px-2 text-[.95rem]">
-									<a href="/posts/{post.slug}" class="text-ink no-underline hover:text-ember">✍️ {post.title}</a>
+								<li class="flex flex-wrap items-center gap-x-2 px-1 text-[.95rem] lg:flex-nowrap lg:px-2">
+									<a href="/posts/{post.slug}" class="tap text-ink no-underline hover:text-ember max-lg:flex max-lg:flex-[1_1_12rem] max-lg:items-center">✍️ {post.title}</a>
 									<time datetime={post.publishedAt} class="ml-auto text-xs whitespace-nowrap text-muted">{formatDate(post.publishedAt, t.locale)}</time>
 								</li>
 							{/each}
@@ -242,17 +247,17 @@
 							{@const qDone = isQuestDone(q)}
 							<li>
 								{#if q.kind === 'outreach'}
-									<a href="/merchants" class="group flex items-center gap-3 rounded-lg px-2 py-1.5 no-underline transition hover:bg-gold/10">
+									<a href="/merchants" class="tap group flex items-center gap-2.5 rounded-lg px-1 py-1.5 no-underline transition hover:bg-gold/10 lg:gap-3 lg:px-2">
 										<span class="grid h-5 w-5 flex-none place-items-center rounded-md border-2 text-xs text-white {qDone ? 'border-forest bg-forest' : 'border-line'}">{qDone ? '✓' : ''}</span>
-										<span class="flex-1 {qDone ? 'text-muted line-through' : 'text-ink'}">{q.title} <span class="text-xs text-muted">· {t.home.outreachProgress(reachedSoFar, q.target ?? 3)}</span></span>
-										<span class="text-xs font-extrabold text-gold {qDone ? 'opacity-40' : ''}">+{QUEST_XP}</span>
+										<span class="flex-1 {qDone ? 'text-muted line-through' : 'text-ink'}">{q.title} <span class="text-xs text-muted">· {t.home.outreachProgress(reachedSoFar, q.target ?? 3)}</span> <span class="inline-block text-xs font-extrabold text-gold lg:hidden {qDone ? 'opacity-40' : ''}">+{QUEST_XP}</span></span>
+										<span class="text-xs font-extrabold text-gold max-lg:hidden {qDone ? 'opacity-40' : ''}">+{QUEST_XP}</span>
 									</a>
 								{:else}
-									<label class="group flex cursor-pointer items-center gap-3 rounded-lg px-2 py-1.5 transition hover:bg-gold/10">
+									<label class="tap group flex cursor-pointer items-center gap-2.5 rounded-lg px-1 py-1.5 transition hover:bg-gold/10 lg:gap-3 lg:px-2">
 										<input type="checkbox" class="peer sr-only" checked={qDone} onchange={() => toggleQuest(q)} />
 										<span class="grid h-5 w-5 flex-none place-items-center rounded-md border-2 text-xs text-white transition peer-focus-visible:ring-2 peer-focus-visible:ring-gold {qDone ? 'border-forest bg-forest' : 'border-line group-hover:border-gold'}">{qDone ? '✓' : ''}</span>
-										<span class="flex-1 {qDone ? 'text-muted line-through' : ''}">{q.title}</span>
-										<span class="text-xs font-extrabold text-gold {qDone ? 'opacity-40' : ''}">+{QUEST_XP}</span>
+										<span class="flex-1 {qDone ? 'text-muted line-through' : ''}">{q.title} <span class="inline-block text-xs font-extrabold text-gold lg:hidden {qDone ? 'opacity-40' : ''}">+{QUEST_XP}</span></span>
+										<span class="text-xs font-extrabold text-gold max-lg:hidden {qDone ? 'opacity-40' : ''}">+{QUEST_XP}</span>
 									</label>
 								{/if}
 							</li>
