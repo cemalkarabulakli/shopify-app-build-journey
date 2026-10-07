@@ -6,28 +6,32 @@
 ## Context
 At bootstrap (2026-10-07), CI was left out on purpose: `scripts/check` ran locally before merge,
 and `docs/architecture.md` listed CI as out of scope. Since then:
-- three features and a bug fix have shipped through PRs that are merged by the owner, a solo
-  founder, on the strength of local evidence;
+- two features (specs 0001, 0002) and a bug fix (BUG-001) have shipped through PRs that are merged
+  by the owner, a solo founder, on the strength of local evidence;
 - every push to `main` deploys to production (Coolify), and a red `main` takes the site down;
-- the local check has already been fooled once, by a stray generated `src/.svelte-kit` (0001).
+- local-only generated state (a stray `src/.svelte-kit`) has already made the local check fail
+  falsely once, during spec 0001 (fixed in PRs #6 and #7).
 
-A second, independent run of the same contract costs nothing on a public repo. Without it, nothing
-stops a PR from being merged red.
+A second, independent run of the same contract costs nothing on a public repo. Without it, a red
+PR merges as quietly as a green one.
 
 ## Decision
 GitHub Actions runs `./scripts/doctor --strict` and `./scripts/check` on every pull request and on
-every push to `main`, with read-only permissions. The `check` job is a required status check
-on `main` for pull requests. Admins may still push to `main` directly, because the content
-carve-out (`docs/git.md`) needs that.
+every push to `main`, with read-only permissions. The `check` job is meant to be a required status
+check on `main`, a repository setting the owner applies separately. Admins keep a bypass, because
+the content carve-out (`docs/git.md`) pushes straight to `main`.
 
 ## Consequences
 - **Gains:**
-  - A PR cannot merge while the contract is red.
+  - A red PR is visible as red. Once the setting is applied, it can only merge through an explicit
+    admin bypass, never by accident.
   - The check runs on a clean Linux machine with a clean `npm ci`, which catches "works on my
     machine" (case sensitivity, a missing file, a lockfile drift).
   - Spec/plan gate violations fail in CI (`doctor --strict`), not only as local warnings.
 - **Costs:**
-  - About 1–2 minutes of waiting per PR.
+  - About 1–2 minutes of waiting per PR. The first run took about 36 seconds.
+  - For the solo admin, the required status adds friction, not a hard block: GitHub's admin bypass
+    covers merges as well as pushes.
   - One more file to maintain, plus action versions to bump.
   - CI does not gate deploys: Coolify still deploys every push to `main`, including content
     commits, and those are checked only after they land.
