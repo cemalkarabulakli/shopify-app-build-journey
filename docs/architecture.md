@@ -49,6 +49,10 @@ Enforced by `scripts/arch-check` (step `arch` of `scripts/check`), except F-5.
 - **F-3** `routes/` and `hooks.server.ts` never import `$lib/server/infrastructure`.
 - **F-4** Only `lib/server/config/siteConfig.ts` reads `process.env` / `$env` / `import.meta.env`.
 - **F-5** Only `lib/server/container.ts` constructs adapters (review rule).
+- **F-6** Only `lib/server/infrastructure/pg/createPool.ts` value-imports `pg` (others use `import type`),
+  so it is the only place that constructs a Postgres pool or client, and
+  every pool logs lost idle connections instead of crashing the process, and bounds connect time
+  (BUG-002).
 
 ## Deliberately out of scope
 - The Shopify app itself — this repo is the build-in-public site around it.
