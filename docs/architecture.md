@@ -17,7 +17,6 @@ in one line of `container.ts`.
 | `lib/domain/vip` | Customer, Subscription (the access rule, BR-2), Transaction | The billing mirror model |
 | `lib/domain/auth` | `SessionUser`, login-token and email-sender ports | Who is signed in |
 | `lib/domain/roadmap` | FeatureRequest status machine, votes, limits (BR-6…BR-9) | Feature board rules |
-| `lib/domain/project` | Project, Milestone, progress (BR-10) | Project progress rules |
 | `lib/application` | Use cases (`VerbNoun.execute()`), ports (`MarkdownRenderer`, `Membership`), DTOs | Orchestration |
 | `lib/server/infrastructure/content` | FS repositories, frontmatter, `marked` renderer, TTL cache | Reading `content/` and `docs/` |
 | `lib/server/infrastructure/vip` | `PgBillingStore`, `PaddleWebhookAdapter`, `PaddlePortal` | Tables `customers`, `subscriptions`, `transactions`, `webhook_events`, `login_tokens` |

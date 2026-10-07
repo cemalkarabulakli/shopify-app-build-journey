@@ -9,4 +9,4 @@ export {
 	NOTE_MAX
 } from './FeatureRequest';
 export type { FeatureStatus, FeatureRequestProps, Vote, FeatureRequestWithVotes } from './FeatureRequest';
-export type { FeatureBoardRepository, StatusChange } from './ports';
+export type { FeatureBoardRepository } from './ports';
