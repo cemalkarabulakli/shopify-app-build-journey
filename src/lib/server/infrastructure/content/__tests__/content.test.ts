@@ -18,7 +18,10 @@ describe('learning path content (spec 0002)', () => {
 		for (const step of path.steps) {
 			expect(step.quests.length, `phase ${step.n}`).toBeGreaterThanOrEqual(1);
 			expect(step.quests.length, `phase ${step.n}`).toBeLessThanOrEqual(3);
-			for (const q of step.quests) expect(q.title.trim(), q.id).not.toBe('');
+			for (const q of step.quests) {
+				expect(q.id, `phase ${step.n}`).toMatch(/^q\d-[a-z0-9-]+$/);
+				expect(q.title.trim(), q.id).not.toBe('');
+			}
 		}
 	});
 
