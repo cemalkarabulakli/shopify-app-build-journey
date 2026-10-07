@@ -1,6 +1,6 @@
 # Spec 0004 — The header fits a phone (mini)
 
-- Status: Approved
+- Status: In progress
 - Mode: lite
 - Plan: `specs/plans/0004-plan.md`
 - Source: VERIFY 0003 re-verify 2 (2026-10-07) — `scratchpad/evidence-0003/recheck2-overflow*.txt`
