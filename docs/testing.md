@@ -20,7 +20,8 @@
     end-to-end test"); screenshots land in `.e2e/`.
 
 ## What must be tested
-- Every business rule BR-n in `docs/domain.md`, at the domain or use-case level.
+- Every business rule BR-n in `docs/domain.md`, at the domain or use-case level — or at the adapter
+  level when the rule is about files or storage (e.g. BR-11, which file in `docs/` is published).
 - Every entity invariant (`create()` rejections) and status transition (`withX()`).
 - Every `*Refused` code a use case can raise.
 - Any change touching billing, webhooks, access or checkout: the unit tests **plus** evidence from
