@@ -529,6 +529,123 @@ is missing is §5. The prospect list exists. The Friday morning does not yet.
 
 ---
 
+## 8. Use cases: apps launched 2020 or later, read for the mechanics
+
+The stories above are mostly 2010s winners. These six launched in 2020 or later, under today's App
+Store, run by small teams. Three were chosen by name (Zipchat, Wide Bundles, WideReview). The other
+three each sit next to one of them as a comparison: Kaching against Wide Bundles, Trustoo against
+WideReview, and Selleasy for its pricing model. Listings fetched 7 October 2026. A figure marked
+*unverified* could only be read from search snippets.
+
+### Zipchat — AI sales chat, Estonia/US, launched May 2023
+| When | Milestone |
+|---|---|
+| Apr 2023 | Ruslan Leteyski publishes "Why I'm leaving the Shopify apps business": his Checkout X hit €600k MRR, then lost its API key in Jan 2020 |
+| May 2023 | Zipchat launches on the App Store |
+| Jan 2024 | Leteyski buys a majority stake in under 30 days: "double-digit MoM MRR increase", "hundreds of brands" |
+| 2024 | "About to cross $2M ARR", 700k conversations a month (Indie Hackers, *unverified*) |
+| Oct 2026 | 4.9★ from 204 reviews; Free → $80 / $300 / $600 a month by AI replies; "2,500+ brands" (company claim) |
+
+- **Moves:**
+  - He bought an app with "strong organic pull" instead of building one.
+  - It sells revenue, not support: a "16.4% average chat-to-sale conversion", and one customer with
+    "$1.45M+ in revenue attributed".
+  - Agencies earn 30% lifetime commission and can resell it under their own brand.
+  - A sold-out AppSumo lifetime deal.
+- **Copy:** price on a usage metric, and show merchants the revenue the app brought in. Next to
+  that, $300 a month looks small. Also note the founder came back to the platform that had killed
+  his last app: the category is what you choose, the platform risk is not.
+
+### Wide Bundles — quantity breaks and bundles, France, launched 2020
+| When | Milestone |
+|---|---|
+| May 2020 | MVP built in 14 days by Mat De Sousa, after a Facebook-group mockup drew 100+ comments |
+| Sep → Dec 2020 | 3,000 → 10,000 a month |
+| Dec 2021 | $25k MRR in under a year, on a single $14.99 plan |
+| Jan 2023 | $37k a month after 2.5 years; then 3,000+ stores in 30 countries with a team of 5–6 |
+| 2025 | "$0 to $50K MRR"; over $57k MRR in a later interview |
+| Oct 2026 | 4.9★ from 320 reviews; $14.99–$24.99 a month, tiered by revenue the app generates |
+
+- **Moves:**
+  - Sold before building: 10–12 paying users from Facebook-group DMs before the listing was live.
+  - Raised the single price from $12.99 to $14.99.
+  - Affiliates on YouTube at about 30%.
+  - In 2021, users came from word of mouth (30%), the App Store (25%) and YouTube affiliates (10%).
+  - Trial-to-paid went from 9% to 40% through support insights, analytics, onboarding fixes and docs.
+- **Copy:** sell the mockup where merchants already gather, then work on trial-to-paid before
+  buying any traffic. This is the cheapest playbook on the page.
+
+### WideReview — review carousels, France, launched May 2021
+| When | Milestone |
+|---|---|
+| May 2021 | Mat De Sousa's second app, meant as part of a Wide "ecosystem" |
+| Mar 2023 | $9.99 a month, sold alongside Wide Bundles |
+| Apr 2023 | The founder says it was under-resourced and splitting his focus hurt |
+| Oct 2026 | 5.0★ from **11 reviews** in five years; revenue not public |
+
+- **Moves:**
+  - Cross-sold to the existing Wide Bundles customers.
+  - Imports reviews from AliExpress and Loox to lower switching costs.
+- **Copy:** the lesson, not the app. A second app in a category crowded with incumbents, while the
+  first app still needs you, gets 11 reviews. Give it its own owner, or don't ship it.
+
+### Kaching Bundles — the Wide Bundles competitor, Lithuania, launched Aug 2022
+| When | Milestone |
+|---|---|
+| Before 2022 | The founder's first app reached $6.5k MRR and sold for $250k |
+| Aug 2022 | Kaching Bundles launches |
+| Apr 2025 | "4.5 million a year", "90% profitable", "almost 0 on marketing", five apps |
+| Apr 2026 | Shopify newsroom: $900k → $4.3M annual revenue in a year, organically; team of 40; 100,000+ merchants |
+| Oct 2026 | 5.0★ from **6,191 reviews**; $14.99–$59.99 a month, tiered by revenue the app generates |
+
+- **Moves:**
+  - Seeded by hand: asked communities to install it, with free access at first.
+  - About 95% of reviews come from customer support, which works to leaderboards and bonuses
+    for reviews.
+  - Monthly emails show each merchant the revenue the app made them.
+  - All five apps sit in one category: AOV and discounts.
+- **Copy:** make reviews a measured part of the support job. 6,191 reviews against Wide Bundles'
+  320, in less time, is the gap App Store ranking rewards. The two apps sell the same product
+  at the same entry price.
+
+### Selleasy (Logbase) — upsell and cross-sell, India, launched Jul 2021
+| When | Milestone |
+|---|---|
+| Jul 2021 | Launch by a small team at an incubator in Coimbatore |
+| Feb 2025 | 1,600+ five-star reviews; partnership with NestScale |
+| Oct 2026 | 4.9★ from 2,742 reviews; free up to 50 orders, then $9 / $19 / $29 a month by order volume; "49,000+ active stores" (company claim); revenue not public |
+
+- **Moves:**
+  - A free tier, plus cheap tiers by order volume: stores install free and pay as they grow.
+  - Partnerships with other apps.
+  - Founder interviews on its own blog (including Mat De Sousa's) as search content.
+- **Copy:** a free tier that scales with order volume buys installs and reviews before revenue. It
+  only works if serving one more store costs you close to nothing.
+
+### Trustoo (CWILL) — product reviews, launched Jan 2022
+| When | Milestone |
+|---|---|
+| Jan 2022 | Launch, eight months after WideReview, at a similar price |
+| Oct 2026 | 4.9★ from 1,571 reviews; free plan, then $11.99 / $29.99 a month; revenue, installs and founders not public |
+
+- **Moves (from the listing only):**
+  - A generous free plan.
+  - One-click import and export of reviews, to win merchants from competitors.
+  - The Built for Shopify badge.
+- **Copy:** in a crowded category, a free plan plus one-click migration is the minimum to compete.
+  That is the 1,571-versus-11 difference.
+
+### What the six say together
+1. **Every winner started where merchants already were:** Facebook groups (Wide), communities
+   (Kaching), agencies and AppSumo (Zipchat). In 2021 the App Store brought only a quarter of
+   Wide's users.
+2. **Price follows the value delivered** (extra revenue, AI replies, order volume), and **reviews are
+   a process, not luck**. The review gaps (6,191 vs 320, 1,571 vs 11) are the ranking gaps.
+3. **Focus beats breadth.** Kaching kept five apps in one category and Zipchat stayed single-purpose.
+   WideReview stalled when it split its founder's attention.
+
+---
+
 ## Sources
 
 **Install and penetration data:** Storeleads via [06-Merchant Psychology](06-MERCHANT-PSYCHOLOGY.md),
@@ -554,6 +671,12 @@ is missing is §5. The prospect list exists. The Friday morning does not yet.
 - **Yotpo** — [TechCrunch, 30 Oct 2012](https://techcrunch.com/2012/10/30/yotpo-closes-1-5m-round-led-by-rhodium-and-gandyr-group-to-scale-social-reviews/) · [TechCrunch Series F, 18 Mar 2021](https://techcrunch.com/2021/03/18/yotpo-series-f/)
 - **Attentive** — [TechCrunch launch, 8 Feb 2018](https://techcrunch.com/2018/02/08/attentive-launch/) · [Contrary Research](https://research.contrary.com/company/attentive) · [Forbes, 23 Sep 2020](https://www.forbes.com/sites/kenrickcai/2020/09/23/attentive-messaging-marketing-startup-series-d-billion-valuation/)
 - **Shopify first-party** — [Shopify Forms changelog, 8 Nov 2022](https://changelog.shopify.com/posts/grow-your-marketing-list-for-free-with-shopify-forms) · [Inbox changelog](https://changelog.shopify.com/posts/shopify-ping-and-shopify-chat-have-relaunched-as-shopify-inbox) · [Shopify Email launch, 2020](https://www.shopify.com/news/shopify-launches-new-email-product-globally-making-it-easier-to-reach-customers-during-covid-19) · [Product Reviews deprecation](https://junip.co/blog/what-to-do-about-shopify-product-reviews-app-being-deprecated-in-may-2024/) · ["Why I'm leaving the Shopify apps business", 12 Apr 2023](https://www.linkedin.com/pulse/why-im-leaving-shopify-apps-business-ruslan-leteyski) · ["The Shopify App Store Is Broken", 17 Apr 2024](https://tobebuilds.com/2024/04/17/the-shopify-app-store-is-broken/)
+
+- **Zipchat** — [App Store listing](https://apps.shopify.com/zipchat) · [Leteyski: my first acquisition, 16 Jan 2024](https://blog.leteyski.com/p/my-first-acquisition-zipchat-ai-the) · [Checkout X story, 28 Mar 2023](https://www.linkedin.com/pulse/part-22-bootstrapping-600k-mrr-getting-killed-shopify-ruslan-leteyski) · [Ecomm Show podcast, 1 May 2024](https://ecommshow.bluetuskr.com/the-opportunities-of-ai-with-zipchat-131) · [Indie Hackers, $2M ARR (*unverified*, page returned 403)](https://www.indiehackers.com/post/building-a-2m-arr-product-after-his-8m-arr-product-failed-overnight-UZm68xNgjDZBHH7Mvc54) · [zipchat.ai](https://www.zipchat.ai/ai-info-page) · [Agency program](https://www.zipchat.ai/partners/agencies) · [AppSumo](https://appsumo.com/products/zipchat-ai/)
+- **Wide Bundles / WideReview** — [Wide Bundles listing](https://apps.shopify.com/widebundle) · [WideReview listing](https://apps.shopify.com/widereview-carousel-reviews) · [Starter Story, Apr 2023](https://starterstory.com/stories/widebundle) · [Indie Hackers, 10 Dec 2021](https://www.indiehackers.com/post/how-we-validated-grew-a-shopify-app-to-25k-mo-in-less-than-a-year-159f82699c) · [Indie Hackers Podcast #266, 25 Jan 2023](https://bizarro.dev.to/theindiehackerspodcast/266-lessons-learned-building-a-37kmo-business-in-25-years-with-mat-de-sousa-of-widebundle) · [Journal du Net, Mar 2023](https://www.journaldunet.com/retail/1520501-quatre-francais-qui-cartonnent-avec-leurs-applications-sur-shopify) · [Techtonic 2025](https://heymantle.com/techtonic/2025/shopify-app-growth) · [Logbase interview](https://www.logbase.io/blog/grow-your-shopify-app)
+- **Kaching Bundles** — [App Store listing](https://apps.shopify.com/bundle-deals) · [Starter Story video, 19 Apr 2025](https://www.starterstory.com/stories/my-apps-make-4-5m-year-with-0-marketing) · [Shopify newsroom, 28 Apr 2026](https://www.shopify.com/news/billion-dollar-ecosystem) · [First-app exit, 20 Mar 2025](https://www.goodreads.com/author_blog_posts/25605328-former-freelancer-earning-100k-month-with-this-app)
+- **Selleasy** — [App Store listing](https://apps.shopify.com/upsell-cross-sell-kit-1) · [Logbase product page](https://www.logbase.io/products/shopify-upsell-app) · [NestScale × Logbase, 11 Feb 2025](https://nestscale.com/blog/nestscale-x-logbase.html)
+- **Trustoo (CWILL)** — [App Store listing](https://apps.shopify.com/sealapps-product-review)
 
 **Corrections recorded during research, so they are not repeated elsewhere:**
 

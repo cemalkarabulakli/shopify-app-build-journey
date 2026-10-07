@@ -17,7 +17,7 @@ A record of the process of building a Shopify app from scratch. Numbered to be r
 | [10-CASE-STUDIES.md](10-CASE-STUDIES.md) | Reading Shopify case studies through a money lens: the value pool, the slice an app can take, the number the merchant will pay | ~25 min |
 | [11-BRAND-AND-SCALE.md](11-BRAND-AND-SCALE.md) | Branding and scaling: Ali Aslan's funnel/email steps + Gürkanzone's "premium price is a result" sequence: pain-point funnels, offer, proof, email/SMS flows, the founder's face; 2020+ brand use cases and people to model — for both stores and apps | ~45 min |
 | [12-PROBLEM-SELECTION.md](12-PROBLEM-SELECTION.md) | **The painkiller workshop**: pick the niche, mine competitor reviews for real pains, interview, and write the one-sentence problem. Run before building anything in Phase 5 | ~25 min |
-| [13-APP-ORIGIN-STORIES.md](13-APP-ORIGIN-STORIES.md) | The apps merchants actually have installed: what each founder saw, what v1 did, how the first 100 customers arrived, and where it got to | ~30 min |
+| [13-APP-ORIGIN-STORIES.md](13-APP-ORIGIN-STORIES.md) | The apps merchants actually have installed: what each founder saw, what v1 did, how the first 100 customers arrived, and where it got to; plus six 2020+ app use cases (Zipchat, Wide Bundles, WideReview, Kaching, Selleasy, Trustoo) | ~40 min |
 | [LEARNING.md](LEARNING.md) | Roadmap + session-by-session learning log | ongoing |
 
 **Reading order:** 00 → 01 → 02 → then hands on the keyboard with Session 2 in LEARNING.
