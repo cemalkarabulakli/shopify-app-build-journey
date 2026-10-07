@@ -42,7 +42,7 @@
 		<span class="mr-1.5 inline-block align-middle"><FogDragon level={4} size={34} /></span>{data.site.name}
 	</a>
 	<!-- Wraps onto extra rows on phones so every destination stays visible (spec 0004) -->
-	<nav class="flex flex-wrap justify-center gap-1 rounded-2xl border border-line bg-card/70 p-1 text-sm backdrop-blur sm:rounded-full">
+	<nav class="flex flex-wrap justify-center gap-1 rounded-2xl border border-line bg-card/70 p-1 text-sm backdrop-blur lg:rounded-full">
 		{#each links as l (l.href)}
 			<a
 				href={l.href}
