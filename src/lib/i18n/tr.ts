@@ -119,7 +119,7 @@ export const tr: Messages = {
 		mark: 'Ulaştım',
 		marked: 'Ulaşıldı',
 		progress: (n, target) => `${Math.min(n, target)}/${target} merchant'a ulaşıldı`,
-		questDone: '⚔️ Ulaşma görevi tamamlandı!'
+		questDone: (xp) => `⚔️ Ulaşma görevi tamamlandı! +${xp} XP`
 	},
 	dragon: {
 		name: 'Sis Ejderi',

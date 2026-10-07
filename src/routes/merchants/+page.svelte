@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { createReadingProgress } from '$lib/client/readingProgress.svelte';
+	import { QUEST_XP } from '$lib/client/gamification';
 	import { reachOutLink, reachedCount } from '$lib/client/outreach';
 	import Burst from '$lib/components/Burst.svelte';
 	import Seo from '$lib/components/Seo.svelte';
@@ -14,7 +15,7 @@
 	function toggle(id: string) {
 		const before = count;
 		reached.toggle(id);
-		if (before < data.target && before + 1 >= data.target && reached.has(id)) burst.fire(t.merchants.questDone);
+		if (before < data.target && before + 1 >= data.target && reached.has(id)) burst.fire(t.merchants.questDone(QUEST_XP));
 	}
 </script>
 

@@ -117,7 +117,7 @@ export const en = {
 		mark: 'I reached out',
 		marked: 'Reached out',
 		progress: (n: number, target: number) => `${Math.min(n, target)}/${target} merchants reached`,
-		questDone: '⚔️ Outreach quest complete!'
+		questDone: (xp: number) => `⚔️ Outreach quest complete! +${xp} XP`
 	},
 	dragon: {
 		name: 'Fog Dragon',
