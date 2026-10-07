@@ -43,3 +43,39 @@ describe('sealing', () => {
 		expect(scrollOrder(stages, ['zzz', 'c', 'a', 'b'])).toEqual(['a', 'b', 'c', 'zzz']);
 	});
 });
+
+import { QUEST_XP, questDone, questProgress } from '../gamification';
+
+describe('quests (spec 0002)', () => {
+	const has = (set: string[]) => (x: string) => set.includes(x);
+	const quests = [{ id: 'q0-a' }, { id: 'q0-b' }, { id: 'q5-outreach', kind: 'outreach' as const, target: 3 }];
+
+	it('a quest is worth 150 XP on top of the existing score (AC-3, AC-5)', () => {
+		expect(QUEST_XP).toBe(150);
+		expect(xpFor(3, 1, 2) - xpFor(3, 1, 1)).toBe(150);
+		expect(xpFor(3, 1, 2)).toBe(3 * 100 + 1 * 500 + 2 * 150);
+	});
+	it('leaves an existing reader with exactly the XP they had (AC-12)', () => {
+		expect(xpFor(3, 1)).toBe(800);
+		expect(xpFor(3, 1, 0)).toBe(800);
+	});
+	it('counts each ticked quest once, however often it was toggled (AC-3)', () => {
+		expect(questProgress(quests, has(['q0-a', 'q0-a']), 0)).toEqual({ done: 1, total: 3 });
+	});
+	it('completes the outreach quest at 3 reached merchants and reopens below (AC-10)', () => {
+		const outreach = quests[2];
+		expect(questDone(outreach, has([]), 2)).toBe(false);
+		expect(questDone(outreach, has([]), 3)).toBe(true);
+		expect(questDone(outreach, has([]), 4)).toBe(true);
+		expect(questDone(outreach, has(['q5-outreach']), 2)).toBe(false); // only merchants count, not a tick
+	});
+	it('never changes sealing: every quest ticked, nothing read → only phase 0 and its first scroll (AC-4)', () => {
+		const stages = [
+			{ id: '0', docs: ['a', 'b'] },
+			{ id: '1', docs: ['c'] }
+		];
+		const u = unlocked(stages, has([]), has(['q0-a', 'q0-b', 'q5-outreach']));
+		expect([u.stage('0'), u.stage('1')]).toEqual([true, false]);
+		expect([u.doc('a'), u.doc('b'), u.doc('c')]).toEqual([true, false, false]);
+	});
+});
