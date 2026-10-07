@@ -30,7 +30,7 @@
 	<link rel="alternate" type="text/markdown" href="/llms.txt" title="llms.txt" />
 	<link rel="sitemap" type="application/xml" href="/sitemap.xml" />
 	<meta name="author" content={data.site.author} />
-	{@html `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@type': 'WebSite', name: data.site.name, url: data.site.url, description: data.site.description, inLanguage: data.locale, author: { '@type': 'Person', name: data.site.author, url: data.site.url + '/about' } })}</script>`}
+	{@html `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@type': 'WebSite', name: data.site.name, url: data.site.url, description: data.site.description, inLanguage: data.locale, author: { '@type': 'Person', name: data.site.author, url: data.site.url + '/about' } }).replace(/</g, '\\u003c')}</script>`}
 </svelte:head>
 
 {#if bare}
