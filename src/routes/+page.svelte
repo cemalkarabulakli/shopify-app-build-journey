@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { createReadingProgress } from '$lib/client/readingProgress.svelte';
-	import { XP_PER_DOC, levelFor, stageComplete, unlocked, xpFor } from '$lib/client/gamification';
+	import { QUEST_XP, XP_PER_DOC, levelFor, questDone, questProgress, stageComplete, unlocked, xpFor, type Quest } from '$lib/client/gamification';
 	import FogDragon from '$lib/components/FogDragon.svelte';
 	import { formatDate } from '$lib/format';
 	import Burst from '$lib/components/Burst.svelte';
@@ -12,6 +12,9 @@
 	let { data } = $props();
 	const read = createReadingProgress('docs:read');
 	const tasks = createReadingProgress('phases:done');
+	// Spec 0002: quests are bonus XP and never touch sealing; the outreach quest counts merchants reached.
+	const quests = createReadingProgress('quests:done');
+	const reached = createReadingProgress('merchants:reached');
 	let burst: Burst;
 
 	type Step = (typeof data.steps)[number];
@@ -28,7 +31,19 @@
 	const readDocs = $derived(data.steps.reduce((n, s) => n + s.docs.filter((d) => read.has(d.slug)).length, 0));
 	const complete = (s: Step) => stageComplete(stageOf(s), read.has, tasks.has);
 	const doneSteps = $derived(data.steps.filter(complete).length);
-	const xp = $derived(xpFor(readDocs, doneSteps));
+	const reachedCount = $derived(reached.read.length);
+	const allQuests = $derived(data.steps.flatMap((s) => s.quests));
+	const questsSoFar = $derived(questProgress(allQuests, quests.has, reachedCount));
+	const xp = $derived(xpFor(readDocs, doneSteps, questsSoFar.done));
+
+	type Chapter = (typeof data.chapters)[number];
+	const chapterAt = (n: number) => data.chapters.findIndex((c) => c.phases[0] === n);
+	const chapterQuests = (c: Chapter) => data.steps.filter((s) => c.phases.includes(s.n)).flatMap((s) => s.quests);
+	const isQuestDone = (q: Quest) => questDone(q, quests.has, reachedCount);
+	const ourAppNow = $derived(data.steps.find((s) => s.status === 'next'));
+	const buildLog = $derived(data.steps.filter((s) => s.posts.length));
+	const OUR_APP_CHAPTER = 3;
+	const MERCHANTS_CHAPTER = 2;
 
 	const stepPct = (s: Step) => {
 		const parts = s.docs.length + 1; // scrolls + the task
@@ -44,6 +59,11 @@
 		const was = tasks.has(String(step.n));
 		tasks.toggle(String(step.n));
 		if (!was) burst.fire(complete(step) ? t.home.phaseDone(step.title) : '🏁');
+	}
+	function toggleQuest(q: Quest) {
+		const was = quests.has(q.id);
+		quests.toggle(q.id);
+		if (!was) burst.fire(t.home.questToast(QUEST_XP));
 	}
 	const statusCls = { done: 'border-forest text-forest', next: 'border-forest bg-forest text-white', todo: 'border-line text-muted' } as const;
 </script>
@@ -72,7 +92,7 @@
 </section>
 
 <div class="grid gap-4 lg:grid-cols-[3fr_2fr] lg:items-stretch">
-<XpBar {xp} docsRead={readDocs} docsTotal={totalDocs} phasesDone={doneSteps} phasesTotal={data.steps.length} />
+<XpBar {xp} docsRead={readDocs} docsTotal={totalDocs} phasesDone={doneSteps} phasesTotal={data.steps.length} questsDone={questsSoFar.done} questsTotal={questsSoFar.total} />
 
 <section class="card mt-4 flex flex-wrap content-center items-center gap-3 px-5 py-4 lg:mt-6" aria-label={t.home.badges}>
 	<span class="w-full text-[.7rem] font-extrabold tracking-[.2em] text-gold uppercase">{t.home.badges}</span>
@@ -101,6 +121,38 @@
 		{@const pct = stepPct(step)}
 		{@const sealed = sealedStep(step)}
 		{@const earned = complete(step)}
+		{@const ci = chapterAt(step.n)}
+
+		{#if ci >= 0}
+			{@const chapter = data.chapters[ci]}
+			{@const cp = questProgress(chapterQuests(chapter), quests.has, reachedCount)}
+			<li id="chapter-{ci + 1}" class="relative -ml-16 animate-enter rounded-2xl border border-gold/40 bg-gold/10 px-5 py-4">
+				<div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+					<span class="font-display text-xs font-extrabold tracking-widest text-gold uppercase">{t.home.chapter} {ci + 1}</span>
+					<h2 class="text-2xl font-extrabold text-ink">{chapter.title}</h2>
+					<span class="ml-auto text-sm text-muted tabular-nums">⚔️ {cp.done}/{cp.total} {t.home.quests}</span>
+				</div>
+				{#if ci === MERCHANTS_CHAPTER}
+					<a href="/merchants" class="mt-2 inline-block font-bold text-forest no-underline hover:text-ember">🏪 {t.home.toMerchants}</a>
+				{/if}
+				{#if ci === OUR_APP_CHAPTER}
+					{#if ourAppNow}<p class="mt-2 font-bold text-forest">🐉 {t.home.ourAppNow(ourAppNow.n, ourAppNow.title)}</p>{/if}
+					{#if buildLog.length}
+						<p class="mt-3 text-[.7rem] font-extrabold tracking-[.2em] text-gold uppercase">{t.home.buildLog}</p>
+						<ul class="mt-1 space-y-1">
+							{#each buildLog as s (s.n)}
+								{#each s.posts as post (post.slug)}
+									<li class="flex items-center gap-2 text-[.95rem]">
+										<span class="font-display text-xs font-extrabold text-muted">{t.home.phase} {s.n}</span>
+										<a href="/posts/{post.slug}" class="text-ink no-underline hover:text-ember">✍️ {post.title}</a>
+									</li>
+								{/each}
+							{/each}
+						</ul>
+					{/if}
+				{/if}
+			</li>
+		{/if}
 
 		<li id="faz-{step.n}" class="relative animate-enter {sealed ? 'opacity-60' : ''}" style="animation-delay:{i * 80}ms">
 			<!-- waypoint -->
@@ -180,6 +232,31 @@
 							{/each}
 						</ul>
 					{/if}
+				{/if}
+				<!-- Quests (spec 0002): bonus XP on every phase, sealed or not — they never change the seals. -->
+				{#if step.quests.length}
+					<p class="mt-4 text-[.7rem] font-extrabold tracking-[.2em] text-gold uppercase">⚔️ {t.home.questsLabel}</p>
+					<ul class="mt-1 space-y-1">
+						{#each step.quests as q (q.id)}
+							{@const qDone = isQuestDone(q)}
+							<li>
+								{#if q.kind === 'outreach'}
+									<a href="/merchants" class="group flex items-center gap-3 rounded-lg px-2 py-1.5 no-underline transition hover:bg-gold/10">
+										<span class="grid h-5 w-5 flex-none place-items-center rounded-md border-2 text-xs text-white {qDone ? 'border-forest bg-forest' : 'border-line'}">{qDone ? '✓' : ''}</span>
+										<span class="flex-1 {qDone ? 'text-muted line-through' : 'text-ink'}">{q.title} <span class="text-xs text-muted">· {t.home.outreachProgress(reachedCount, q.target ?? 3)}</span></span>
+										<span class="text-[.7rem] font-extrabold text-gold {qDone ? 'opacity-40' : ''}">+{QUEST_XP}</span>
+									</a>
+								{:else}
+									<label class="group flex cursor-pointer items-center gap-3 rounded-lg px-2 py-1.5 transition hover:bg-gold/10">
+										<input type="checkbox" class="peer sr-only" checked={qDone} onchange={() => toggleQuest(q)} />
+										<span class="grid h-5 w-5 flex-none place-items-center rounded-md border-2 text-xs text-white transition peer-focus-visible:ring-2 peer-focus-visible:ring-gold {qDone ? 'border-forest bg-forest' : 'border-line group-hover:border-gold'}">{qDone ? '✓' : ''}</span>
+										<span class="flex-1 {qDone ? 'text-muted line-through' : ''}">{q.title}</span>
+										<span class="text-[.7rem] font-extrabold text-gold {qDone ? 'opacity-40' : ''}">+{QUEST_XP}</span>
+									</label>
+								{/if}
+							</li>
+						{/each}
+					</ul>
 				{/if}
 			</article>
 		</li>

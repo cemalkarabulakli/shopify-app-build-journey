@@ -14,6 +14,7 @@ export const load: PageServerLoad = async ({ parent }) => {
 	return {
 		intro: path.intro,
 		rule: path.rule,
+		chapters: path.chapters,
 		steps: path.steps.map((s) => ({
 			...s,
 			docs: s.docs.map((slug) => bySlug.get(slug)).filter((d) => d !== undefined),
