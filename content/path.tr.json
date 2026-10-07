@@ -67,7 +67,7 @@
       "docs": [
         "learning"
       ],
-      "status": "next",
+      "status": "done",
       "icon": "🏕️",
       "quests": [
         {
@@ -93,7 +93,8 @@
           "id": "q2-admin-page",
           "title": "App'ine Shopify admin içinde bir sayfa ekle"
         }
-      ]
+      ],
+      "status": "done"
     },
     {
       "n": 3,
@@ -112,7 +113,8 @@
           "id": "q3-metafield",
           "title": "Bir ayarı metafield'a kaydet"
         }
-      ]
+      ],
+      "status": "done"
     },
     {
       "n": 4,
@@ -131,7 +133,8 @@
           "id": "q4-twice",
           "title": "Aynı webhook'u iki kez işle, etkisi iki kez olmasın"
         }
-      ]
+      ],
+      "status": "done"
     },
     {
       "n": 5,
@@ -159,7 +162,8 @@
           "id": "q5-problem",
           "title": "Bir merchant'ın sorununu kendi kelimeleriyle yaz"
         }
-      ]
+      ],
+      "status": "next"
     },
     {
       "n": 6,
@@ -174,7 +178,8 @@
           "id": "q6-mvp",
           "title": "MVP'ni gerçek bir mağazanın önüne koy"
         }
-      ]
+      ],
+      "status": "todo"
     },
     {
       "n": 7,
@@ -189,7 +194,8 @@
           "id": "q7-billing",
           "title": "Billing API ile ücretli bir plan ekle"
         }
-      ]
+      ],
+      "status": "todo"
     },
     {
       "n": 8,
@@ -209,7 +215,8 @@
           "id": "q8-listing",
           "title": "App Store listeleme başvurunu gönder"
         }
-      ]
+      ],
+      "status": "todo"
     },
     {
       "n": 9,
@@ -226,7 +233,8 @@
           "id": "q9-first10",
           "title": "İlk 10 ödeme yapan merchant'ını kazan"
         }
-      ]
+      ],
+      "status": "todo"
     }
   ]
 }
