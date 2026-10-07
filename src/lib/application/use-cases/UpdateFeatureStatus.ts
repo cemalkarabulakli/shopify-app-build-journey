@@ -22,12 +22,14 @@ export class UpdateFeatureStatus {
 		if (!this.isAdmin(input.actorEmail)) throw new StatusRefused('not-admin');
 		const request = await this.board.findById(input.id);
 		if (!request) throw new StatusRefused('not-found');
+		let next;
 		try {
-			const next = request.withStatus(input.status, input.note, now);
-			await this.board.save(next);
-			return next;
+			next = request.withStatus(input.status, input.note, now);
 		} catch (e) {
 			throw new StatusRefused((e as Error).message === 'long-note' ? 'long-note' : 'not-found');
 		}
+		// Outside the try: a storage failure is not a refusal — the route logs it and answers 500.
+		await this.board.save(next);
+		return next;
 	}
 }

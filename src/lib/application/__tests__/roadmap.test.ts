@@ -127,6 +127,22 @@ describe('UpdateFeatureStatus', () => {
 			.rejects.toThrow(StatusRefused);
 		expect((await board.findById(r.id))!.status).toBe('considering');
 	});
+
+	it('refuses a request that does not exist (not-found) and a note over 500 characters (long-note)', async () => {
+		const r = seed();
+		const update = new UpdateFeatureStatus(board, isAdmin);
+		await expect(update.execute({ actorEmail: ADMIN, id: 'nope', status: 'planned', note: null })).rejects.toMatchObject({ code: 'not-found' });
+		await expect(update.execute({ actorEmail: ADMIN, id: r.id, status: 'planned', note: 'n'.repeat(501) })).rejects.toMatchObject({ code: 'long-note' });
+		expect((await board.findById(r.id))!.status).toBe('considering');
+	});
+
+	it('lets a storage failure surface as itself, not as a refusal (review 0003 m-1)', async () => {
+		const r = seed();
+		const broken = Object.assign(Object.create(board), { save: async () => { throw new Error('connection terminated'); } });
+		const attempt = new UpdateFeatureStatus(broken, isAdmin).execute({ actorEmail: ADMIN, id: r.id, status: 'planned', note: null });
+		await expect(attempt).rejects.toThrow('connection terminated');
+		await expect(attempt).rejects.not.toBeInstanceOf(StatusRefused);
+	});
 });
 
 describe('ListRoadmap', () => {
