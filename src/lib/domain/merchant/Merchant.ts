@@ -24,7 +24,7 @@ export interface MerchantProps {
 }
 
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
-const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const EMAIL = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
 
 function https(url: string, what: string, id: string): string {
 	let parsed: URL;

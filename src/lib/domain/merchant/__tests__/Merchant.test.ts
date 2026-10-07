@@ -35,6 +35,10 @@ describe('Merchant.create (AC-14)', () => {
 	it('rejects a malformed email', () => {
 		expect(() => Merchant.create(props({ email: 'not-an-email', emailSourceUrl: 'https://gruns.co/p' }))).toThrow(/email/);
 	});
+	it('rejects an email that would inject mailto headers (review finding 5)', () => {
+		for (const email of ['a@b.co?bcc=x@y.z', 'a@b.co&cc=x@y.z', 'a@b.co#x', 'a b@c.co'])
+			expect(() => Merchant.create(props({ email, emailSourceUrl: 'https://gruns.co/c' })), email).toThrow(/email/);
+	});
 	it('rejects links that are not https', () => {
 		expect(() => Merchant.create(props({ storeUrl: 'http://gruns.co' }))).toThrow(/https/);
 		expect(() => Merchant.create(props({ contactPage: 'javascript:alert(1)' }))).toThrow(/https/);
