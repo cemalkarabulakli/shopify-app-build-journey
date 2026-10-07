@@ -47,10 +47,7 @@ export function loadSiteConfig(): SiteConfig {
 		databaseUrl: env.DATABASE_URL || '',
 		sessionSecret: env.SESSION_SECRET || '',
 		email: { resendApiKey: env.RESEND_API_KEY || '', from: env.EMAIL_FROM || `${env.SITE_NAME || 'Shopify App Build Journey'} <noreply@example.com>` },
-		adminEmails: (env.ADMIN_EMAILS || '')
-			.split(',')
-			.map((e) => e.trim().toLowerCase())
-			.filter(Boolean)
+		adminEmails: parseAdminEmails(env.ADMIN_EMAILS)
 	};
 }
 
@@ -72,6 +69,14 @@ export function requirePaddle(site: SiteConfig): { environment: 'sandbox' | 'pro
 		throw new Error('PUBLIC_PADDLE_ENV is "production" but PUBLIC_PADDLE_CLIENT_TOKEN is a sandbox token.');
 	}
 	return { environment: site.paddle.environment, clientToken: site.paddle.clientToken };
+}
+
+/** `ADMIN_EMAILS` → lower-cased list: comma-separated, trimmed, empty entries dropped. */
+export function parseAdminEmails(raw: string | undefined): string[] {
+	return (raw || '')
+		.split(',')
+		.map((e) => e.trim().toLowerCase())
+		.filter(Boolean);
 }
 
 /** True when this signed-in person may move requests on the roadmap board. */
