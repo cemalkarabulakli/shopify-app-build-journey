@@ -1,5 +1,5 @@
 import { resolve } from 'node:path';
-import { BuildFeed, ExportMarkdown, GetAccessForEmail, GetPublishedPost, HandleBillingEvent, ListPublishedPosts, MagicLinkLogin } from '$lib/application';
+import { BuildFeed, ExportMarkdown, GetAccessForEmail, GetPublishedPost, HandleBillingEvent, ListMerchants, ListPublishedPosts, MagicLinkLogin } from '$lib/application';
 import { loadSiteConfig, requirePaddle } from './config/siteConfig';
 import { CachedPostRepository } from './infrastructure/content/CachedPostRepository';
 import { FileSystemPostRepository } from './infrastructure/content/FileSystemPostRepository';
@@ -10,6 +10,7 @@ import { RssFeedSerializer } from './presentation/RssFeedSerializer';
 import { rewriteRelativeMarkdownLinks } from './infrastructure/content/rewriteRelativeMarkdownLinks';
 import { Post } from '$lib/domain/post';
 import { FileSystemPathRepository } from './infrastructure/content/FileSystemPathRepository';
+import { FileSystemMerchantRepository } from './infrastructure/content/FileSystemMerchantRepository';
 import { PaddleWebhookAdapter } from './infrastructure/vip/PaddleWebhookAdapter';
 import { PaddlePortal } from './infrastructure/vip/PaddlePortal';
 import { PgBillingStore, subscriptionRepo, transactionRepo } from './infrastructure/vip/PgBillingStore';
@@ -68,6 +69,8 @@ function buildContainer() {
 			return new SessionCodec(site.sessionSecret);
 		},
 		path: new FileSystemPathRepository(resolve(site.pathDir)),
+		// The curated merchants sit next to the path files (spec 0002); story links resolve against docs.
+		listMerchants: new ListMerchants(new FileSystemMerchantRepository(resolve(site.pathDir, 'merchants.json')), docs),
 		listDocs: new ListPublishedPosts(docs, Post.bySlug),
 		exportDocs: new ExportMarkdown(docs, (md) => rewriteRelativeMarkdownLinks(md, `${site.url}/docs`), Post.bySlug),
 		exportPosts: new ExportMarkdown(posts),

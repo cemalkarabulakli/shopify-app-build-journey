@@ -1,0 +1,203 @@
+[
+  {
+    "id": "gruns",
+    "name": "Grüns",
+    "sells": {
+      "en": "Daily nutrition gummy packs",
+      "tr": "Günlük besin takviyesi gummy paketleri"
+    },
+    "fact": {
+      "en": "From a Stanford dorm room (2023) to 7,000+ retail locations",
+      "tr": "Stanford yurt odasından (2023) 7.000+ perakende noktasına"
+    },
+    "sourceUrl": "https://www.shopify.com/case-studies/gruns",
+    "storeUrl": "https://gruns.co/",
+    "contactPage": "https://gruns.co/pages/contact",
+    "email": "press@gruns.co",
+    "emailSourceUrl": "https://gruns.co/",
+    "storySlugs": [
+      "10-case-studies",
+      "11-brand-and-scale"
+    ]
+  },
+  {
+    "id": "scuffers",
+    "name": "Scuffers",
+    "sells": {
+      "en": "Spanish streetwear and footwear",
+      "tr": "İspanyol sokak giyimi ve ayakkabı"
+    },
+    "fact": {
+      "en": "+225% year-on-year growth; physical retail in 4 European markets",
+      "tr": "Yıllık %225 büyüme; 4 Avrupa pazarında fiziksel mağaza"
+    },
+    "sourceUrl": "https://www.shopify.com/case-studies/scuffers",
+    "storeUrl": "https://scuffers.com/",
+    "contactPage": "https://scuffers.com/pages/faqs",
+    "email": null,
+    "emailSourceUrl": null,
+    "storySlugs": [
+      "10-case-studies"
+    ]
+  },
+  {
+    "id": "pulsetto",
+    "name": "Pulsetto",
+    "sells": {
+      "en": "Vagus nerve stimulation wearable for stress",
+      "tr": "Stres için vagus siniri uyarıcı giyilebilir cihaz"
+    },
+    "fact": {
+      "en": "Orders +241% in a year; 8 localised markets launched",
+      "tr": "Bir yılda siparişler %241 arttı; 8 yerelleştirilmiş pazar açıldı"
+    },
+    "sourceUrl": "https://www.shopify.com/case-studies/pulsetto",
+    "storeUrl": "https://pulsetto.tech/",
+    "contactPage": "https://pulsetto.tech/pages/contact",
+    "email": "info@pulsetto.tech",
+    "emailSourceUrl": "https://pulsetto.tech/pages/contact",
+    "storySlugs": [
+      "10-case-studies"
+    ]
+  },
+  {
+    "id": "wow-concept",
+    "name": "WOW Concept",
+    "sells": {
+      "en": "Multi-brand fashion, beauty and home (Madrid)",
+      "tr": "Çok markalı moda, güzellik ve ev (Madrid)"
+    },
+    "fact": {
+      "en": "Repeat-customer orders +356% year over year; online sales +80%",
+      "tr": "Tekrar eden müşteri siparişleri yıllık %356 arttı; online satışlar %80 arttı"
+    },
+    "sourceUrl": "https://www.shopify.com/case-studies/wow-concept",
+    "storeUrl": "https://wowconcept.com/",
+    "contactPage": "https://wowconcept.com/pages/faq",
+    "email": null,
+    "emailSourceUrl": null,
+    "storySlugs": [
+      "10-case-studies"
+    ]
+  },
+  {
+    "id": "armedangels",
+    "name": "ARMEDANGELS",
+    "sells": {
+      "en": "Sustainable fashion (Cologne)",
+      "tr": "Sürdürülebilir moda (Köln)"
+    },
+    "fact": {
+      "en": "Mobile conversion +18% and checkout conversion doubled in 3 months",
+      "tr": "3 ayda mobil dönüşüm %18 arttı, checkout dönüşümü ikiye katlandı"
+    },
+    "sourceUrl": "https://www.shopify.com/case-studies/armedangels",
+    "storeUrl": "https://www.armedangels.com/",
+    "contactPage": "https://www.armedangels.com/pages/kontakt",
+    "email": null,
+    "emailSourceUrl": null,
+    "storySlugs": [
+      "10-case-studies"
+    ]
+  },
+  {
+    "id": "braingain",
+    "name": "BrainGain",
+    "sells": {
+      "en": "Home fitness equipment",
+      "tr": "Ev fitness ekipmanı"
+    },
+    "fact": {
+      "en": "Online Store GMV +45% and orders +35% in 12 months on Shopify Plus",
+      "tr": "Shopify Plus ile 12 ayda online mağaza GMV %45, siparişler %35 arttı"
+    },
+    "sourceUrl": "https://www.shopify.com/case-studies/braingain",
+    "storeUrl": "https://eu.braingain.fit/",
+    "contactPage": "https://eu.braingain.fit/pages/contact-us",
+    "email": null,
+    "emailSourceUrl": null,
+    "storySlugs": [
+      "10-case-studies"
+    ]
+  },
+  {
+    "id": "polyvinyl",
+    "name": "Polyvinyl Records",
+    "sells": {
+      "en": "Independent record label: vinyl and merch",
+      "tr": "Bağımsız plak şirketi: plak ve merch"
+    },
+    "fact": {
+      "en": "+20% revenue and a 3.88% conversion rate after replacing 15 years of custom code",
+      "tr": "15 yıllık özel kodu bıraktıktan sonra gelir %20 arttı, dönüşüm oranı %3,88"
+    },
+    "sourceUrl": "https://www.shopify.com/case-studies/polyvinyl",
+    "storeUrl": "https://www.polyvinylrecords.com/",
+    "contactPage": "https://www.polyvinylrecords.com/pages/contact",
+    "email": "info@polyvinylrecords.com",
+    "emailSourceUrl": "https://www.polyvinylrecords.com/pages/contact",
+    "storySlugs": [
+      "10-case-studies"
+    ]
+  },
+  {
+    "id": "justmylook",
+    "name": "Justmylook",
+    "sells": {
+      "en": "Online beauty: haircare, cosmetics, skincare",
+      "tr": "Online güzellik: saç bakımı, kozmetik, cilt bakımı"
+    },
+    "fact": {
+      "en": "First-ever £1M+ sales day on Black Friday after replatforming",
+      "tr": "Platform değişikliğinden sonra Black Friday’de ilk kez 1 milyon £+ satış günü"
+    },
+    "sourceUrl": "https://www.shopify.com/case-studies/justmylook",
+    "storeUrl": "https://www.justmylook.com/",
+    "contactPage": "https://www.justmylook.com/pages/contact-form",
+    "email": "marketing@justmylook.com",
+    "emailSourceUrl": "https://www.justmylook.com/pages/about-us",
+    "storySlugs": [
+      "10-case-studies"
+    ]
+  },
+  {
+    "id": "mrmarvis",
+    "name": "MR MARVIS",
+    "sells": {
+      "en": "Men’s shorts, trousers, tops and swimwear",
+      "tr": "Erkek şort, pantolon, üst ve mayo"
+    },
+    "fact": {
+      "en": "10+ years of double-digit revenue growth; 0 to 25 retail stores on Shopify POS",
+      "tr": "10+ yıl çift haneli gelir büyümesi; Shopify POS ile 0’dan 25 mağazaya"
+    },
+    "sourceUrl": "https://www.shopify.com/case-studies/mrmarvis",
+    "storeUrl": "https://www.mrmarvis.com/",
+    "contactPage": "https://www.mrmarvis.com/support",
+    "email": "hello@mrmarvis.com",
+    "emailSourceUrl": "https://www.mrmarvis.com/support",
+    "storySlugs": [
+      "10-case-studies"
+    ]
+  },
+  {
+    "id": "labellov",
+    "name": "Labellov",
+    "sells": {
+      "en": "Authenticated pre-owned designer bags",
+      "tr": "Orijinalliği doğrulanmış ikinci el tasarım çantalar"
+    },
+    "fact": {
+      "en": "Average order value €1,250 → €1,650; visitors +88% year on year",
+      "tr": "Ortalama sipariş tutarı 1.250 € → 1.650 €; ziyaretçiler yıllık %88 arttı"
+    },
+    "sourceUrl": "https://www.shopify.com/case-studies/labellov",
+    "storeUrl": "https://labellov.com/",
+    "contactPage": "https://labellov.com/pages/contact",
+    "email": "info@labellov.com",
+    "emailSourceUrl": "https://labellov.com/pages/contact",
+    "storySlugs": [
+      "10-case-studies"
+    ]
+  }
+]

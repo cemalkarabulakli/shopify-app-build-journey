@@ -11,3 +11,5 @@ export type { BillingEvent, BillingEventResult } from './use-cases/HandleBilling
 export { GetAccessForEmail } from './use-cases/GetAccessForEmail';
 export type { AccessSummary } from './use-cases/GetAccessForEmail';
 export { MagicLinkLogin } from './use-cases/MagicLinkLogin';
+export { ListMerchants } from './use-cases/ListMerchants';
+export type { MerchantCardDto } from './dto';
