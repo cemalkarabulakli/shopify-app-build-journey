@@ -11,5 +11,11 @@ export type { BillingEvent, BillingEventResult } from './use-cases/HandleBilling
 export { GetAccessForEmail } from './use-cases/GetAccessForEmail';
 export type { AccessSummary } from './use-cases/GetAccessForEmail';
 export { MagicLinkLogin } from './use-cases/MagicLinkLogin';
+export { ListRoadmap } from './use-cases/ListRoadmap';
+export type { RoadmapColumn } from './use-cases/ListRoadmap';
+export { SubmitFeatureRequest, SubmitRefused } from './use-cases/SubmitFeatureRequest';
+export { ToggleVote, VoteRefused } from './use-cases/ToggleVote';
+export { UpdateFeatureStatus, StatusRefused } from './use-cases/UpdateFeatureStatus';
+export type { MembershipCheck } from './ports/Membership';
 export { ListMerchants } from './use-cases/ListMerchants';
 export type { MerchantCardDto } from './dto';

@@ -91,6 +91,7 @@ Base directory `/`, no install/build/start overrides, port `3000`. `nixpacks.tom
 | `DATABASE_URL` | — | Postgres for the billing mirror and sign-in tokens (schema below). Webhook/account routes answer 503 without it |
 | `SESSION_SECRET` | — | ≥32 chars; signs the `session` cookie for `/account` |
 | `RESEND_API_KEY`, `EMAIL_FROM` | — | Sign-in emails via Resend; unset → links are printed to the server log |
+| `ADMIN_EMAILS` | — | Comma-separated emails that may move requests on `/roadmap` and write their public notes; empty → nobody can |
 
 ### Sandbox end-to-end test
 
@@ -123,6 +124,10 @@ CREATE TABLE transactions (transaction_id TEXT PRIMARY KEY, customer_id TEXT, su
 CREATE TABLE webhook_events (event_id TEXT PRIMARY KEY, event_type TEXT NOT NULL, occurred_at TIMESTAMPTZ NOT NULL, received_at TIMESTAMPTZ NOT NULL DEFAULT NOW());
 CREATE TABLE login_tokens (token_hash TEXT PRIMARY KEY, email TEXT NOT NULL, expires_at TIMESTAMPTZ NOT NULL, used_at TIMESTAMPTZ);
 ```
+
+**Roadmap board** (`/roadmap`): `feature_requests` and `feature_votes`. Apply the idempotent
+`scripts/roadmap-schema.sql` before deploying (`psql "$DATABASE_URL" -f scripts/roadmap-schema.sql`);
+without the tables the board shows "unavailable" and the rest of the site is unaffected.
 
 ---
 

@@ -26,7 +26,6 @@ invent its own meaning for it.
 | Feature request | A public roadmap item with status `considering · planned · building · shipped · declined` | "Open" = first three |
 | Vote | One weighted endorsement of an open Feature request | Weight is fixed when cast |
 | Roadmap / Changelog | The board's open requests / its `shipped` requests | Same table, different filter |
-| Project / Milestone | A project on the public board and its ordered steps (`todo · doing · done`) | |
 | Founding offer (Deposit) | The `/switch` pre-sale: a Paddle deposit for the Zero-Churn Switch app | Not a VIP subscription |
 
 ## Business rules
@@ -46,8 +45,7 @@ invent its own meaning for it.
 - **BR-8** Entering `shipped` stamps `shippedAt`; leaving it clears the stamp. Declined requests
   stay publicly visible with their note.
 - **BR-9** Only an Admin may change a request's status.
-- **BR-10** Milestone order is the plan and is never re-sorted. Progress counts only `done`
-  milestones.
+- **BR-10** *(retired 2026-10-07: the project/milestone code was never shipped — spec 0003 D2.)*
 - **BR-11** From `docs/`, only `NN-<name>.md` (exactly two digits, then a dash), `README.md` and
   `LEARNING.md` (exact case) are published. Every other file there is unreachable (404) and absent
   from the docs list, home page, sitemap and `llms*.txt`. Journal entries are not affected.

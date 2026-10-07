@@ -14,6 +14,7 @@
 		{ href: '/merchants', label: t.nav.merchants, icon: '🏪' },
 		{ href: '/about', label: t.nav.about, icon: '🧑‍🚀' },
 		{ href: '/vip', label: t.nav.vip, icon: '👑' },
+		{ href: '/roadmap', label: t.nav.roadmap, icon: '🗳️' },
 		{ href: '/account', label: t.nav.account, icon: '🎟️' }
 	];
 	const active = (href: string) => (href === '/' ? page.url.pathname === '/' : page.url.pathname.startsWith(href));

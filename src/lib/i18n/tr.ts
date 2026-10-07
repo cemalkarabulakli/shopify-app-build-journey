@@ -1,8 +1,8 @@
-import type { Messages } from './en';
+import { en, type Messages } from './en';
 
 export const tr: Messages = {
 	locale: 'tr-TR',
-	nav: { map: 'Harita', journal: 'Günlük', library: 'Kütüphane', about: 'Gezgin', merchants: 'Merchant\'lar', vip: 'VIP', account: 'Hesap', rss: 'RSS' },
+	nav: { map: 'Harita', journal: 'Günlük', library: 'Kütüphane', about: 'Gezgin', merchants: 'Merchant\'lar', vip: 'VIP', roadmap: 'Yol haritası', account: 'Hesap', rss: 'RSS' },
 	footer: 'Açık havada inşa ediliyor. Harita her gün güncellenir.',
 	home: {
 		eyebrow: "Görev haritası · sıfırdan App Store'a",
@@ -31,6 +31,12 @@ export const tr: Messages = {
 		toMerchants: "Merchant'larla tanış →",
 		ourAppNow: (n, title) => `Bizim app şu an Faz ${n}'de: ${title}`,
 		buildLog: 'Yapım günlüğü'
+	},
+	// The board is English-only for now: one source of truth in en.ts, with a Turkish
+	// notice on top. Replace this spread with a translated block when the copy is ready.
+	roadmap: {
+		...en.roadmap,
+		enOnlyNotice: 'Bu pano şimdilik sadece İngilizce; Türkçesi yolda.'
 	},
 	journal: { eyebrow: 'Seyir defteri', title: 'Günlük', empty: 'Henüz kayıt yok.', back: '← Seyir defteri' },
 	library: {
