@@ -9,7 +9,7 @@
 <Seo site={data.site} title={t.journal.title} description={data.site.description} path="/journal" />
 
 <section class="animate-enter">
-	<p class="mb-2 text-[.7rem] font-extrabold tracking-[.25em] text-gold uppercase">{t.journal.eyebrow}</p>
+	<p class="mb-2 text-xs font-extrabold tracking-[.25em] text-gold uppercase">{t.journal.eyebrow}</p>
 	<h1 class="mb-2 text-3xl font-extrabold text-ink">{t.journal.title}</h1>
 	<p class="mb-8 text-muted">{data.site.description}</p>
 </section>
@@ -18,7 +18,7 @@
 	{#each data.posts as post, i (post.slug)}
 		<li class="card animate-enter p-5" style="animation-delay:{i * 70}ms">
 			<PostMeta publishedAt={post.publishedAt} tags={post.tags} />
-			<h2 class="mt-1 text-xl font-extrabold"><a href="/posts/{post.slug}" class="text-ink no-underline hover:text-ember">{post.title}</a></h2>
+			<h2 class="mt-1 text-xl font-extrabold"><a href="/posts/{post.slug}" class="tap max-lg:flex max-lg:items-center text-ink no-underline hover:text-ember">{post.title}</a></h2>
 			{#if post.summary}<p class="mt-1 text-muted">{post.summary}</p>{/if}
 		</li>
 	{:else}

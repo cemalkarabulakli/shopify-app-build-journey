@@ -19,7 +19,7 @@
 <Seo site={data.site} title={t.library.title} description="{t.library.eyebrow} — {data.site.description}" path="/docs" />
 
 <section class="animate-enter">
-	<p class="mb-2 text-[.7rem] font-extrabold tracking-[.25em] text-gold uppercase">{t.library.eyebrow}</p>
+	<p class="mb-2 text-xs font-extrabold tracking-[.25em] text-gold uppercase">{t.library.eyebrow}</p>
 	<h1 class="mb-2 text-3xl font-extrabold text-ink">{t.library.title}</h1>
 	<p class="text-muted">{t.library.lede} <a href="/" class="text-forest">{t.library.ledeLink}</a>.</p>
 	<p class="mt-2 rounded-lg border border-gold/40 bg-gold/10 px-3 py-2 text-sm text-muted">🔒 {t.library.sealedLede}</p>
@@ -38,8 +38,10 @@
 			{#if sealed}
 				<span class="grid h-5 w-5 place-items-center text-sm" title={t.library.sealed} aria-label={t.library.sealed}>🔒</span>
 			{:else}
-				<label class="grid h-5 w-5 cursor-pointer place-items-center rounded-md border-2 text-xs text-white {isRead ? 'border-forest bg-forest' : 'border-line hover:border-gold'}">
-					<input type="checkbox" class="sr-only" checked={isRead} onchange={() => progress.toggle(doc.slug)} aria-label={t.library.readLabel} />{isRead ? '✓' : ''}
+				<!-- 44 px hit area on phones around the same 20 px box (spec 0005 CB-4); the negative margin keeps the row in place. -->
+				<label class="tap group grid flex-none cursor-pointer place-items-center max-lg:-m-3">
+					<input type="checkbox" class="sr-only" checked={isRead} onchange={() => progress.toggle(doc.slug)} aria-label={t.library.readLabel} />
+					<span class="grid h-5 w-5 place-items-center rounded-md border-2 text-xs text-white {isRead ? 'border-forest bg-forest' : 'border-line group-hover:border-gold'}">{isRead ? '✓' : ''}</span>
 				</label>
 			{/if}
 			<span class="w-7 pt-0.5 font-display text-xs font-extrabold text-muted">{String(i + 1).padStart(2, '0')}</span>
@@ -48,7 +50,7 @@
 					<span class="text-ink">{doc.title}</span>
 					{#if doc.summary}<p class="mt-0.5 line-clamp-2 text-sm text-muted">{doc.summary}</p>{/if}
 				{:else}
-					<a href="/docs/{doc.slug}" class="no-underline {isRead ? 'text-muted line-through' : 'text-ink hover:text-ember'}">{doc.title}</a>
+					<a href="/docs/{doc.slug}" class="tap max-lg:flex max-lg:items-center no-underline {isRead ? 'text-muted line-through' : 'text-ink hover:text-ember'}">{doc.title}</a>
 				{/if}
 			</div>
 		</li>

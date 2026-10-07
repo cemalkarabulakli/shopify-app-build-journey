@@ -72,11 +72,11 @@
 	<!-- Own top bar: the offer stands alone, the journal is the trust link. -->
 	<nav class="mb-12 flex items-center justify-between text-sm">
 		<span class="font-display text-lg font-extrabold text-ink">Zero-Churn Switch</span>
-		<a href="/journal" class="text-muted underline decoration-line underline-offset-4 hover:text-ink">Built in public — read the journal →</a>
+		<a href="/journal" class="tap max-lg:inline-flex max-lg:items-center text-muted underline decoration-line underline-offset-4 hover:text-ink">Built in public — read the journal →</a>
 	</nav>
 
 	<section class="animate-enter">
-		<p class="mb-3 text-[.7rem] font-extrabold tracking-[.25em] text-gold uppercase">Founding-merchant offer · 5 slots</p>
+		<p class="mb-3 text-xs font-extrabold tracking-[.25em] text-gold uppercase">Founding-merchant offer · 5 slots</p>
 		<h1 class="text-4xl leading-tight font-extrabold text-ink sm:text-5xl">Every dollar Recharge skims, you keep.</h1>
 		<p class="mt-4 max-w-2xl text-lg text-muted">
 			A flat-rate subscription engine for Shopify Plus merchants — no percentage of your GMV, ever. We move your active
@@ -90,11 +90,11 @@
 		<div class="mt-4 grid gap-4 sm:grid-cols-2">
 			<label class="text-sm font-extrabold text-ink">
 				Monthly subscription revenue
-				<input type="number" bind:value={gmv} min="0" step="5000" class="mt-1 w-full rounded-lg border border-line bg-bg px-3 py-2 font-sans text-base font-normal text-ink focus:border-forest focus:ring-2 focus:ring-forest/30 focus:outline-none" />
+				<input type="number" bind:value={gmv} min="0" step="5000" class="tap mt-1 w-full rounded-lg border border-line bg-bg px-3 py-2 font-sans text-base font-normal text-ink focus:border-forest focus:ring-2 focus:ring-forest/30 focus:outline-none" />
 			</label>
 			<label class="text-sm font-extrabold text-ink">
 				Average order value
-				<input type="number" bind:value={aov} min="1" step="5" class="mt-1 w-full rounded-lg border border-line bg-bg px-3 py-2 font-sans text-base font-normal text-ink focus:border-forest focus:ring-2 focus:ring-forest/30 focus:outline-none" />
+				<input type="number" bind:value={aov} min="1" step="5" class="tap mt-1 w-full rounded-lg border border-line bg-bg px-3 py-2 font-sans text-base font-normal text-ink focus:border-forest focus:ring-2 focus:ring-forest/30 focus:outline-none" />
 			</label>
 		</div>
 		<div class="mt-6 grid gap-4 sm:grid-cols-2">

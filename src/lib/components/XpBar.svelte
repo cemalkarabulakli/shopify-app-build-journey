@@ -38,7 +38,7 @@
 </script>
 
 <section class="card relative mt-6 overflow-hidden p-5" aria-label={t.home.card}>
-	<p class="mb-2 text-[.7rem] font-extrabold tracking-[.2em] text-gold uppercase">{t.home.card}</p>
+	<p class="mb-2 text-xs font-extrabold tracking-[.2em] text-gold uppercase">{t.home.card}</p>
 	<div class="flex flex-wrap items-end justify-between gap-3">
 		<div class="flex items-end gap-3">
 			<FogDragon level={level.index + 1} size={72} fog />

@@ -1,6 +1,6 @@
 export const en = {
 	locale: 'en-GB',
-	nav: { map: 'Map', journal: 'Journal', library: 'Library', about: 'Traveller', merchants: 'Merchants', vip: 'VIP', roadmap: 'Roadmap', account: 'Account', rss: 'RSS' },
+	nav: { map: 'Map', journal: 'Journal', library: 'Library', about: 'Traveller', merchants: 'Merchants', vip: 'VIP', roadmap: 'Roadmap', account: 'Account', rss: 'RSS', menu: 'Menu' },
 	footer: 'Built in the open. The map is updated as I go.',
 	home: {
 		eyebrow: 'Quest map · from zero to the App Store',

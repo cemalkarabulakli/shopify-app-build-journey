@@ -64,7 +64,7 @@
 <Seo site={data.site} title={t.vip.title} description={t.vip.lede} path="/vip" />
 
 <section class="animate-enter">
-	<p class="mb-2 text-[.7rem] font-extrabold tracking-[.25em] text-gold uppercase">{t.vip.eyebrow}</p>
+	<p class="mb-2 text-xs font-extrabold tracking-[.25em] text-gold uppercase">{t.vip.eyebrow}</p>
 	<h1 class="mb-3 text-3xl leading-tight font-extrabold text-ink sm:text-4xl">{t.vip.title}</h1>
 	<p class="max-w-3xl text-lg text-muted">{t.vip.lede}</p>
 	<div class="mt-4 flex items-end gap-3">
@@ -76,14 +76,14 @@
 <div class="mt-8 flex flex-wrap items-center justify-between gap-4">
 	<div class="inline-flex rounded-full border border-line bg-card p-1 text-sm font-extrabold" role="tablist">
 		{#each ['month', 'year'] as const as c (c)}
-			<button role="tab" aria-selected={cycle === c} class="rounded-full px-4 py-1.5 transition {cycle === c ? 'bg-forest text-white shadow' : 'text-muted hover:text-ink'}" onclick={() => (cycle = c)}>
-				{t.vip.cycle[c]}{#if c === 'year'}<span class="ml-1 rounded-full bg-gold/20 px-2 py-0.5 text-[.65rem] text-gold">{t.vip.yearlySave}</span>{/if}
+			<button role="tab" aria-selected={cycle === c} class="tap rounded-full px-4 py-1.5 transition {cycle === c ? 'bg-forest text-white shadow' : 'text-muted hover:text-ink'}" onclick={() => (cycle = c)}>
+				{t.vip.cycle[c]}{#if c === 'year'}<span class="ml-1 rounded-full bg-gold/20 px-2 py-0.5 text-xs text-gold">{t.vip.yearlySave}</span>{/if}
 			</button>
 		{/each}
 	</div>
 	<label class="flex items-center gap-2 text-sm font-extrabold text-ink">
 		{t.vip.emailLabel}
-		<input type="email" bind:value={email} placeholder="you@example.com" autocomplete="email" class="rounded-lg border border-line bg-card px-3 py-1.5 font-sans text-base font-normal text-ink placeholder:text-muted/60 focus:border-forest focus:ring-2 focus:ring-forest/30 focus:outline-none" />
+		<input type="email" bind:value={email} placeholder="you@example.com" autocomplete="email" class="tap rounded-lg border border-line bg-card px-3 py-1.5 font-sans text-base font-normal text-ink placeholder:text-muted/60 focus:border-forest focus:ring-2 focus:ring-forest/30 focus:outline-none" />
 	</label>
 </div>
 
@@ -95,7 +95,7 @@
 		{@const priceId = tier.priceId[cycle]}
 		{@const total = totals[priceId]}
 		<article class="card animate-enter relative flex flex-col overflow-hidden p-6 {tier.featured ? 'ring-2 ring-gold/70 lg:-translate-y-2' : ''}" style="animation-delay:{i * 80}ms">
-			{#if tier.featured}<span class="absolute top-4 right-4 rounded-full bg-gold px-2.5 py-0.5 text-[.65rem] font-extrabold tracking-wider text-ink uppercase">{t.vip.popular}</span>{/if}
+			{#if tier.featured}<span class="absolute top-4 right-4 rounded-full bg-gold px-2.5 py-0.5 text-xs font-extrabold tracking-wider text-ink uppercase">{t.vip.popular}</span>{/if}
 			<div class="text-3xl">{tier.icon}</div>
 			<h2 class="mt-2 font-display text-xl font-extrabold text-ink">{text.name}</h2>
 			<p class="mt-1 min-h-10 text-sm text-muted">{text.tagline}</p>

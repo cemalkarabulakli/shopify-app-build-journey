@@ -30,9 +30,9 @@
 
 <Burst bind:this={burst} />
 
-<article class="card animate-enter p-6 sm:p-8">
+<article class="card animate-enter p-4 sm:p-8">
 	<header class="mb-6 border-b border-dashed border-line pb-5">
-		<p class="mb-2 text-sm"><a href="/docs" class="text-forest no-underline hover:text-ember">{t.library.back}</a></p>
+		<p class="mb-2 text-sm"><a href="/docs" class="tap max-lg:inline-flex max-lg:items-center text-forest no-underline hover:text-ember">{t.library.back}</a></p>
 		<h1 class="text-3xl leading-tight font-extrabold text-ink">{sealed ? '🔒' : '📜'} {data.doc.title}</h1>
 	</header>
 
@@ -44,9 +44,9 @@
 			<p class="mt-1 text-sm text-muted">{t.library.sealedLede}</p>
 			<p class="mt-3 flex flex-wrap gap-3 text-sm">
 				{#if !stageOpen && data.stage}
-					<a href="/#faz-{data.stage.n}" class="rounded-full border-2 border-forest px-4 py-1.5 font-extrabold text-forest no-underline hover:bg-forest/10">{t.library.finishPhase(`${t.home.phase} ${data.stage.n}`)} {t.library.toMap}</a>
+					<a href="/#faz-{data.stage.n}" class="tap max-lg:inline-flex max-lg:items-center rounded-full border-2 border-forest px-4 py-1.5 font-extrabold text-forest no-underline hover:bg-forest/10">{t.library.finishPhase(`${t.home.phase} ${data.stage.n}`)} {t.library.toMap}</a>
 				{:else if data.prev}
-					<a href="/docs/{data.prev.slug}" class="rounded-full border-2 border-forest px-4 py-1.5 font-extrabold text-forest no-underline hover:bg-forest/10">{t.library.readFirst(data.prev.title)} →</a>
+					<a href="/docs/{data.prev.slug}" class="tap max-lg:inline-flex max-lg:items-center rounded-full border-2 border-forest px-4 py-1.5 font-extrabold text-forest no-underline hover:bg-forest/10">{t.library.readFirst(data.prev.title)} →</a>
 				{/if}
 			</p>
 		</div>
@@ -55,9 +55,9 @@
 		<div class="prose-map">{@html data.doc.html}</div>
 
 		<nav class="mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-dashed border-line pt-5 text-sm">
-			<span class="max-w-[40%]">{#if data.prev}<a href="/docs/{data.prev.slug}" class="text-forest no-underline hover:text-ember">← {data.prev.title}</a>{/if}</span>
+			<span class="max-w-[40%]">{#if data.prev}<a href="/docs/{data.prev.slug}" class="tap max-lg:inline-flex max-lg:items-center text-forest no-underline hover:text-ember">← {data.prev.title}</a>{/if}</span>
 			<button
-				class="rounded-full border-2 px-5 py-2 font-extrabold transition active:scale-95 {isRead ? 'border-forest bg-forest text-white' : 'border-gold bg-gold/15 text-ink hover:bg-gold/30'}"
+				class="tap rounded-full border-2 px-5 py-2 font-extrabold transition active:scale-95 {isRead ? 'border-forest bg-forest text-white' : 'border-gold bg-gold/15 text-ink hover:bg-gold/30'}"
 				onclick={mark}
 			>
 				{isRead ? t.library.marked : t.library.markRead(XP_PER_DOC)}
@@ -65,7 +65,7 @@
 			<span class="max-w-[40%] text-right">
 				{#if data.next}
 					{#if nextOpen}
-						<a href="/docs/{data.next.slug}" class="text-forest no-underline hover:text-ember">{data.next.title} →</a>
+						<a href="/docs/{data.next.slug}" class="tap max-lg:inline-flex max-lg:items-center text-forest no-underline hover:text-ember">{data.next.title} →</a>
 					{:else}
 						<span class="text-muted" title={isRead ? t.library.finishPhase(`${t.home.phase} ${data.stage?.n ?? ''}`) : t.library.unlockNext}>🔒 {data.next.title}</span>
 						<small class="block text-xs text-muted">{isRead ? t.library.finishPhase(`${t.home.phase} ${data.stage?.n ?? ''}`) : t.library.unlockNext}</small>

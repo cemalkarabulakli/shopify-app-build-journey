@@ -18,6 +18,8 @@
   - `Pg*` adapters — exercised manually against a Neon branch when their SQL changes.
   - Paddle checkout — `npm run e2e:checkout` against the sandbox (see README "Sandbox
     end-to-end test"); screenshots land in `.e2e/`.
+  - Layout probes — Playwright/Chrome scripts measuring a built page (widths, tap sizes, overflow);
+    they run in VERIFY and their output is saved as the VERIFY evidence (spec 0004, 0005).
 
 ## What must be tested
 - Every business rule BR-n in `docs/domain.md`, at the domain or use-case level — or, for a rule about
