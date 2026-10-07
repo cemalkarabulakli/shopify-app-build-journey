@@ -139,7 +139,7 @@
 
 				<p class="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted">
 					<span>🗳️ {t.roadmap.voters(item.voters)}</span>
-					{#if item.memberVoters > 0}<span>👑 {t.roadmap.memberVoters(item.memberVoters)}</span>{/if}
+					<span>👑 {t.roadmap.memberVoters(item.memberVoters)}</span>
 					<span>{item.authorTier ? t.roadmap.requestedBy(item.authorTier) : t.roadmap.requestedByMember}</span>
 					{#if item.shippedAt}<span class="text-forest">✅ {t.roadmap.shippedOn} {formatDate(item.shippedAt, t.locale)}</span>{/if}
 				</p>
