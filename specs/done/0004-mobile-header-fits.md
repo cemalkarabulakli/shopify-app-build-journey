@@ -1,6 +1,6 @@
 # Spec 0004 — The header fits a phone (mini)
 
-- Status: In progress
+- Status: Shipped
 - Mode: lite
 - Plan: `specs/plans/0004-plan.md`
 - Source: VERIFY 0003 re-verify 2 (2026-10-07) — `scratchpad/evidence-0003/recheck2-overflow*.txt`
@@ -15,22 +15,22 @@ destination visible.
 ## Changed behavior
 Observed before: `scratchpad/evidence-0004/before.txt` and `screens/before-*.png`.
 At 320 and 390 px, 5–6 nav links are off-screen and the page is 675/687 px wide.
-- [ ] CB-1 — At viewport widths 320, 390 and 768 px, in English and Turkish, the page is never wider
+- [x] CB-1 — At viewport widths 320, 390 and 768 px, in English and Turkish, the page is never wider
   than the viewport on `/`, `/docs`, `/merchants` and `/roadmap`.
-- [ ] CB-2 — At those widths, all 9 navigation destinations (Map, Journal, Library, Merchants,
+- [x] CB-2 — At those widths, all 9 navigation destinations (Map, Journal, Library, Merchants,
   Traveller, VIP, Roadmap, Account, RSS) are fully visible on screen without scrolling sideways,
   and each can be tapped. None is hidden behind a menu.
-- [ ] CB-3 — On a phone the navigation may take more than one row, and the header grows no
+- [x] CB-3 — On a phone the navigation may take more than one row, and the header grows no
   more than it needs to: at 390 px it is at most 260 px tall in both languages (172 px before).
 
 ## Preserved behavior
 Written from the before-capture.
-- [ ] PB-1 — At 1280 px the header looks as it does today: logo, one row of 9 nav links, and the
+- [x] PB-1 — At 1280 px the header looks as it does today: logo, one row of 9 nav links, and the
   language switch. Before/after screenshots compared.
-- [ ] PB-2 — The nav order, icons, labels and active-page highlight are unchanged in both languages.
-- [ ] PB-3 — The language switch (EN / TR) is visible and works at every width.
-- [ ] PB-4 — `/switch` still shows no site header (bare layout) at every width.
-- [ ] PB-5 — No navigation needs JavaScript: the header works with scripts disabled.
+- [x] PB-2 — The nav order, icons, labels and active-page highlight are unchanged in both languages.
+- [x] PB-3 — The language switch (EN / TR) is visible and works at every width.
+- [x] PB-4 — `/switch` still shows no site header (bare layout) at every width.
+- [x] PB-5 — No navigation needs JavaScript: the header works with scripts disabled.
 
 ## Out of scope
 - A hamburger or drawer menu (it would hide destinations; CB-2).
@@ -46,7 +46,23 @@ Written from the before-capture.
 - **Why test 768?** It fits today, and it guards against a fix that only works at phone widths.
 
 ## Definition of Done
-- [ ] `scripts/check` green
-- [ ] Independent review done; real findings fixed, noise rejected with written rationale
-- [ ] Criterion ↔ evidence table complete for CB-* **and** PB-* (UI: before/after screenshots)
-- [ ] Spec moved to `specs/done/` (immutable there)
+- [x] `scripts/check` green
+- [x] Independent review done; real findings fixed, noise rejected with written rationale
+- [x] Criterion ↔ evidence table complete for CB-* **and** PB-* (UI: before/after screenshots)
+- [x] Spec moved to `specs/done/` (immutable there)
+
+## Ship record (2026-10-07)
+- **Review:** clean, with 1 low fix (pill ends only from `lg`, where the nav is one row). Two
+  further notes went into VERIFY's instructions.
+- **Verify:** CB-1…CB-3 and PB-1…PB-5 all PASS, against independent QA evidence
+  (`scratchpad/evidence-0004`):
+  - page width at 320/390 px: 675/687 → equal to the viewport;
+  - every link on screen, and 10/10 real taps reach their page;
+  - header 216 px tall at 390;
+  - 1280 px header pixel-identical to before;
+  - identical results with JavaScript off.
+- **Accepted cosmetic notes:**
+  - tablets show two nav rows (768 px: header 172 → 184);
+  - at 320 px the header is 276 px tall;
+  - from 900 to 1023 px the one-row nav has soft corners instead of pill ends;
+  - links are 28 px tall, which passes WCAG 2.5.8 and is unchanged from before.
