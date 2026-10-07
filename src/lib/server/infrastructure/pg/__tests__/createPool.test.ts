@@ -1,3 +1,4 @@
+import { inspect } from 'node:util';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { createPool } from '../createPool';
 
@@ -9,10 +10,17 @@ describe('createPool (BUG-002)', () => {
 	it('logs a lost idle connection with its context and code, never the connection details', () => {
 		const log = vi.spyOn(console, 'error').mockImplementation(() => {});
 		const pool = createPool(URL, 3, 'roadmap');
-		const err = Object.assign(new Error('terminating connection due to administrator command'), { code: '57P01' });
+		// Shaped like a real pg/Node connection error: it carries where it was connected to.
+		const err = Object.assign(new Error('terminating connection due to administrator command'), {
+			code: '57P01',
+			address: 'db.example.com',
+			port: 5432,
+			user: 'someone'
+		});
 		expect(() => pool.emit('error', err)).not.toThrow();
 		expect(log).toHaveBeenCalledOnce();
-		const line = log.mock.calls[0].join(' ');
+		// Render arguments the way the console does, so logging the whole error object would leak here.
+		const line = log.mock.calls[0].map((a) => (typeof a === 'string' ? a : inspect(a))).join(' ');
 		expect(line).toContain('[roadmap]');
 		expect(line).toContain('57P01');
 		expect(line).not.toMatch(/hunter2|someone|db\.example\.com/);
