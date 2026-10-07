@@ -98,7 +98,7 @@ export const actions: Actions = {
 		try {
 			await container().updateFeatureStatus.execute({ actorEmail: locals.user.email, id, status, note });
 		} catch (e) {
-			if (e instanceof StatusRefused) return fail(403, { statusError: e.code });
+			if (e instanceof StatusRefused) return fail(e.code === 'not-admin' ? 403 : 400, { statusError: e.code });
 			console.error('[roadmap] status failed:', (e as Error).message);
 			return fail(500, { statusError: 'db' });
 		}
