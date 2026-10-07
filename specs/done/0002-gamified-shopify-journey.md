@@ -1,6 +1,6 @@
 # Spec 0002 — Gamified Shopify business journey
 
-- Status: In progress
+- Status: Shipped
 - Mode: lite
 - Plan: `specs/plans/0002-plan.md`
 
@@ -97,36 +97,36 @@ approval.
   - Changing the unlock rule.
 
 ## Acceptance criteria
-- [ ] AC-1 — The map shows four chapters, in R1 order, each with its title, its phases, and
+- [x] AC-1 — The map shows four chapters, in R1 order, each with its title, its phases, and
   "quests done / quests total" for that chapter.
-- [ ] AC-2 — Every one of the 10 phases shows 1–3 quests, in the reader's language.
-- [ ] AC-3 — Ticking a quest adds exactly 150 XP and shows the XP toast. Unticking removes exactly
+- [x] AC-2 — Every one of the 10 phases shows 1–3 quests, in the reader's language.
+- [x] AC-3 — Ticking a quest adds exactly 150 XP and shows the XP toast. Unticking removes exactly
   150 XP. A quest cannot count twice.
-- [ ] AC-4 — Quests never change sealing. With every quest ticked and nothing read, only phase 0
+- [x] AC-4 — Quests never change sealing. With every quest ticked and nothing read, only phase 0
   and its first scroll are open. With no quest ticked, a phase still opens when the previous phase
   is complete.
-- [ ] AC-5 — Total XP = 100 × scrolls read + 500 × phases done + 150 × quests done. The level and
+- [x] AC-5 — Total XP = 100 × scrolls read + 500 × phases done + 150 × quests done. The level and
   "to next level" figures follow the existing thresholds. The XP bar shows quests done / total.
-- [ ] AC-6 — The Merchants page lists at least 8 merchants in curated order. Each card has a name,
+- [x] AC-6 — The Merchants page lists at least 8 merchants in curated order. Each card has a name,
   what they sell, a notable fact with a figure, a working source link, and a store link. A
   "story" link appears only when the merchant appears in a scroll.
-- [ ] AC-7 — The Merchants page is linked from the main navigation and from chapter 3. It works in
+- [x] AC-7 — The Merchants page is linked from the main navigation and from chapter 3. It works in
   English and Turkish.
-- [ ] AC-8 — For a merchant with a published business email, "Reach out" opens the reader's email
+- [x] AC-8 — For a merchant with a published business email, "Reach out" opens the reader's email
   app addressed to that email, with a prefilled subject and the template body. For a merchant
   without one, it opens their contact page in a new tab. The site makes no network request when
   this happens.
-- [ ] AC-9 — "I reached out" can be marked and unmarked per merchant, and survives a page reload in
+- [x] AC-9 — "I reached out" can be marked and unmarked per merchant, and survives a page reload in
   the same browser.
-- [ ] AC-10 — "Reach out to 3 merchants" is complete exactly when 3 or more different merchants are
+- [x] AC-10 — "Reach out to 3 merchants" is complete exactly when 3 or more different merchants are
   marked: it completes on the 3rd mark and reopens on unmarking to 2. Its XP follows AC-3.
-- [ ] AC-11 — Chapter 4 names the phase our app is in now and lists each phase's journal entries.
+- [x] AC-11 — Chapter 4 names the phase our app is in now and lists each phase's journal entries.
   When a phase has no entries, it shows no empty list.
-- [ ] AC-12 — An existing reader (scrolls read and phases done stored before this change) sees the
+- [x] AC-12 — An existing reader (scrolls read and phases done stored before this change) sees the
   same scrolls read, the same phases done, the same open phases, and XP at least as high as before.
-- [ ] AC-13 — With browser storage unavailable (private mode), every page still renders and works
+- [x] AC-13 — With browser storage unavailable (private mode), every page still renders and works
   for the session, and nothing crashes.
-- [ ] AC-14 — Merchant data is rejected at build or test time when a merchant lacks a source link,
+- [x] AC-14 — Merchant data is rejected at build or test time when a merchant lacks a source link,
   has an email and a contact page that are both missing, or has duplicate ids.
 
 ## Self-critique (gaps found, with recommendations — approve or change at the gate)
@@ -144,17 +144,30 @@ approval.
   like every other tick; the game rewards the action, not the merchant's answer.
 
 ## Definition of Done
-- [ ] Every acceptance criterion mapped to proof (test or reproducible observation)
-- [ ] `scripts/check` green
-- [ ] Independent review done; real findings fixed, noise rejected with written rationale
-- [ ] Docs / ADRs updated if behavior or architecture changed
-- [ ] Spec moved to `specs/done/` (it becomes immutable there)
+- [x] Every acceptance criterion mapped to proof (test or reproducible observation)
+- [x] `scripts/check` green
+- [x] Independent review done; real findings fixed, noise rejected with written rationale
+- [x] Docs / ADRs updated if behavior or architecture changed
+- [x] Spec moved to `specs/done/` (it becomes immutable there)
 
 ## Scorecard (fill at ship — honest numbers make the process improvable)
 | Metric | Value |
 |---|---|
-| Spec revisions | |
-| Fix rounds | |
-| Review findings: real / noise | |
-| Regressions introduced | |
-| Bugs escaped to production | |
+| Spec revisions | 0 (approved as first drafted; wording only reflowed) |
+| Fix rounds | 1 (4 fixes, then a clean re-review) |
+| Review findings: real / noise | 4 real (outreach count, toast XP, email header injection, quest-id test) / 3 noise (BrainGain scroll wording → separate content fix, domain error style, map degradation nit); 1 investigated and confirmed (MR MARVIS email) |
+| Regressions introduced | 0 (existing reader keeps 800 XP and the same open phases) |
+| Bugs escaped to production | 0 at ship |
+
+## Ship record (2026-10-07)
+- Review: 7 findings. Real and fixed: outreach counted against the current catalog on every page;
+  the toast shows +150 XP; the email rule now blocks mailto header injection; quest ids are
+  well-formed. The re-review was clean.
+- Verify: AC-1…AC-14 all PASS (independent QA, Playwright, en + tr, browser storage blocked).
+  The MR MARVIS email was confirmed in a real browser.
+- Content calls at ship (owner): keep hello@mrmarvis.com (general contact) and press@gruns.co (the
+  footer "Press Inquiries" link).
+- Follow-ups:
+  - Scroll `10-case-studies` describes BrainGain as "sports supplements", but the case study says
+    home fitness equipment. This is a content fix.
+  - The XP counter animation takes about 1.5 s instead of 0.6 s. Pre-existing and cosmetic.
