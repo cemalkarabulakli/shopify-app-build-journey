@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { isAdminEmail, type SiteConfig } from '../siteConfig';
 
 const site = (adminEmails: string[]) => ({ adminEmails }) as SiteConfig;
@@ -14,5 +14,15 @@ describe('isAdminEmail (spec 0003 AC-10, BR-9)', () => {
 		expect(isAdminEmail(site(['builder@example.com']), 'member@example.com')).toBe(false);
 		expect(isAdminEmail(site(['builder@example.com']), null)).toBe(false);
 		expect(isAdminEmail(site(['builder@example.com']), undefined)).toBe(false);
+	});
+});
+
+vi.mock('$env/dynamic/private', () => ({ env: { ADMIN_EMAILS: ' Builder@Example.com, ,x@y.z ' } }));
+vi.mock('$env/dynamic/public', () => ({ env: {} }));
+
+describe('loadSiteConfig ADMIN_EMAILS (review 0003 m-5)', () => {
+	it('splits on commas, trims, lowercases and drops empty entries', async () => {
+		const { loadSiteConfig } = await import('../siteConfig');
+		expect(loadSiteConfig().adminEmails).toEqual(['builder@example.com', 'x@y.z']);
 	});
 });

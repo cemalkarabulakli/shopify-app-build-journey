@@ -68,6 +68,16 @@ describe('SubmitFeatureRequest', () => {
 	it('surfaces the entity validation as a refusal code', async () => {
 		await expect(submit().execute({ ...input, title: 'ab' })).rejects.toMatchObject({ code: 'short-title' });
 	});
+
+	it('refuses each invalid field with its own code and stores nothing (review 0003 m-5)', async () => {
+		const cases = [
+			[{ title: 't'.repeat(121) }, 'long-title'],
+			[{ body: 'b'.repeat(9) }, 'short-body'],
+			[{ body: 'b'.repeat(2001) }, 'long-body']
+		] as const;
+		for (const [over, code] of cases) await expect(submit().execute({ ...input, ...over })).rejects.toMatchObject({ code });
+		expect(board.requests.size).toBe(0);
+	});
 });
 
 describe('ToggleVote', () => {
@@ -106,6 +116,16 @@ describe('ToggleVote', () => {
 		const vote = new ToggleVote(board, members);
 		await expect(vote.execute(shipped.id, VISITOR)).rejects.toMatchObject({ code: 'closed' });
 		await expect(vote.execute('nope', VISITOR)).rejects.toThrow(VoteRefused);
+		await expect(vote.execute('nope', VISITOR)).rejects.toMatchObject({ code: 'not-found' });
+	});
+
+	it('changes nothing when a vote is refused (spec 0003 AC-5)', async () => {
+		const declined = seed({ status: 'declined', note: 'Out of scope.' });
+		const vote = new ToggleVote(board, members);
+		const before = (await board.list(null)).find((i) => i.request.id === declined.id)!;
+		await expect(vote.execute(declined.id, MEMBER)).rejects.toMatchObject({ code: 'closed' });
+		const after = (await board.list(null)).find((i) => i.request.id === declined.id)!;
+		expect([after.score, after.voters, after.memberVoters]).toEqual([before.score, before.voters, before.memberVoters]);
 	});
 });
 
