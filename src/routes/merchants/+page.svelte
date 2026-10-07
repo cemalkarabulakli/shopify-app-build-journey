@@ -23,7 +23,7 @@
 <Burst bind:this={burst} />
 
 <section class="animate-enter">
-	<p class="mb-2 text-[.7rem] font-extrabold tracking-[.25em] text-gold uppercase">{t.merchants.eyebrow}</p>
+	<p class="mb-2 text-xs font-extrabold tracking-[.25em] text-gold uppercase">{t.merchants.eyebrow}</p>
 	<h1 class="mb-2 text-3xl font-extrabold text-ink">{t.merchants.title}</h1>
 	<p class="max-w-3xl text-muted">{t.merchants.lede}</p>
 </section>

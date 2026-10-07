@@ -76,7 +76,7 @@
 	</nav>
 
 	<section class="animate-enter">
-		<p class="mb-3 text-[.7rem] font-extrabold tracking-[.25em] text-gold uppercase">Founding-merchant offer · 5 slots</p>
+		<p class="mb-3 text-xs font-extrabold tracking-[.25em] text-gold uppercase">Founding-merchant offer · 5 slots</p>
 		<h1 class="text-4xl leading-tight font-extrabold text-ink sm:text-5xl">Every dollar Recharge skims, you keep.</h1>
 		<p class="mt-4 max-w-2xl text-lg text-muted">
 			A flat-rate subscription engine for Shopify Plus merchants — no percentage of your GMV, ever. We move your active

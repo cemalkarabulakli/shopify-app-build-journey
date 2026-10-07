@@ -12,7 +12,7 @@
 <svelte:head><meta name="robots" content="noindex" /></svelte:head>
 
 <section class="animate-enter">
-	<p class="mb-2 text-[.7rem] font-extrabold tracking-[.25em] text-gold uppercase">{t.account.eyebrow}</p>
+	<p class="mb-2 text-xs font-extrabold tracking-[.25em] text-gold uppercase">{t.account.eyebrow}</p>
 	<h1 class="mb-3 text-3xl font-extrabold text-ink">{t.account.title}</h1>
 </section>
 
@@ -47,7 +47,7 @@
 				<ul class="mt-5 space-y-2 border-t border-dashed border-line pt-4 text-sm">
 					{#each data.access.subscriptions as s (s.id)}
 						<li class="flex flex-wrap items-center gap-2">
-							<span class="rounded-full border px-2 py-0.5 text-[.7rem] font-extrabold uppercase {s.status === 'active' || s.status === 'trialing' ? 'border-forest text-forest' : 'border-line text-muted'}">{s.status}</span>
+							<span class="rounded-full border px-2 py-0.5 text-xs font-extrabold uppercase {s.status === 'active' || s.status === 'trialing' ? 'border-forest text-forest' : 'border-line text-muted'}">{s.status}</span>
 							<code class="text-xs text-muted">{s.id}</code>
 							{#if s.scheduledChange}<span class="text-xs text-ember">⏳ {t.account.scheduled(s.scheduledChange.action, formatDate(s.scheduledChange.at, t.locale))}</span>
 							{:else if s.currentPeriodEnd}<span class="text-xs text-muted">{t.account.renews} {formatDate(s.currentPeriodEnd, t.locale)}</span>{/if}

@@ -87,7 +87,7 @@
 <Burst bind:this={burst} />
 
 <section class="animate-enter">
-	<p class="mb-2 text-[.7rem] font-extrabold tracking-[.25em] text-gold uppercase">{t.home.eyebrow}</p>
+	<p class="mb-2 text-xs font-extrabold tracking-[.25em] text-gold uppercase">{t.home.eyebrow}</p>
 	<h1 class="mb-3 text-3xl leading-tight font-extrabold text-ink sm:text-4xl">{data.site.name}</h1>
 	<p class="max-w-3xl text-lg text-muted">{data.intro}</p>
 </section>
@@ -96,7 +96,7 @@
 <XpBar {xp} docsRead={readDocs} docsTotal={totalDocs} phasesDone={doneSteps} phasesTotal={data.steps.length} questsDone={questsSoFar.done} questsTotal={questsSoFar.total} />
 
 <section class="card mt-4 flex flex-wrap content-center items-center gap-3 px-5 py-4 lg:mt-6" aria-label={t.home.badges}>
-	<span class="w-full text-[.7rem] font-extrabold tracking-[.2em] text-gold uppercase">{t.home.badges}</span>
+	<span class="w-full text-xs font-extrabold tracking-[.2em] text-gold uppercase">{t.home.badges}</span>
 	{#each data.steps as step (step.n)}
 		{@const earned = complete(step)}
 		<span
@@ -106,7 +106,7 @@
 			title="{step.title} {t.home.badgeOf}"
 		>
 			{step.icon}
-			<small class="absolute -right-1 -bottom-1 rounded-full border border-line bg-card px-1 text-[.6rem] text-muted">{step.n}</small>
+			<small class="absolute -right-1 -bottom-1 rounded-full border border-line bg-card px-1 text-xs text-muted">{step.n}</small>
 		</span>
 	{/each}
 </section>
@@ -139,7 +139,7 @@
 				{#if ci === OUR_APP_CHAPTER}
 					{#if ourAppNow}<p class="mt-2 font-bold text-forest">🐉 {t.home.ourAppNow(ourAppNow.n, ourAppNow.title)}</p>{/if}
 					{#if buildLog.length}
-						<p class="mt-3 text-[.7rem] font-extrabold tracking-[.2em] text-gold uppercase">{t.home.buildLog}</p>
+						<p class="mt-3 text-xs font-extrabold tracking-[.2em] text-gold uppercase">{t.home.buildLog}</p>
 						<ul class="mt-1 space-y-1">
 							{#each buildLog as s (s.n)}
 								{#each s.posts as post (post.slug)}
@@ -179,7 +179,7 @@
 					<span class="font-display text-xs font-extrabold tracking-widest text-muted">{t.home.phase.toUpperCase()} {step.n}</span>
 					<h2 class="text-xl font-extrabold text-ink">{step.title}</h2>
 					<span class="text-sm text-muted">· {step.time}</span>
-					<span class="ml-auto rounded-full border px-2.5 py-0.5 text-[.7rem] font-extrabold tracking-wider uppercase {statusCls[step.status]}">{t.home.status[step.status]}</span>
+					<span class="ml-auto rounded-full border px-2.5 py-0.5 text-xs font-extrabold tracking-wider uppercase {statusCls[step.status]}">{t.home.status[step.status]}</span>
 				</div>
 				<p class="mt-2">{step.learn}</p>
 
@@ -206,7 +206,7 @@
 											<input type="checkbox" class="peer sr-only" checked={isRead} onchange={() => toggleDoc(step, doc.slug)} />
 											<span class="grid h-5 w-5 flex-none place-items-center rounded-md border-2 text-xs text-white transition peer-focus-visible:ring-2 peer-focus-visible:ring-gold {isRead ? 'border-forest bg-forest' : 'border-line group-hover:border-gold'}">{isRead ? '✓' : ''}</span>
 											<span class="flex-1 {isRead ? 'text-muted line-through' : ''}">📜 {doc.title}</span>
-											<span class="text-[.7rem] font-extrabold text-gold {isRead ? 'opacity-40' : ''}">+{XP_PER_DOC}</span>
+											<span class="text-xs font-extrabold text-gold {isRead ? 'opacity-40' : ''}">+{XP_PER_DOC}</span>
 										</label>
 										<a href="/docs/{doc.slug}" class="rounded-lg px-2.5 py-1 font-extrabold text-forest no-underline hover:bg-forest/10" aria-label={t.home.read}>→</a>
 									{/if}
@@ -236,7 +236,7 @@
 				{/if}
 				<!-- Quests (spec 0002): bonus XP on every phase, sealed or not — they never change the seals. -->
 				{#if step.quests.length}
-					<p class="mt-4 text-[.7rem] font-extrabold tracking-[.2em] text-gold uppercase">⚔️ {t.home.questsLabel}</p>
+					<p class="mt-4 text-xs font-extrabold tracking-[.2em] text-gold uppercase">⚔️ {t.home.questsLabel}</p>
 					<ul class="mt-1 space-y-1">
 						{#each step.quests as q (q.id)}
 							{@const qDone = isQuestDone(q)}
@@ -245,14 +245,14 @@
 									<a href="/merchants" class="group flex items-center gap-3 rounded-lg px-2 py-1.5 no-underline transition hover:bg-gold/10">
 										<span class="grid h-5 w-5 flex-none place-items-center rounded-md border-2 text-xs text-white {qDone ? 'border-forest bg-forest' : 'border-line'}">{qDone ? '✓' : ''}</span>
 										<span class="flex-1 {qDone ? 'text-muted line-through' : 'text-ink'}">{q.title} <span class="text-xs text-muted">· {t.home.outreachProgress(reachedSoFar, q.target ?? 3)}</span></span>
-										<span class="text-[.7rem] font-extrabold text-gold {qDone ? 'opacity-40' : ''}">+{QUEST_XP}</span>
+										<span class="text-xs font-extrabold text-gold {qDone ? 'opacity-40' : ''}">+{QUEST_XP}</span>
 									</a>
 								{:else}
 									<label class="group flex cursor-pointer items-center gap-3 rounded-lg px-2 py-1.5 transition hover:bg-gold/10">
 										<input type="checkbox" class="peer sr-only" checked={qDone} onchange={() => toggleQuest(q)} />
 										<span class="grid h-5 w-5 flex-none place-items-center rounded-md border-2 text-xs text-white transition peer-focus-visible:ring-2 peer-focus-visible:ring-gold {qDone ? 'border-forest bg-forest' : 'border-line group-hover:border-gold'}">{qDone ? '✓' : ''}</span>
 										<span class="flex-1 {qDone ? 'text-muted line-through' : ''}">{q.title}</span>
-										<span class="text-[.7rem] font-extrabold text-gold {qDone ? 'opacity-40' : ''}">+{QUEST_XP}</span>
+										<span class="text-xs font-extrabold text-gold {qDone ? 'opacity-40' : ''}">+{QUEST_XP}</span>
 									</label>
 								{/if}
 							</li>

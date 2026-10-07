@@ -70,12 +70,34 @@
 	html { color-scheme: light dark; }
 	body {
 		@apply bg-bg font-sans text-ink text-[17px] leading-relaxed;
+	}
+	/* The glow sits on a fixed layer, not a fixed body background: background-attachment: fixed
+	   leaves a seam on phones and in full-page captures (spec 0005 CB-7). */
+	body::before {
+		content: '';
+		position: fixed;
+		inset: 0;
+		z-index: -1;
+		pointer-events: none;
 		background-image:
 			radial-gradient(circle at 15% 0%, color-mix(in srgb, var(--forest) 9%, transparent), transparent 42%),
 			radial-gradient(circle at 100% 100%, color-mix(in srgb, var(--sky) 8%, transparent), transparent 45%);
-		background-attachment: fixed;
+	}
+	/* In-page jumps (/#faz-5) land below the pinned phone header. */
+	html {
+		@variant max-lg {
+			scroll-padding-top: 4.5rem;
+		}
 	}
 	h1, h2, h3 { @apply font-display; }
+}
+
+/* A control a thumb can hit: at least 44 × 44 px below desktop (spec 0005 CB-4). */
+@utility tap {
+	@variant max-lg {
+		min-height: 2.75rem;
+		min-width: 2.75rem;
+	}
 }
 
 @utility card {
@@ -94,7 +116,8 @@
 .prose-map pre { @apply bg-code text-ink border border-line; }
 .prose-map code { @apply bg-code rounded px-1 py-0.5 text-[.9em]; }
 .prose-map table { @apply block overflow-x-auto text-[.92rem]; }
-.prose-map td, .prose-map th { @apply border border-line px-3 py-1.5; }
+/* On phones a cell never squeezes below 144 px; a wider table scrolls inside its own box (CB-3). */
+.prose-map td, .prose-map th { @apply border border-line px-3 py-1.5 max-sm:min-w-36; }
 .prose-map img { @apply rounded-xl; }
 
 @media (prefers-reduced-motion: reduce) {

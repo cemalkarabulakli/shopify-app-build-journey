@@ -28,7 +28,7 @@
 <Seo site={data.site} title={t.roadmap.title} description={t.roadmap.lede} path="/roadmap" />
 
 <section class="animate-enter">
-	<p class="mb-2 text-[.7rem] font-extrabold tracking-[.25em] text-gold uppercase">{t.roadmap.eyebrow}</p>
+	<p class="mb-2 text-xs font-extrabold tracking-[.25em] text-gold uppercase">{t.roadmap.eyebrow}</p>
 	<h1 class="mb-3 text-3xl leading-tight font-extrabold text-ink sm:text-4xl">{t.roadmap.title}</h1>
 	<p class="max-w-3xl text-lg text-muted">{t.roadmap.lede}</p>
 	{#if t.roadmap.enOnlyNotice}
@@ -126,14 +126,14 @@
 						<span class="text-lg leading-none font-extrabold">{item.score}</span>
 					</a>
 				{/if}
-				<p class="mt-1 text-[.6rem] tracking-wider text-muted uppercase">{t.roadmap.score}</p>
+				<p class="mt-1 text-xs tracking-wider text-muted uppercase">{t.roadmap.score}</p>
 			</div>
 
 			<!-- Member text can be one long unbroken word (a URL): it must wrap, never widen the page. -->
 			<div class="min-w-0 flex-1 [overflow-wrap:anywhere]">
 				<div class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
 					<h3 class="text-lg font-extrabold text-ink">{item.title}</h3>
-					<span class="rounded-full border px-2 py-0.5 text-[.65rem] font-extrabold tracking-wider uppercase {badge[item.status as Status]}">{icon[item.status as Status]} {t.roadmap.columns[item.status as Status]}</span>
+					<span class="rounded-full border px-2 py-0.5 text-xs font-extrabold tracking-wider uppercase {badge[item.status as Status]}">{icon[item.status as Status]} {t.roadmap.columns[item.status as Status]}</span>
 				</div>
 				<!-- Plain text from a member; never rendered as HTML -->
 				<p class="mt-1.5 whitespace-pre-line text-[.95rem] text-muted">{item.body}</p>

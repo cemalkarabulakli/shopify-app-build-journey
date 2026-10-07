@@ -19,7 +19,7 @@
 <Seo site={data.site} title={t.library.title} description="{t.library.eyebrow} — {data.site.description}" path="/docs" />
 
 <section class="animate-enter">
-	<p class="mb-2 text-[.7rem] font-extrabold tracking-[.25em] text-gold uppercase">{t.library.eyebrow}</p>
+	<p class="mb-2 text-xs font-extrabold tracking-[.25em] text-gold uppercase">{t.library.eyebrow}</p>
 	<h1 class="mb-2 text-3xl font-extrabold text-ink">{t.library.title}</h1>
 	<p class="text-muted">{t.library.lede} <a href="/" class="text-forest">{t.library.ledeLink}</a>.</p>
 	<p class="mt-2 rounded-lg border border-gold/40 bg-gold/10 px-3 py-2 text-sm text-muted">🔒 {t.library.sealedLede}</p>

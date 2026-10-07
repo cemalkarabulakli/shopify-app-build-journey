@@ -9,7 +9,7 @@
 <Seo site={data.site} title={t.journal.title} description={data.site.description} path="/journal" />
 
 <section class="animate-enter">
-	<p class="mb-2 text-[.7rem] font-extrabold tracking-[.25em] text-gold uppercase">{t.journal.eyebrow}</p>
+	<p class="mb-2 text-xs font-extrabold tracking-[.25em] text-gold uppercase">{t.journal.eyebrow}</p>
 	<h1 class="mb-2 text-3xl font-extrabold text-ink">{t.journal.title}</h1>
 	<p class="mb-8 text-muted">{data.site.description}</p>
 </section>
