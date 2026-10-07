@@ -32,3 +32,12 @@ export function reachOutLink(m: ReachOutTarget): { href: string; newTab: boolean
 	if (m.contactPage && new URL(m.contactPage).protocol === 'https:') return { href: m.contactPage, newTab: true };
 	throw new Error(`${m.name} has no published email or https contact page`);
 }
+
+/**
+ * How many merchants in the current catalog this reader has reached out to. Ids of merchants
+ * that were removed or renamed stay in browser storage forever, so they must never count —
+ * the map and the Merchants page both count through here (AC-10).
+ */
+export function reachedCount(catalogIds: readonly string[], reached: (id: string) => boolean): number {
+	return catalogIds.filter(reached).length;
+}

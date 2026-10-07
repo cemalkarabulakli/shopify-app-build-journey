@@ -37,3 +37,19 @@ describe('reachOutLink (AC-8)', () => {
 		expect(() => reachOutLink({ ...base, contactPage: null })).toThrow();
 	});
 });
+
+import { reachedCount } from '../outreach';
+
+describe('reachedCount (AC-10, review finding 1)', () => {
+	const catalog = ['gruns', 'pulsetto', 'labellov', 'scuffers'];
+	const has = (set: string[]) => (id: string) => set.includes(id);
+
+	it('counts only merchants that are still in the catalog', () => {
+		expect(reachedCount(catalog, has(['gruns', 'removed-merchant', 'junk']))).toBe(1);
+	});
+	it('crosses the outreach boundary 2 → 3 → 2 the same way on every page', () => {
+		expect(reachedCount(catalog, has(['gruns', 'pulsetto']))).toBe(2);
+		expect(reachedCount(catalog, has(['gruns', 'pulsetto', 'labellov']))).toBe(3);
+		expect(reachedCount(catalog, has(['gruns', 'labellov', 'old-id']))).toBe(2);
+	});
+});

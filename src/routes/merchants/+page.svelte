@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createReadingProgress } from '$lib/client/readingProgress.svelte';
-	import { reachOutLink } from '$lib/client/outreach';
+	import { reachOutLink, reachedCount } from '$lib/client/outreach';
 	import Burst from '$lib/components/Burst.svelte';
 	import Seo from '$lib/components/Seo.svelte';
 	import { useI18n } from '$lib/i18n';
@@ -10,7 +10,7 @@
 	const reached = createReadingProgress('merchants:reached');
 	let burst: Burst;
 
-	const count = $derived(data.merchants.filter((m) => reached.has(m.id)).length);
+	const count = $derived(reachedCount(data.merchants.map((m) => m.id), reached.has));
 	function toggle(id: string) {
 		const before = count;
 		reached.toggle(id);

@@ -7,6 +7,7 @@
 	import Burst from '$lib/components/Burst.svelte';
 	import XpBar from '$lib/components/XpBar.svelte';
 	import Seo from '$lib/components/Seo.svelte';
+	import { reachedCount } from '$lib/client/outreach';
 	import { useI18n } from '$lib/i18n';
 	const { t } = useI18n();
 	let { data } = $props();
@@ -31,15 +32,15 @@
 	const readDocs = $derived(data.steps.reduce((n, s) => n + s.docs.filter((d) => read.has(d.slug)).length, 0));
 	const complete = (s: Step) => stageComplete(stageOf(s), read.has, tasks.has);
 	const doneSteps = $derived(data.steps.filter(complete).length);
-	const reachedCount = $derived(reached.read.length);
+	const reachedSoFar = $derived(reachedCount(data.merchantIds, reached.has));
 	const allQuests = $derived(data.steps.flatMap((s) => s.quests));
-	const questsSoFar = $derived(questProgress(allQuests, quests.has, reachedCount));
+	const questsSoFar = $derived(questProgress(allQuests, quests.has, reachedSoFar));
 	const xp = $derived(xpFor(readDocs, doneSteps, questsSoFar.done));
 
 	type Chapter = (typeof data.chapters)[number];
 	const chapterAt = (n: number) => data.chapters.findIndex((c) => c.phases[0] === n);
 	const chapterQuests = (c: Chapter) => data.steps.filter((s) => c.phases.includes(s.n)).flatMap((s) => s.quests);
-	const isQuestDone = (q: Quest) => questDone(q, quests.has, reachedCount);
+	const isQuestDone = (q: Quest) => questDone(q, quests.has, reachedSoFar);
 	const ourAppNow = $derived(data.steps.find((s) => s.status === 'next'));
 	const buildLog = $derived(data.steps.filter((s) => s.posts.length));
 	const OUR_APP_CHAPTER = 3;
@@ -125,7 +126,7 @@
 
 		{#if ci >= 0}
 			{@const chapter = data.chapters[ci]}
-			{@const cp = questProgress(chapterQuests(chapter), quests.has, reachedCount)}
+			{@const cp = questProgress(chapterQuests(chapter), quests.has, reachedSoFar)}
 			<li id="chapter-{ci + 1}" class="relative -ml-16 animate-enter rounded-2xl border border-gold/40 bg-gold/10 px-5 py-4">
 				<div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
 					<span class="font-display text-xs font-extrabold tracking-widest text-gold uppercase">{t.home.chapter} {ci + 1}</span>
@@ -243,7 +244,7 @@
 								{#if q.kind === 'outreach'}
 									<a href="/merchants" class="group flex items-center gap-3 rounded-lg px-2 py-1.5 no-underline transition hover:bg-gold/10">
 										<span class="grid h-5 w-5 flex-none place-items-center rounded-md border-2 text-xs text-white {qDone ? 'border-forest bg-forest' : 'border-line'}">{qDone ? '✓' : ''}</span>
-										<span class="flex-1 {qDone ? 'text-muted line-through' : 'text-ink'}">{q.title} <span class="text-xs text-muted">· {t.home.outreachProgress(reachedCount, q.target ?? 3)}</span></span>
+										<span class="flex-1 {qDone ? 'text-muted line-through' : 'text-ink'}">{q.title} <span class="text-xs text-muted">· {t.home.outreachProgress(reachedSoFar, q.target ?? 3)}</span></span>
 										<span class="text-[.7rem] font-extrabold text-gold {qDone ? 'opacity-40' : ''}">+{QUEST_XP}</span>
 									</a>
 								{:else}
