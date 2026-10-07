@@ -1,4 +1,5 @@
-import pg from 'pg';
+import type pg from 'pg';
+import { createPool } from '../pg/createPool';
 import { FeatureRequest, OPEN_STATUSES, VOTE_WEIGHT, type FeatureBoardRepository, type FeatureRequestWithVotes, type FeatureStatus } from '$lib/domain/roadmap';
 
 /**
@@ -10,7 +11,7 @@ import { FeatureRequest, OPEN_STATUSES, VOTE_WEIGHT, type FeatureBoardRepository
 export class PgFeatureBoard implements FeatureBoardRepository {
 	private readonly pool: pg.Pool;
 	constructor(connectionString: string) {
-		this.pool = new pg.Pool({ connectionString, max: 3 });
+		this.pool = createPool(connectionString, 3, 'roadmap');
 	}
 
 	async findById(id: string): Promise<FeatureRequest | null> {
