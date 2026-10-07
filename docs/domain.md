@@ -12,6 +12,10 @@ invent its own meaning for it.
 | Path | The ordered learning path (`content/path.<locale>.json`) shown on the home page | |
 | Stage | One phase of the Path, rendered as a sealable map stage with its Docs | |
 | XP | Client-side reading gamification (`lib/client/gamification.ts`) | Not money, not membership |
+| Chapter | One of the journey's four parts (Learn Shopify · Build basic apps · Merchants & ecosystem · Our app), a run of phases | Not a phase |
+| Quest | A real-world task on a phase (`path.<locale>.json`), ticked by the reader for bonus XP | Not the phase's "done when" task, which unseals |
+| Merchant (card) | A curated successful Shopify merchant on `/merchants` (`content/merchants.json`) | Not a VIP customer |
+| Outreach | The reader contacting a merchant from their own mail app or the merchant's contact page | The site never sends it |
 | Member (VIP) | A person whose subscription currently grants access (BR-2) | Not "customer": a customer may have no access |
 | Tier | A paid plan: Starter, Pro, Advanced; monthly or yearly price ids | Prices live in Paddle, not in code (BR-4) |
 | Trial | Free days before the first charge (`trialDays` in `vip-catalog.json`) | |
@@ -47,6 +51,13 @@ invent its own meaning for it.
 - **BR-11** From `docs/`, only `NN-<name>.md` (exactly two digits, then a dash), `README.md` and
   `LEARNING.md` (exact case) are published. Every other file there is unreachable (404) and absent
   from the docs list, home page, sitemap and `llms*.txt`. Journal entries are not affected.
+- **BR-12** A quest is worth 150 XP while ticked and never seals or unseals a phase or scroll. The
+  outreach quest is not ticked: it is done exactly while 3 or more different merchants are marked
+  as reached out to. All reader progress stays in the reader's browser.
+- **BR-13** Outreach never leaves through the site: "Reach out" opens the reader's own mail app
+  addressed to an email the merchant itself publishes for business or press (with that page
+  recorded), or else the merchant's public contact page. A merchant figure is shown only with its
+  public source.
 
 ## Key domain invariants
 - No one loses paid access early (BR-2), and no one gains it from client-supplied data:

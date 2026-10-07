@@ -3,7 +3,7 @@
 	import FogDragon from '$lib/components/FogDragon.svelte';
 	import { useI18n } from '$lib/i18n';
 	const { t } = useI18n();
-	let { xp, docsRead, docsTotal, phasesDone, phasesTotal }: { xp: number; docsRead: number; docsTotal: number; phasesDone: number; phasesTotal: number } = $props();
+	let { xp, docsRead, docsTotal, phasesDone, phasesTotal, questsDone = 0, questsTotal = 0 }: { xp: number; docsRead: number; docsTotal: number; phasesDone: number; phasesTotal: number; questsDone?: number; questsTotal?: number } = $props();
 	const level = $derived(levelFor(xp));
 
 	let shown = $state(0);
@@ -61,7 +61,7 @@
 		</div>
 	</div>
 	<div class="mt-2 flex flex-wrap justify-between gap-2 text-xs text-muted">
-		<span>🏁 {phasesDone}/{phasesTotal} {t.home.phases} · 📖 {docsRead}/{docsTotal} {t.home.scrolls}</span>
+		<span>🏁 {phasesDone}/{phasesTotal} {t.home.phases} · 📖 {docsRead}/{docsTotal} {t.home.scrolls}{#if questsTotal} · ⚔️ {questsDone}/{questsTotal} {t.home.quests}{/if}</span>
 		<span>{#if level.hasNext}{level.toNext} {t.home.toNext} <b class="text-ink">{t.levels[level.index + 1]}</b>{:else}{t.home.maxed}{/if}</span>
 	</div>
 </section>

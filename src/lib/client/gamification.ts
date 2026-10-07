@@ -1,6 +1,8 @@
 /** Pure scoring rules — no state, easy to test. */
 export const XP_PER_DOC = 100;
 export const XP_PER_PHASE = 500;
+/** A quest is bonus XP: it never seals or unseals anything (BR-12). */
+export const QUEST_XP = 150;
 
 export const LEVELS = [
 	{ min: 0, icon: '🥾' },
@@ -11,8 +13,27 @@ export const LEVELS = [
 	{ min: 4500, icon: '🐉' }
 ] as const;
 
-export function xpFor(docsRead: number, phasesDone: number): number {
-	return docsRead * XP_PER_DOC + phasesDone * XP_PER_PHASE;
+export function xpFor(docsRead: number, phasesDone: number, questsDone = 0): number {
+	return docsRead * XP_PER_DOC + phasesDone * XP_PER_PHASE + questsDone * QUEST_XP;
+}
+
+/**
+ * A real-world task on a phase. Plain quests are ticked by the reader; the `outreach` quest
+ * completes by itself once `target` different merchants are marked as reached out to.
+ */
+export interface Quest {
+	id: string;
+	kind?: 'outreach';
+	target?: number;
+}
+
+export function questDone(quest: Quest, ticked: (id: string) => boolean, merchantsReached: number): boolean {
+	return quest.kind === 'outreach' ? merchantsReached >= (quest.target ?? 3) : ticked(quest.id);
+}
+
+/** Done / total over any set of quests — a chapter's, or the whole map's. */
+export function questProgress(quests: Quest[], ticked: (id: string) => boolean, merchantsReached: number) {
+	return { done: quests.filter((q) => questDone(q, ticked, merchantsReached)).length, total: quests.length };
 }
 
 export function levelFor(xp: number) {

@@ -1,6 +1,6 @@
 export const en = {
 	locale: 'en-GB',
-	nav: { map: 'Map', journal: 'Journal', library: 'Library', about: 'Traveller', vip: 'VIP', account: 'Account', rss: 'RSS' },
+	nav: { map: 'Map', journal: 'Journal', library: 'Library', about: 'Traveller', merchants: 'Merchants', vip: 'VIP', account: 'Account', rss: 'RSS' },
 	footer: 'Built in the open. The map is updated as I go.',
 	home: {
 		eyebrow: 'Quest map · from zero to the App Store',
@@ -20,7 +20,15 @@ export const en = {
 		sealedPhase: 'Sealed — finish the phase before it',
 		sealedScroll: 'Sealed',
 		phaseDone: (title: string) => `🏁 ${title} complete!`,
-		badgeEarned: (title: string) => `🏅 ${title} badge!`
+		badgeEarned: (title: string) => `🏅 ${title} badge!`,
+		chapter: 'Chapter',
+		quests: 'quests',
+		questsLabel: 'Quests',
+		questToast: (xp: number) => `⚔️ +${xp} XP`,
+		outreachProgress: (n: number, target: number) => `${Math.min(n, target)}/${target} merchants reached`,
+		toMerchants: 'Meet the merchants →',
+		ourAppNow: (n: number, title: string) => `Our app is in phase ${n} now: ${title}`,
+		buildLog: 'Build log'
 	},
 	journal: { eyebrow: "Captain's log", title: 'Journal', empty: 'No entries yet.', back: '← Back to the log' },
 	library: {
@@ -94,6 +102,22 @@ export const en = {
 		openPortal: 'Manage billing',
 		logout: 'Sign out',
 		errors: { email: 'That email address doesn’t look right.', send: 'Could not send the email. Try again in a minute.', link: 'That link is invalid or has expired — request a new one.', db: 'Billing records are temporarily unavailable.' }
+	},
+	merchants: {
+		eyebrow: 'Merchant hall',
+		title: 'Successful merchants',
+		lede: 'Real Shopify merchants and the numbers behind them. Study one, then reach out — reaching 3 completes a quest on the map.',
+		sells: 'Sells',
+		source: 'Source',
+		store: 'Visit store',
+		story: 'Their story:',
+		reachOut: 'Reach out',
+		viaEmail: 'Opens your own email app with a template you can edit. This site sends nothing.',
+		viaPage: 'Opens their contact page in a new tab.',
+		mark: 'I reached out',
+		marked: 'Reached out',
+		progress: (n: number, target: number) => `${Math.min(n, target)}/${target} merchants reached`,
+		questDone: (xp: number) => `⚔️ Outreach quest complete! +${xp} XP`
 	},
 	dragon: {
 		name: 'Fog Dragon',

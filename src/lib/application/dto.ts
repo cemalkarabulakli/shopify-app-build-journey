@@ -13,3 +13,19 @@ export interface PostSummaryDto {
 export interface PostDetailDto extends PostSummaryDto {
 	html: string;
 }
+
+/** A merchant card, already in the reader's language (spec 0002). */
+export interface MerchantCardDto {
+	id: string;
+	name: string;
+	sells: string;
+	fact: string;
+	/** The fact in English, for the English reach-out template. */
+	factEn: string;
+	sourceUrl: string;
+	storeUrl: string;
+	contactPage: string | null;
+	email: string | null;
+	/** Only scrolls that are actually published. */
+	stories: { slug: string; title: string }[];
+}

@@ -1,6 +1,38 @@
 {
   "intro": "Sıfırdan — Partner hesabı yok, CLI kurulu değil, Shopify bilgisi yok — para kazanan bir Shopify app'e giden yol. Sırayla izle; her adım bir şey gösterebildiğinde biter, \"öğrendim\" dediğinde değil.",
   "rule": "Faz 0–4 platformu öğrenmek için, atılabilir kod. Gerçek ürün Faz 5'te başlıyor; ondan önce kalıcı bir şey inşa etme.",
+  "chapters": [
+    {
+      "title": "Shopify'ı öğren",
+      "phases": [
+        0
+      ]
+    },
+    {
+      "title": "İlk basit app'ler",
+      "phases": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "title": "Merchant'lar ve ekosistem",
+      "phases": [
+        5
+      ]
+    },
+    {
+      "title": "Bizim app",
+      "phases": [
+        6,
+        7,
+        8,
+        9
+      ]
+    }
+  ],
   "steps": [
     {
       "n": 0,
@@ -14,7 +46,17 @@
         "02-shopify-anatomy"
       ],
       "status": "done",
-      "icon": "🧭"
+      "icon": "🧭",
+      "quests": [
+        {
+          "id": "q0-partner",
+          "title": "Ücretsiz bir Shopify Partner hesabı aç"
+        },
+        {
+          "id": "q0-explain",
+          "title": "Paranın nasıl aktığını bir arkadaşına anlat: merchant → Shopify → app"
+        }
+      ]
     },
     {
       "n": 1,
@@ -26,7 +68,17 @@
         "learning"
       ],
       "status": "next",
-      "icon": "🏕️"
+      "icon": "🏕️",
+      "quests": [
+        {
+          "id": "q1-devstore",
+          "title": "Bir development store oluştur"
+        },
+        {
+          "id": "q1-scaffold",
+          "title": "Shopify CLI ile bir app iskeleti kur ve dev store'unda aç"
+        }
+      ]
     },
     {
       "n": 2,
@@ -35,7 +87,13 @@
       "learn": "OAuth, session token, embedded app, App Bridge.",
       "done": "Template'e kendi sayfamı ekledim ve bir isteğin yolunu uçtan uca çizebiliyorum.",
       "docs": [],
-      "icon": "🗝️"
+      "icon": "🗝️",
+      "quests": [
+        {
+          "id": "q2-admin-page",
+          "title": "App'ine Shopify admin içinde bir sayfa ekle"
+        }
+      ]
     },
     {
       "n": 3,
@@ -44,7 +102,17 @@
       "learn": "Admin GraphQL API, scope'lar, rate limit.",
       "done": "Ürünleri listeleyen ve birini güncelleyen bir sayfa.",
       "docs": [],
-      "icon": "📦"
+      "icon": "📦",
+      "quests": [
+        {
+          "id": "q3-graphql",
+          "title": "Admin GraphQL API ile 10 ürün oku"
+        },
+        {
+          "id": "q3-metafield",
+          "title": "Bir ayarı metafield'a kaydet"
+        }
+      ]
     },
     {
       "n": 4,
@@ -53,7 +121,17 @@
       "learn": "Webhook'lar, uninstall temizliği, GDPR webhook'ları.",
       "done": "`orders/create` yakalanıp veritabanına yazılıyor.",
       "docs": [],
-      "icon": "⚡"
+      "icon": "⚡",
+      "quests": [
+        {
+          "id": "q4-webhook",
+          "title": "Bir orders/create webhook'u al"
+        },
+        {
+          "id": "q4-twice",
+          "title": "Aynı webhook'u iki kez işle, etkisi iki kez olmasın"
+        }
+      ]
     },
     {
       "n": 5,
@@ -69,7 +147,19 @@
         "12-problem-selection",
         "05-people-and-vision"
       ],
-      "icon": "🔍"
+      "icon": "🔍",
+      "quests": [
+        {
+          "id": "q5-outreach",
+          "title": "3 merchant'a ulaş",
+          "kind": "outreach",
+          "target": 3
+        },
+        {
+          "id": "q5-problem",
+          "title": "Bir merchant'ın sorununu kendi kelimeleriyle yaz"
+        }
+      ]
     },
     {
       "n": 6,
@@ -78,7 +168,13 @@
       "learn": "Kendi app'im — sadece problemi çözen kadarı.",
       "done": "3 merchant elle kurulmuş ve kullanıyor.",
       "docs": [],
-      "icon": "⚒️"
+      "icon": "⚒️",
+      "quests": [
+        {
+          "id": "q6-mvp",
+          "title": "MVP'ni gerçek bir mağazanın önüne koy"
+        }
+      ]
     },
     {
       "n": 7,
@@ -87,7 +183,13 @@
       "learn": "Billing API, trial, planlar, sürpriz fatura tuzağı.",
       "done": "İlk ödeme geldi.",
       "docs": [],
-      "icon": "💰"
+      "icon": "💰",
+      "quests": [
+        {
+          "id": "q7-billing",
+          "title": "Billing API ile ücretli bir plan ekle"
+        }
+      ]
     },
     {
       "n": 8,
@@ -101,7 +203,13 @@
         "08-ecommerce-events",
         "09-podcasts"
       ],
-      "icon": "🏰"
+      "icon": "🏰",
+      "quests": [
+        {
+          "id": "q8-listing",
+          "title": "App Store listeleme başvurunu gönder"
+        }
+      ]
     },
     {
       "n": 9,
@@ -112,7 +220,13 @@
       "docs": [
         "11-brand-and-scale"
       ],
-      "icon": "📣"
+      "icon": "📣",
+      "quests": [
+        {
+          "id": "q9-first10",
+          "title": "İlk 10 ödeme yapan merchant'ını kazan"
+        }
+      ]
     }
   ]
 }

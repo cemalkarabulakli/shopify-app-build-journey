@@ -2,7 +2,7 @@ import type { Messages } from './en';
 
 export const tr: Messages = {
 	locale: 'tr-TR',
-	nav: { map: 'Harita', journal: 'Günlük', library: 'Kütüphane', about: 'Gezgin', vip: 'VIP', account: 'Hesap', rss: 'RSS' },
+	nav: { map: 'Harita', journal: 'Günlük', library: 'Kütüphane', about: 'Gezgin', merchants: 'Merchant\'lar', vip: 'VIP', account: 'Hesap', rss: 'RSS' },
 	footer: 'Açık havada inşa ediliyor. Harita her gün güncellenir.',
 	home: {
 		eyebrow: "Görev haritası · sıfırdan App Store'a",
@@ -22,7 +22,15 @@ export const tr: Messages = {
 		sealedPhase: 'Mühürlü — önce önceki fazı bitir',
 		sealedScroll: 'Mühürlü',
 		phaseDone: (title) => `🏁 ${title} tamamlandı!`,
-		badgeEarned: (title) => `🏅 ${title} rozeti!`
+		badgeEarned: (title) => `🏅 ${title} rozeti!`,
+		chapter: 'Bölüm',
+		quests: 'görev',
+		questsLabel: 'Görevler',
+		questToast: (xp) => `⚔️ +${xp} XP`,
+		outreachProgress: (n, target) => `${Math.min(n, target)}/${target} merchant'a ulaşıldı`,
+		toMerchants: "Merchant'larla tanış →",
+		ourAppNow: (n, title) => `Bizim app şu an Faz ${n}'de: ${title}`,
+		buildLog: 'Yapım günlüğü'
 	},
 	journal: { eyebrow: 'Seyir defteri', title: 'Günlük', empty: 'Henüz kayıt yok.', back: '← Seyir defteri' },
 	library: {
@@ -96,6 +104,22 @@ export const tr: Messages = {
 		openPortal: 'Faturalandırmayı yönet',
 		logout: 'Çıkış',
 		errors: { email: 'Bu e-posta adresi doğru görünmüyor.', send: 'E-posta gönderilemedi. Bir dakika sonra tekrar dene.', link: 'Bağlantı geçersiz ya da süresi dolmuş — yenisini iste.', db: 'Fatura kayıtları geçici olarak kullanılamıyor.' }
+	},
+	merchants: {
+		eyebrow: 'Merchant salonu',
+		title: "Başarılı merchant'lar",
+		lede: "Gerçek Shopify merchant'ları ve arkalarındaki rakamlar. Birini incele, sonra ulaş — 3 merchant'a ulaşmak haritada bir görevi tamamlar.",
+		sells: 'Satıyor',
+		source: 'Kaynak',
+		store: 'Mağazaya git',
+		story: 'Hikâyeleri:',
+		reachOut: 'Ulaş',
+		viaEmail: 'Kendi e-posta uygulamanı, düzenleyebileceğin bir şablonla açar. Bu site hiçbir şey göndermez.',
+		viaPage: 'İletişim sayfalarını yeni sekmede açar.',
+		mark: 'Ulaştım',
+		marked: 'Ulaşıldı',
+		progress: (n, target) => `${Math.min(n, target)}/${target} merchant'a ulaşıldı`,
+		questDone: (xp) => `⚔️ Ulaşma görevi tamamlandı! +${xp} XP`
 	},
 	dragon: {
 		name: 'Sis Ejderi',
