@@ -41,18 +41,19 @@
 	<a href="/" class="font-display text-lg font-extrabold tracking-wide text-ink no-underline">
 		<span class="mr-1.5 inline-block align-middle"><FogDragon level={4} size={34} /></span>{data.site.name}
 	</a>
-	<nav class="flex gap-1 rounded-full border border-line bg-card/70 p-1 text-sm backdrop-blur">
+	<!-- Wraps onto extra rows on phones so every destination stays visible (spec 0004) -->
+	<nav class="flex flex-wrap justify-center gap-1 rounded-2xl border border-line bg-card/70 p-1 text-sm backdrop-blur lg:rounded-full">
 		{#each links as l (l.href)}
 			<a
 				href={l.href}
-				class="rounded-full px-3 py-1 no-underline transition-colors {active(l.href)
+				class="rounded-full px-3 py-1 whitespace-nowrap no-underline transition-colors {active(l.href)
 					? 'bg-forest text-white shadow'
 					: 'text-muted hover:bg-gold/15 hover:text-ink'}"
 			>
 				<span class="mr-1">{l.icon}</span>{l.label}
 			</a>
 		{/each}
-		<a href="/feed.xml" class="rounded-full px-3 py-1 text-muted no-underline hover:bg-gold/15 hover:text-ink">{t.nav.rss}</a>
+		<a href="/feed.xml" class="rounded-full px-3 py-1 whitespace-nowrap text-muted no-underline hover:bg-gold/15 hover:text-ink">{t.nav.rss}</a>
 	</nav>
 	<div class="flex gap-1 text-xs font-extrabold tracking-wider uppercase" aria-label="Language">
 		{#each LOCALES as code (code)}
