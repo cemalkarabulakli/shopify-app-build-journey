@@ -3,8 +3,9 @@ MIT License
 Copyright (c) 2026 Cemal Karabulaklı
 
 Portions (the ANEW workflow template: AGENTS.md, CLAUDE.md, workflows/, prompts/, adapters/,
-docs/roles/, docs/decisions/0001-0003, .claude/, specs/ templates, scripts/check, scripts/doctor,
-scripts/init) Copyright (c) 2026 Engin Demiroğ
+docs/roles/, docs/decisions/ (README, TEMPLATE, 0001-0003), .claude/, specs/ templates and READMEs,
+scripts/check, scripts/check.conf.example, scripts/doctor, scripts/init)
+Copyright (c) 2026 Engin Demiroğ
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
