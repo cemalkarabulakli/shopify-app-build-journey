@@ -129,7 +129,8 @@
 				<p class="mt-1 text-[.6rem] tracking-wider text-muted uppercase">{t.roadmap.score}</p>
 			</div>
 
-			<div class="min-w-0 flex-1">
+			<!-- Member text can be one long unbroken word (a URL): it must wrap, never widen the page. -->
+			<div class="min-w-0 flex-1 [overflow-wrap:anywhere]">
 				<div class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
 					<h3 class="text-lg font-extrabold text-ink">{item.title}</h3>
 					<span class="rounded-full border px-2 py-0.5 text-[.65rem] font-extrabold tracking-wider uppercase {badge[item.status as Status]}">{icon[item.status as Status]} {t.roadmap.columns[item.status as Status]}</span>
