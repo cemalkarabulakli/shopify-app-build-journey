@@ -10,6 +10,7 @@ import {
 	type TransactionRepository
 } from '$lib/domain/vip';
 import type { LoginTokenRepository } from '$lib/domain/auth';
+import { createPool } from '../pg/createPool';
 
 /**
  * One adapter, several ports, one connection pool. Schema: see README "Database".
@@ -18,7 +19,7 @@ import type { LoginTokenRepository } from '$lib/domain/auth';
 export class PgBillingStore implements CustomerRepository, ProcessedEventLog, LoginTokenRepository {
 	private readonly pool: pg.Pool;
 	constructor(connectionString: string) {
-		this.pool = new pg.Pool({ connectionString, max: 5 });
+		this.pool = createPool(connectionString, 5, 'billing');
 	}
 
 	// ── customers ──
