@@ -23,13 +23,13 @@
 	const bare = $derived(page.url.pathname.startsWith('/switch'));
 	// Below 1024 px the nav lives in a <details> menu (spec 0005): native without JS, closed after each navigation.
 	let menuOpen = $state(false);
-	let menuButton: HTMLElement;
+	let menuButton = $state<HTMLElement>();
 	afterNavigate(() => (menuOpen = false));
 	// Escape closes an open menu and hands focus back to its button, not to the page body.
 	function closeOnEscape(e: KeyboardEvent) {
 		if (e.key !== 'Escape' || !menuOpen) return;
 		menuOpen = false;
-		menuButton.focus();
+		menuButton?.focus();
 	}
 </script>
 
