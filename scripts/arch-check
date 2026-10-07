@@ -1,13 +1,14 @@
 #!/bin/sh
 # Architecture boundaries F-1…F-4 (docs/architecture.md "Forbidden dependencies"), as greps.
 # F-5 (only container.ts constructs adapters) is a review rule. Exit 1 on any violation.
+# Generated SvelteKit output (.svelte-kit, even a stray one under src/) is never checked.
 set -u
 ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
 cd "$ROOT" || exit 1
 
 # "file -> module" for every import / export-from / dynamic import in non-test sources under $1.
 imports() {
-  find "$1" -type f \( -name '*.ts' -o -name '*.svelte' \) ! -path '*/__tests__/*' -print |
+  find "$1" -type f \( -name '*.ts' -o -name '*.svelte' \) ! -path '*/__tests__/*' ! -path '*/.svelte-kit/*' -print |
     while IFS= read -r f; do
       grep -Eo "(from|import)[[:space:]]*\(?['\"][^'\"]+['\"]" "$f" |
         sed -E "s/.*['\"]([^'\"]+)['\"]$/\1/" |
@@ -22,7 +23,7 @@ f2=$(imports src/lib/application | grep -vE -- "-> (\./|\.\./|\\\$lib/domain/|\\
 # F-3: routes and hooks never reach into infrastructure — they go through the container.
 f3=$(grep -rn "server/infrastructure" src/routes src/hooks.server.ts)
 # F-4: only siteConfig.ts reads the environment.
-f4=$(grep -rnE "process\.env|import\.meta\.env|\\\$env/" src | grep -v '^src/lib/server/config/siteConfig.ts:')
+f4=$(grep -rnE --exclude-dir=.svelte-kit "process\.env|import\.meta\.env|\\\$env/" src | grep -v '^src/lib/server/config/siteConfig.ts:')
 
 bad=0
 for rule in F-1 F-2 F-3 F-4; do
